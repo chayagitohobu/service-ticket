@@ -29,37 +29,67 @@
                                     <div class="card-body">
                                         <h4 class="mt-0 header-title">Daftar Tiket divisi {{$divisi->divisi}} </h4>
                                         <p class="text-muted m-b-30">Berikut adalah daftar tiket untuk divisi marketing</p>
+                                        <form id="form_search" action="{{route('operator.tiket.judul_search')}}" method="GET">
+                                        {{ csrf_field() }}
                                         <div class="row mt-5">
                                             <div class="col-xl-8">
                                                 <div class="form-group">
                                                     <label class="col-form-label">Cari berdasarkan</label>
-                                                    <select id="search" class="form-control">
-                                                        <option>Judul</option>
-                                                        <option>Nama Client</option>
-                                                        <option>Nama User</option>
-                                                        <option>Status</option>
-                                                        <option>Update Terakhir</option>
+                                                    <select name="kategori_search" id="kategori_search" class="form-control">
+                                                        <option
+                                                        @if (!empty($_GET['kategori_search']))
+                                                            @if ($_GET['kategori_search'] == 'Judul')
+                                                                {{'selected'}}
+                                                            @endif
+                                                        @endif
+                                                        >Judul</option>
+                                                        <option
+                                                        @if (!empty($_GET['kategori_search']))
+                                                            @if ($_GET['kategori_search'] == 'Nama Client')
+                                                                {{'selected'}}
+                                                            @endif
+                                                        @endif
+                                                        >Nama Client</option>
+                                                        <option
+                                                        @if (!empty($_GET['kategori_search']))
+                                                            @if ($_GET['kategori_search'] == 'Nama User')
+                                                                {{'selected'}}
+                                                            @endif
+                                                        @endif
+                                                        >Nama User</option>
+                                                        <option
+                                                        @if (!empty($_GET['kategori_search']))
+                                                            @if ($_GET['kategori_search'] == 'Status')
+                                                                {{'selected'}}
+                                                            @endif
+                                                        @endif
+                                                        >Status</option>
+                                                        <option
+                                                        @if (!empty($_GET['kategori_search']))
+                                                            @if ($_GET['kategori_search'] == 'Update Terakhir')
+                                                                {{'selected'}}
+                                                            @endif
+                                                        @endif
+                                                        >Update Terakhir</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-xl-4">
-                                                <form id="form_search" action="{{route('operator.tiket.judul_search')}}" method="GET">
-                                                    {{ csrf_field() }}
-                                                    <div class="form-group">
-                                                        <label id="label_form_search">Cari Judul</label>
-                                                        <div>
-                                                            <div class="input-group">
-                                                                <input name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
-                                                                <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
-                                                                    <span class="input-group-text"><small> Search	&nbsp;</small> <i class="mdi mdi-magnify noti-icon"></i></span>
-                                                                </button>
-                                                            </div><!-- input-group -->
-                                                        </div>
+                                                <div class="form-group">
+                                                    <label id="label_form_search">Cari</label>
+                                                    <div>
+                                                        <div class="input-group">
+                                                            <input name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                            <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
+                                                                <span class="input-group-text"><small> Search	&nbsp;</small> <i class="mdi mdi-magnify noti-icon"></i></span>
+                                                            </button>
+                                                        </div><!-- input-group -->
                                                     </div>
-                                                </form>
+                                                </div>
                                             </div>
                                         </div>
-                                        
+                                        </form>
+                                            
                                         <table id="mainTable" class="table table-striped mb-0 mt-2">
                                             <thead>
                                             <tr>
@@ -155,14 +185,10 @@
 @endsection
 
 @section('script')
-    
     <script>
-        window.onload = function() {
-            
-            $("#search").change(function(){
-                var input = $(this).val();
-                
-                switch(input) {
+        function myFunction() {
+            var selected = $('#kategori_search').val();
+            switch(selected) {
                 case 'Nama Client':
                     $('#form_search').attr('action', "{{route('operator.tiket.client_search')}}");
                     $('#label_form_search').text('Cari Nama Client');
@@ -189,9 +215,15 @@
                     $('#form_search').attr('action', "{{route('operator.tiket.judul_search')}}");
                     $('#label_form_search').text('Cari Judul');
                 }
+        }
+
+        window.onload = function() {
+            myFunction();
+
+            $("#kategori_search").change(function(){
+                myFunction(); 
             });
-            
         }
     </script>
-
+    
 @endsection

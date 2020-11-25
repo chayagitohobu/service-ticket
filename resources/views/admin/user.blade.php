@@ -38,24 +38,55 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <form class="row" id="form_search" action="{{route('admin.user.name_search')}}" method="GET">
-                                            <div class="col-xl-8">
-                                                <div class="form-group">
-                                                    <label class="col-form-label">Cari berdasarkan</label>
-                                                    <select name="kategori_search" id="search" class="form-control">
-                                                        <option>Nama</option>
-                                                        <option>Email</option>
-                                                        <option>Divisi</option>
-                                                        <option>Role</option>
-                                                        <option>No Telp</option>
-                                                    </select>
+                                        <form id="form_search" action="{{route('admin.user.name_search')}}" method="GET">
+                                            <div class="row">
+                                                <div class="col-xl-8">
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">Cari berdasarkan</label>
+                                                        <select name="kategori_search" id="kategori_search" class="form-control">
+                                                            <option
+                                                            @if (!empty($_GET['kategori_search']))
+                                                                @if ($_GET['kategori_search'] == 'Nama')
+                                                                    {{'selected'}}
+                                                                @endif
+                                                            @endif
+                                                            >Nama</option>
+
+                                                            <option
+                                                            @if (!empty($_GET['kategori_search']))
+                                                                @if ($_GET['kategori_search'] == 'Email')
+                                                                    {{'selected'}}
+                                                                @endif
+                                                            @endif
+                                                            >Email</option>
+                                                            <option
+                                                            @if (!empty($_GET['kategori_search']))
+                                                                @if ($_GET['kategori_search'] == 'Divisi')
+                                                                    {{'selected'}}
+                                                                @endif
+                                                            @endif
+                                                            >Divisi</option>
+                                                            <option
+                                                            @if (!empty($_GET['kategori_search']))
+                                                                @if ($_GET['kategori_search'] == 'Role')
+                                                                    {{'selected'}}
+                                                                @endif
+                                                            @endif
+                                                            >Role</option>
+                                                            <option
+                                                            @if (!empty($_GET['kategori_search']))
+                                                                @if ($_GET['kategori_search'] == 'No Telp')
+                                                                    {{'selected'}}
+                                                                @endif
+                                                            @endif
+                                                            >No Telp</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-4 d-inline">
+                                                <div class="col-xl-4 d-inline">
                                                     {{ csrf_field() }}
                                                     <div class="form-group">
-                                                        <label id="label_form_search">Cari Nama</label>
+                                                        <label id="label_form_search">Cari </label>
                                                         <div>
                                                             <div class="input-group">
                                                                 <input  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
@@ -66,8 +97,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>
                                             </div>
+                                        </form>
                                         
                                         <table id="mainTable" class="table table-striped mb-0 mt-2">
                                             <thead>
@@ -130,14 +161,10 @@
 @endsection
 
 @section('script')
-    
     <script>
-        window.onload = function() {
-            
-            $("#search").change(function(){
-                var input = $(this).val();
-                
-                switch(input) {
+        function myFunction() {
+            var selected = $('#kategori_search').val();
+            switch(selected) {
                 case 'Email':
                     $('#form_search').attr('action', "{{route('admin.user.email_search')}}");
                     $('#search').val();
@@ -164,8 +191,14 @@
                     $('#form_search').attr('action', "{{route('admin.user.name_search')}}");
                     $('#label_form_search').text('Cari Nama');
                 }
+        }
+
+        window.onload = function() {
+            myFunction();
+
+            $("#kategori_search").change(function(){
+                myFunction(); 
             });
-            
         }
     </script>
 
