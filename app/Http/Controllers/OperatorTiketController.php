@@ -155,6 +155,7 @@ class OperatorTiketController extends Controller
                 'balasans.id',
                 'balasans.file'
             )
+            ->orderBy('balasans.created_at', 'DESC')
             ->get();
 
         if (empty($tiket->file)) {

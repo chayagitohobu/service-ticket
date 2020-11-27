@@ -161,6 +161,7 @@ class ClientTiketController extends Controller
                 'balasans.file',
                 'balasans.id'
             )
+            ->orderBy('balasans.created_at', 'DESC')
             ->get();
 
         if (empty($balasans)) {

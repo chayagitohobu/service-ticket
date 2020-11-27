@@ -60,60 +60,6 @@
 
                         <div class="row p-3">
                             <div class="col-lg-12">
-                                <div class="card m-b-30">
-                                    <div class="card-header bg-secondary text-white mb-3">
-                                        <div class="row">
-                                            <div class="col-xl-9">
-                                                <i class="mdi mdi-account-outline"></i> 
-                                                @switch($tiket->role_id)
-                                                    @case(1)
-                                                        Admin
-                                                        @break
-                                                    @case(2)
-                                                        Operator
-                                                        @break
-                                                    @default
-                                                        Client
-                                                @endswitch
-                                                 
-                                                | {{$tiket->client_name}} {{$tiket->user_name}}
-                                            </div>    
-                                            <div class="col-xl-3">
-                                                <i class="mdi mdi-calendar-clock"></i> {{$tiket->created_at}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-text">
-                                            {!! $tiket->ket !!}
-                                        </p>
-                                        <div class="col-md-12 p-0 text-left">
-                                            <hr>
-                                            <button class="btn btn-sm btn-secondary" type="button" data-toggle="collapse" data-target="#tiket_file" aria-expanded="false" aria-controls="balasan_file">
-                                                File pendukung <i class="mdi mdi-arrow-down"></i>
-                                            </button>
-                                            <div class="collapse bg-light p-3" id="tiket_file">
-                                                @if ($tiket_files != null)
-                                                    @foreach ($tiket_files as $tiket_file)
-                                                        <form action="{{route('client.tiket.file_download')}}" method="POST">
-                                                            @csrf
-                                                            <input type="hidden" name="file" value="{{$tiket_file}}">
-                                                            <button type="submit" class="btn btn-info btn-sm mt-1" data-toggle="tooltip" data-placement="top" title="Download File"> 
-                                                                <i class="mdi mdi-arrow-down"></i> {{$tiket_file}}
-                                                            </button>
-                                                            <br>
-                                                        </form>
-                                                    @endforeach
-                                                @else
-                                                    <div>Tidak ada file</div>
-                                                @endif
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                </div>
-                                
                                 @foreach ($balasans as $balasan)
                                     <div class="card m-b-30">
                                         <div class="card-header bg-secondary text-white mb-3">
@@ -172,6 +118,62 @@
                                         <br>
                                     </div>
                                 @endforeach
+                                
+                                <div class="card m-b-30">
+                                    <div class="card-header bg-secondary text-white mb-3">
+                                        <div class="row">
+                                            <div class="col-xl-9">
+                                                <i class="mdi mdi-account-outline"></i> 
+                                                @switch($tiket->role_id)
+                                                    @case(1)
+                                                        Admin
+                                                        @break
+                                                    @case(2)
+                                                        Operator
+                                                        @break
+                                                    @default
+                                                        Client
+                                                @endswitch
+                                                 
+                                                | {{$tiket->client_name}} {{$tiket->user_name}}
+                                            </div>    
+                                            <div class="col-xl-3">
+                                                <i class="mdi mdi-calendar-clock"></i> {{$tiket->created_at}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            {!! $tiket->ket !!}
+                                        </p>
+                                        <div class="col-md-12 p-0 text-left">
+                                            <hr>
+                                            <button class="btn btn-sm btn-secondary" type="button" data-toggle="collapse" data-target="#tiket_file" aria-expanded="false" aria-controls="balasan_file">
+                                                File pendukung <i class="mdi mdi-arrow-down"></i>
+                                            </button>
+                                            <div class="collapse bg-light p-3" id="tiket_file">
+                                                @if ($tiket_files != null)
+                                                    @foreach ($tiket_files as $tiket_file)
+                                                        <form action="{{route('client.tiket.file_download')}}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="file" value="{{$tiket_file}}">
+                                                            <button type="submit" class="btn btn-info btn-sm mt-1" data-toggle="tooltip" data-placement="top" title="Download File"> 
+                                                                <i class="mdi mdi-arrow-down"></i> {{$tiket_file}}
+                                                            </button>
+                                                            <br>
+                                                        </form>
+                                                    @endforeach
+                                                @else
+                                                    <div>Tidak ada file</div>
+                                                @endif
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                                
+                                
                             </div> <!-- end col -->
                         </div> <!-- end row -->  
 

@@ -141,6 +141,7 @@ class AdminTiketController extends Controller
                 'balasans.balasan',
                 'balasans.file',
             )
+            ->orderBy('balasans.created_at', 'DESC')
             ->get();
 
         if (empty($tiket->file)) {
