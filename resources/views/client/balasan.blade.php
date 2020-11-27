@@ -105,7 +105,7 @@
                                                         </form>
                                                     @endforeach
                                                 @else
-                                                    <div></div>
+                                                    <div>Tidak ada file</div>
                                                 @endif
 
                                             </div>

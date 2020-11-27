@@ -25,7 +25,7 @@
                             <div class="col-lg-12">
                                 <div class="card p-4 m-b-30">
                                     <div class="card-body">
-                                        <form class="" action="{{route('admin.tiket.update', $tiket->id)}}" method="POST">
+                                        <form class="" action="{{route('admin.tiket.update', $tiket->id)}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                             <h4 class="mt-0 header-title">Informasi tiket</h4>
                                             <p class="text-muted m-b-30">Anda dapat memilih ke divisi mana tiket ini akan dikirim, serta memilih tingkat prioritas tiket.</p>
@@ -77,13 +77,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Upload file</label>
-                                                <div class="m-b-30">
-                                                    <div action="#" class="dropzone">
-                                                        <div class="fallback">
-                                                            <input name="file" type="file" multiple="multiple">
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <input type="file" name="files[]" multiple>
                                             </div>
                                             <div style="min-height:5vh;"></div>
                                             <div class="form-group">

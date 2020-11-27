@@ -74,6 +74,14 @@ class ClientTiketController extends Controller
                 $file->move(storage_path('files'), $filename);
                 $files[] = $filename;
             }
+        } else {
+            $files = null;
+        }
+
+        if ($files == null) {
+            $store_file = null;
+        } else {
+            $store_file = json_encode($files);
         }
 
         $tiket = new Tiket;
@@ -83,7 +91,7 @@ class ClientTiketController extends Controller
         $tiket->status = 'Buka';
         $tiket->divisi_id = $request->input('divisi');
         $tiket->client_id = Auth::guard('client')->user()->id;
-        $tiket->file = json_encode($files);
+        $tiket->file = $store_file;
         $tiket->save();
 
         return redirect('client/tiket')->with('success', 'Tiket berhasil dibuat !');

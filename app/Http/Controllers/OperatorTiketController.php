@@ -80,6 +80,14 @@ class OperatorTiketController extends Controller
                 $file->move(storage_path('files'), $filename);
                 $files[] = $filename;
             }
+        } else {
+            $files = null;
+        }
+
+        if ($files == null) {
+            $store_file = null;
+        } else {
+            $store_file = json_encode($files);
         }
 
         $tiket = new Tiket;
@@ -88,7 +96,7 @@ class OperatorTiketController extends Controller
         $tiket->prioritas = $request->input('prioritas');
         $tiket->judul = $request->input('judul');
         $tiket->ket = $request->input('ket');
-        $tiket->file = json_encode($files);
+        $tiket->file = $store_file;
         $tiket->save();
 
         return redirect('operator/tiket')->with('success', 'Tiket berhasil di buat !!');
