@@ -55,10 +55,6 @@
                                                         <input value="{{$client->name_perusahaan}}" type="text" class="form-control"  readonly aria-readonly="true" required placeholder="Type something"/>
                                                     </div>
                                                     <div class="form-group col-lg-12">
-                                                        <label>Posisi </label>
-                                                        <input value="{{$client->role}}" type="text" class="form-control"  readonly aria-readonly="true" required placeholder="Type something"/>
-                                                    </div>
-                                                    <div class="form-group col-lg-12">
                                                         <label>No. Telp</label>
                                                         <input value="{{$client->telp}}" type="text" class="form-control" readonly aria-readonly="true" required placeholder="Type something"/>
                                                     </div>

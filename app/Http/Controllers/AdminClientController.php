@@ -27,7 +27,7 @@ class AdminClientController extends Controller
 
         $clients = DB::table('clients')
             ->paginate(8);
-        
+
         return view('admin.client')->with('clients', $clients);
     }
     /**
@@ -54,7 +54,6 @@ class AdminClientController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'telp' => $request->telp,
-            'role' => $request->role,
         ]);
 
         return redirect('admin/client')->with('success', 'Client berhasil dibuat !');
@@ -98,7 +97,6 @@ class AdminClientController extends Controller
         $client->email = $request->input('email');
         $client->password = Hash::make($request->input('password'));
         $client->telp = $request->input('telp');
-        $client->role = $request->input('role');
         $client->save();
 
         return redirect('admin/client')->with('success', 'client berhasil di update !!');

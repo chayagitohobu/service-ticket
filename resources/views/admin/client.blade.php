@@ -68,13 +68,6 @@
                                                         >Nama Perusahaan</option>
                                                         <option
                                                         @if (!empty($_GET['kategori_search']))
-                                                            @if ($_GET['kategori_search'] == 'Role')
-                                                                {{'selected'}}
-                                                            @endif
-                                                        @endif
-                                                        >Role</option>
-                                                        <option
-                                                        @if (!empty($_GET['kategori_search']))
                                                             @if ($_GET['kategori_search'] == 'No Telp')
                                                                 {{'selected'}}
                                                             @endif
@@ -107,7 +100,6 @@
                                                 <th>Email</th>
                                                 <th>Nama</th>
                                                 <th>Nama Perusahaan</th>
-                                                <th>Role</th>
                                                 <th>No Telp</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -120,7 +112,6 @@
                                                 <td>{{$client->email}}</td>
                                                 <td>{{$client->name}}</td>
                                                 <td>{{$client->name_perusahaan}}</td>
-                                                <td>{{$client->role}}</td>
                                                 <td>{{$client->telp}}</td>
                                                 <td><a href="{{route('admin.client.edit', $client->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit "><i class="fas fa-pen text-white"></i></a> |
                                                     <form class="d-inline" action="{{route('admin.client.destroy', $client->id)}}" method="POST">
@@ -178,10 +169,6 @@
                 case 'Nama Perusahaan':
                     $('#form_search').attr('action', "{{route('admin.client.name_perusahaan_search')}}");
                     $('#label_form_search').text('Cari Nama Perusahaan');
-                    break;
-                case 'Role':
-                    $('#form_search').attr('action', "{{route('admin.client.role_search')}}");
-                    $('#label_form_search').text('Cari Role');
                     break;
                 case 'No Telp':
                     $('#form_search').attr('action', "{{route('admin.client.telp_search')}}");

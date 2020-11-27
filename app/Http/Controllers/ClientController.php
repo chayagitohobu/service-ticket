@@ -122,7 +122,6 @@ class ClientController extends Controller
         $client->name = $request->input('name');
         $client->name_perusahaan = $request->input('name_perusahaan');
         $client->telp = $request->input('telp');
-        $client->role = $request->input('role');
         $client->save();
 
         return redirect('client/profile')->with('success', 'profile berhasil di update !!');

@@ -47,14 +47,6 @@
                                                             <input name="password" type="password" class="form-control" required placeholder="Type something"/>
                                                         </div>
                                                         <div class="form-group col-lg-6">
-                                                            <label>Role</label>
-                                                            <select name="role" class="form-control">
-                                                                <option>Staff</option>
-                                                                <option>Manager</option>
-                                                                <option>Chief Executive Officer</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group col-lg-6">
                                                             <label>Nama </label>
                                                             <input value="{{$client->name}}" name="name" type="text" class="form-control"  required placeholder="Type something"/>
                                                         </div>
