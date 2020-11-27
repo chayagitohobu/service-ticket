@@ -102,6 +102,14 @@ class OperatorTiketController extends Controller
         return redirect('operator/tiket')->with('success', 'Tiket berhasil di buat !!');
     }
 
+    public function tutupTiket($id)
+    {
+        $tiket = Tiket::find($id);
+        $tiket->status = 'Tutup';
+        $tiket->save();
+        return redirect('client/tiket')->with('success', 'Tiket berhasil di tutup !!');
+    }
+
     /**
      * Display the specified resource.
      *

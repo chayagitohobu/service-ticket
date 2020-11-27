@@ -78,6 +78,7 @@ class AdminBalasanController extends Controller
 
         $tiket = Tiket::find($request->input('tiket_id'));
         $tiket->balasan_terbaru = now();
+        $tiket->status = 'Balasan operator';
         $tiket->save();
 
         return back();

@@ -25,7 +25,22 @@
                     <div class="card m-b-30 p-2">
                         <div class="card m-b-30">
                             <div class="card-body">
-                                <p class="card-text">Status | <i class="mdi mdi-record text-success"></i> {{$tiket->status}}</p>
+                                @switch($tiket->status)
+                                    @case('Tutup')
+                                    <p class="card-text">Status | <i class="mdi mdi-record text-danger"></i> {{$tiket->status}}</p>
+                                        @break
+                                    @case('Balasan client')
+                                    <p class="card-text">Status | <i class="mdi mdi-record text-info"></i> {{$tiket->status}}</p>
+                                        @break
+                                    @case('Balasan operator')
+                                    <p class="card-text">Status | <i class="mdi mdi-record text-primary"></i> {{$tiket->status}}</p>
+                                        @break
+                                    @case('Buka')
+                                    <p class="card-text">Status | <i class="mdi mdi-record text-success"></i> {{$tiket->status}}</p>
+                                    @break
+                                    @default
+                                    <p class="card-text">Status | <i class="mdi mdi-record text-success"></i> {{$tiket->status}}</p>
+                                @endswitch 
                                 <hr>
                                 <p class="card-text">Divisi | <i class="mdi mdi-office-building text-secondary"></i> {{$tiket->divisi}}</p>
                                 <hr>
@@ -43,6 +58,14 @@
                                 <hr>
                                 <p class="card-text">Dibuat pada | <br> <br> <i class="mdi mdi-calendar-check-outline text-secondary"></i> {{$tiket->created_at}}</p>
                                 <hr>
+                                <br>
+                                @if (!empty($tiket))
+                                    @if ($tiket->status != 'Tutup')
+                                        <a class="row justify-content-center" href="{{route('client.tiket.tutup',$tiket->id)}}">
+                                            <button class="btn btn-primary text-center"> <i class="mdi mdi-close-box"></i> Tutup Tiket</button>
+                                        </a>
+                                    @endif
+                                @endif
                             </div>
                         </div>
                     </div>

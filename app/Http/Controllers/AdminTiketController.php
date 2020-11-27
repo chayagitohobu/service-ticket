@@ -90,6 +90,7 @@ class AdminTiketController extends Controller
         $tiket->prioritas = $request->input('prioritas');
         $tiket->judul = $request->input('judul');
         $tiket->ket = $request->input('ket');
+        $tiket->status = 'Buka';
         $tiket->file = $store_file;
         $tiket->save();
 
@@ -236,9 +237,18 @@ class AdminTiketController extends Controller
         $tiket->judul = $request->input('judul');
         $tiket->ket = $request->input('ket');
         $tiket->file = $store_file;
+        $tiket->status = 'Buka';
         $tiket->save();
 
         return redirect('admin/tiket')->with('success', 'Tiket berhasil di update !!');
+    }
+
+    public function tutupTiket($id)
+    {
+        $tiket = Tiket::find($id);
+        $tiket->status = 'Tutup';
+        $tiket->save();
+        return redirect('admin/tiket')->with('success', 'Tiket berhasil di tutup !!');
     }
 
     /**

@@ -63,6 +63,9 @@ Route::prefix('admin')->group(function () {
     Route::post('tiket/file_download', [App\Http\Controllers\AdminDownloadController::class, 'tiket_file_download'])->name('admin.tiket.file_download');
     Route::post('balasan/file_download', [App\Http\Controllers\AdminDownloadController::class, 'balasan_file_download'])->name('admin.balasan.file_download');
 
+    // Tutup Tiket
+    Route::get('tiket/tutup/{id}', [App\Http\Controllers\AdminTiketController::class, 'tutupTiket'])->name('admin.tiket.tutup');
+
     // CRUD
     Route::resource('user', AdminUserController::class, ['as' => 'admin']);
     Route::resource('client', AdminClientController::class, ['as' => 'admin']);
@@ -90,6 +93,9 @@ Route::prefix('operator')->group(function () {
     Route::post('tiket/file_download', [App\Http\Controllers\OperatorDownloadController::class, 'tiket_file_download'])->name('operator.tiket.file_download');
     Route::post('balasan/file_download', [App\Http\Controllers\OperatorDownloadController::class, 'balasan_file_download'])->name('operator.balasan.file_download');
 
+    // Tutup Tiket
+    Route::get('tiket/tutup/{id}', [App\Http\Controllers\OperatorTiketController::class, 'tutupTiket'])->name('operator.tiket.tutup');
+
 
     Route::resource('client', OperatorClientController::class, ['as' => 'operator']);
     Route::resource('tiket', OperatorTiketController::class, ['as' => 'operator']);
@@ -115,6 +121,8 @@ Route::prefix('client')->group(function () {
     Route::post('tiket/file_download', [App\Http\Controllers\ClientDownloadController::class, 'tiket_file_download'])->name('client.tiket.file_download');
     Route::post('balasan/file_download', [App\Http\Controllers\ClientDownloadController::class, 'balasan_file_download'])->name('client.balasan.file_download');
 
+    // Tutup Tiket
+    Route::get('tiket/tutup/{id}', [App\Http\Controllers\ClientTiketController::class, 'tutupTiket'])->name('client.tiket.tutup');
 
     Route::resource('tiket', ClientTiketController::class, ['as' => 'client']);
     Route::resource('balasan', ClientBalasanController::class, ['as' => 'client']);

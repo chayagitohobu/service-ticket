@@ -107,7 +107,7 @@
                                                                 <td><i class="mdi mdi-record text-danger"></i> Tutup</td>
                                                                 @break
                                                             @case('Balasan operator')
-                                                                <td><i class="mdi mdi-record text-info"></i> Balasan Opertor</td>
+                                                                <td><i class="mdi mdi-record text-primary"></i> Balasan Operator</td>
                                                                 @break
                                                             @case('Balasan client')
                                                                 <td><i class="mdi mdi-record text-info"></i> Balasan Client</td>
