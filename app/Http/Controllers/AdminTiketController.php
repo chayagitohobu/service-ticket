@@ -71,8 +71,10 @@ class AdminTiketController extends Controller
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
                 $filename = time() . '-' . $file->getClientOriginalName();
-                $file->move(storage_path('files'), $filename);
-                $files[] = $filename;
+                $remove = ['"', '[', ']', ','];
+                $files_name_replaced = str_replace($remove, ' ', $filename);
+                $file->move(storage_path('files'), $files_name_replaced);
+                $files[] = $files_name_replaced;
             }
         } else {
             $files = null;
@@ -218,8 +220,10 @@ class AdminTiketController extends Controller
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
                 $filename = time() . '-' . $file->getClientOriginalName();
-                $file->move(storage_path('files'), $filename);
-                $files[] = $filename;
+                $remove = ['"', '[', ']', ','];
+                $files_name_replaced = str_replace($remove, ' ', $filename);
+                $file->move(storage_path('files'), $files_name_replaced);
+                $files[] = $files_name_replaced;
             }
         } else {
             $files = null;
