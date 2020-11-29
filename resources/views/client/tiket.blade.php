@@ -84,46 +84,49 @@
                                         </div>
                                         </form>
                                         
-                                        <table id="mainTable" class="table table-striped mb-0 mt-2">
-                                            <thead>
-                                            <tr>
-                                                <th>Divisi</th>
-                                                <th>Judul</th>
-                                                <th>Status</th>
-                                                <th>Update terakhir</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($tikets as $tiket)    
-                                                    <tr>
-                                                        <td>{{$tiket->divisi}}</td>
-                                                        <td>{{$tiket->judul}}</td>
-                                                        @switch($tiket->status)
-                                                            @case('Buka')
-                                                                <td><i class="mdi mdi-record text-success"></i> Buka</td>
-                                                                @break
-                                                            @case('Tutup')
-                                                                <td><i class="mdi mdi-record text-danger"></i> Tutup</td>
-                                                                @break
-                                                            @case('Balasan operator')
-                                                                <td><i class="mdi mdi-record text-primary"></i> Balasan Operator</td>
-                                                                @break
-                                                            @case('Balasan client')
-                                                                <td><i class="mdi mdi-record text-info"></i> Balasan Client</td>
-                                                                @break
-                                                            @default
-                                                        @endswitch
-                                                        @if (empty($tiket->balasan_terbaru))
-                                                            <td>{{$tiket->created_at}}</td>
-                                                        @else
-                                                            <td>{{$tiket->balasan_terbaru}}</td>
-                                                        @endif
-                                                        <td><a href="{{route('client.tiket.show', $tiket->id)}}" class="btn btn-primary">Lihat</a></td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                        <div style="overflow-x:auto;">
+                                            <table id="mainTable" class="table table-striped mb-0 mt-2">
+                                                <thead>
+                                                <tr>
+                                                    <th>Divisi</th>
+                                                    <th>Judul</th>
+                                                    <th>Status</th>
+                                                    <th>Update terakhir</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($tikets as $tiket)    
+                                                        <tr>
+                                                            <td>{{$tiket->divisi}}</td>
+                                                            <td>{{$tiket->judul}}</td>
+                                                            @switch($tiket->status)
+                                                                @case('Buka')
+                                                                    <td><i class="mdi mdi-record text-success"></i> Buka</td>
+                                                                    @break
+                                                                @case('Tutup')
+                                                                    <td><i class="mdi mdi-record text-danger"></i> Tutup</td>
+                                                                    @break
+                                                                @case('Balasan operator')
+                                                                    <td><i class="mdi mdi-record text-primary"></i> Balasan Operator</td>
+                                                                    @break
+                                                                @case('Balasan client')
+                                                                    <td><i class="mdi mdi-record text-info"></i> Balasan Client</td>
+                                                                    @break
+                                                                @default
+                                                            @endswitch
+                                                            @if (empty($tiket->balasan_terbaru))
+                                                                <td>{{$tiket->created_at}}</td>
+                                                            @else
+                                                                <td>{{$tiket->balasan_terbaru}}</td>
+                                                            @endif
+                                                            <td><a href="{{route('client.tiket.show', $tiket->id)}}" class="btn btn-primary">Lihat</a></td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
                                         <div class="row justify-content-center">
                                             <nav class="mt-5" aria-label="...">
                                                 <ul class="pagination">

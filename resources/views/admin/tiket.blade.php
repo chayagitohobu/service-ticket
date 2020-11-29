@@ -31,11 +31,11 @@
                                             <div class="col-xl-12">
                                                 @include('inc.messages')
                                             </div>
-                                            <div class="col-xl-8">
+                                            <div class="col-xl-9">
                                                 <h4 class="mt-0 header-title">Daftar Tiket</h4>
                                                 <p class="text-muted">Berikut adalah daftar Tiket</p>
                                             </div>
-                                            <div class="col-xl-4 text-right">
+                                            <div class="col-xl-3 text-left">
                                                 <a href="{{route('admin.tiket.create')}}">
                                                     <button type="button" class="btn btn-info btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-plus noti-icon mr-3"></i>Tambah Tiket</button>
                                                 </a>
@@ -99,58 +99,64 @@
                                             </div>
                                         </div>
                                         </form>
-                                            
-                                        <table id="mainTable" class="table table-striped mb-0 mt-2">
-                                            <thead>
-                                            <tr>
-                                                <th>Divisi</th>
-                                                <th>Judul</th>
-                                                <th>Status</th>
-                                                <th>Update terakhir</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach ($tikets as $tiket)
+                                        
+                                        <div style="overflow-x: auto;">
+                                            <table id="mainTable" class="table table-striped mb-0 mt-2">
+                                                <thead>
                                                 <tr>
-                                                    <td>{{$tiket->divisi}}</td>
-                                                    <td>{{$tiket->judul}}</td>
-                                                    @switch($tiket->status)
-                                                        @case('Buka')
-                                                            <td><i class="mdi mdi-record text-success"></i> Buka</td>
-                                                            @break
-                                                        @case('Tutup')
-                                                            <td><i class="mdi mdi-record text-danger"></i> Tutup</td>
-                                                            @break
-                                                        @case('Balasan operator')
-                                                            <td><i class="mdi mdi-record text-primary"></i> Balasan Operator</td>
-                                                            @break
-                                                        @case('Balasan client')
-                                                            <td><i class="mdi mdi-record text-info"></i> Balasan Client</td>
-                                                            @break
-                                                        @default
-                                                            
-                                                    @endswitch
-                                                    @if (empty($tiket->balasan_terbaru))
-                                                        <td>{{$tiket->created_at}}</td>
-                                                    @else
-                                                        <td>{{$tiket->balasan_terbaru}}</td>
-                                                    @endif
-                                                    
-                                                    <td><a href="{{route('admin.tiket.show', $tiket->id)}}" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Lihat "><i class="mdi mdi-eye text-white"></i></a> 
-                                                        | <a href="{{route('admin.tiket.edit', $tiket->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fas fa-pen text-white"></i></a>
-                                                        | 
-                                                        <form class="d-inline" action="{{route('admin.tiket.destroy', $tiket->id)}}" method="POST">
-                                                            @csrf
-                                                            {{ method_field('DELETE') }}
-                                                            <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i class="fas fa-trash text-white"></i></button>
-                                                        </form>
-                                                        
-                                                    </td>
+                                                    <th>Divisi</th>
+                                                    <th>Judul</th>
+                                                    <th>Status</th>
+                                                    <th>Update terakhir</th>
+                                                    <th colspan="3" class="text-center">Aksi</th>
                                                 </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                @foreach ($tikets as $tiket)
+                                                    <tr>
+                                                        <td>{{$tiket->divisi}}</td>
+                                                        <td>{{$tiket->judul}}</td>
+                                                        @switch($tiket->status)
+                                                            @case('Buka')
+                                                                <td><i class="mdi mdi-record text-success"></i> Buka</td>
+                                                                @break
+                                                            @case('Tutup')
+                                                                <td><i class="mdi mdi-record text-danger"></i> Tutup</td>
+                                                                @break
+                                                            @case('Balasan operator')
+                                                                <td><i class="mdi mdi-record text-primary"></i> Balasan Operator</td>
+                                                                @break
+                                                            @case('Balasan client')
+                                                                <td><i class="mdi mdi-record text-info"></i> Balasan Client</td>
+                                                                @break
+                                                            @default
+                                                                
+                                                        @endswitch
+                                                        @if (empty($tiket->balasan_terbaru))
+                                                            <td>{{$tiket->created_at}}</td>
+                                                        @else
+                                                            <td>{{$tiket->balasan_terbaru}}</td>
+                                                        @endif
+                                                        
+                                                        <td class="text-right"><a href="{{route('admin.tiket.show', $tiket->id)}}" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Lihat "><i class="mdi mdi-eye text-white"></i></a> 
+                                                            
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a href="{{route('admin.tiket.edit', $tiket->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fas fa-pen text-white"></i></a>
+                                                            
+                                                        </td>
+                                                        <td class="text-left">
+                                                            <form class="d-inline" action="{{route('admin.tiket.destroy', $tiket->id)}}" method="POST">
+                                                                @csrf
+                                                                {{ method_field('DELETE') }}
+                                                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i class="fas fa-trash text-white"></i></button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>    
+                                        </div>
                                         <div class="row justify-content-center">
                                             <nav class="mt-5" aria-label="...">
                                                 <ul class="pagination">

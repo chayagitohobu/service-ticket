@@ -89,75 +89,80 @@
                                             </div>
                                         </div>
                                         </form>
-                                            
-                                        <table id="mainTable" class="table table-striped mb-0 mt-2">
-                                            <thead>
-                                            <tr>
-                                                <th>Nama Client</th>
-                                                <th>Judul</th>
-                                                <th>Status</th>
-                                                {{-- <th>Telah di balas</th> --}}
-                                                <th>Update terakhir</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($tikets as $tiket)
-                                                    <tr>
-                                                        @if (empty($tiket->client_name))
-                                                            @switch($tiket->role_id)
-                                                                @case(1)
-                                                                    <td>{{$tiket->user_name}} (admin)</td>
+                                        
+                                        <div style="overflow-x:auto;">
+                                            <table id="mainTable" class="table table-striped mb-0 mt-2">
+                                                <thead>
+                                                <tr>
+                                                    <th>Nama Client</th>
+                                                    <th>Judul</th>
+                                                    <th>Status</th>
+                                                    {{-- <th>Telah di balas</th> --}}
+                                                    <th>Update terakhir</th>
+                                                    <th colspan="2" class="text-center">Aksi</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($tikets as $tiket)
+                                                        <tr>
+                                                            @if (empty($tiket->client_name))
+                                                                @switch($tiket->role_id)
+                                                                    @case(1)
+                                                                        <td>{{$tiket->user_name}} (admin)</td>
+                                                                        @break
+                                                                    @case(2)
+                                                                        <td>{{$tiket->user_name}} (operator)</td>
+                                                                        @break
+                                                                    @default
+                                                                        
+                                                                @endswitch
+                                                            @else
+                                                                <td> {{$tiket->client_name}} {{$tiket->user_name}} </td>
+                                                            @endif
+                                                            <td>{{$tiket->judul}}</td>
+                                                            @switch($tiket->status)
+                                                                @case('Buka')
+                                                                    <td><i class="mdi mdi-record text-success"></i> Buka</td>
                                                                     @break
-                                                                @case(2)
-                                                                    <td>{{$tiket->user_name}} (operator)</td>
+                                                                @case('Tutup')
+                                                                    <td><i class="mdi mdi-record text-danger"></i> Tutup</td>
+                                                                    @break
+                                                                @case('Balasan operator')
+                                                                    <td><i class="mdi mdi-record text-primary"></i> Balasan Operator</td>
+                                                                    @break
+                                                                @case('Balasan client')
+                                                                    <td><i class="mdi mdi-record text-info"></i> Balasan Client</td>
                                                                     @break
                                                                 @default
                                                                     
                                                             @endswitch
-                                                        @else
-                                                            <td> {{$tiket->client_name}} {{$tiket->user_name}} </td>
-                                                        @endif
-                                                        <td>{{$tiket->judul}}</td>
-                                                        @switch($tiket->status)
-                                                            @case('Buka')
-                                                                <td><i class="mdi mdi-record text-success"></i> Buka</td>
-                                                                @break
-                                                            @case('Tutup')
-                                                                <td><i class="mdi mdi-record text-danger"></i> Tutup</td>
-                                                                @break
-                                                            @case('Balasan operator')
-                                                                <td><i class="mdi mdi-record text-primary"></i> Balasan Operator</td>
-                                                                @break
-                                                            @case('Balasan client')
-                                                                <td><i class="mdi mdi-record text-info"></i> Balasan Client</td>
-                                                                @break
-                                                            @default
-                                                                
-                                                        @endswitch
-                                                        {{-- <td><i class="mdi mdi-record text-danger"></i> Belum </td> --}}
-                                                        @if (empty($tiket->balasan_terbaru))
-                                                            <td>{{$tiket->created_at}}</td>
-                                                        @else
-                                                            <td>{{$tiket->balasan_terbaru}}</td>
-                                                        @endif
-                                                        <td><a href="{{route('operator.tiket.show', $tiket->id)}}" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Balas Tiket "><i class="mdi mdi-file text-white"></i></a> | 
-                                                            @switch($tiket->role_id)
+                                                            {{-- <td><i class="mdi mdi-record text-danger"></i> Belum </td> --}}
+                                                            @if (empty($tiket->balasan_terbaru))
+                                                                <td>{{$tiket->created_at}}</td>
+                                                            @else
+                                                                <td>{{$tiket->balasan_terbaru}}</td>
+                                                            @endif
+                                                            <td class="text-right">
+                                                                <a href="{{route('operator.tiket.show', $tiket->id)}}" class="mb-1 col-xs-6 btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Balas Tiket "><i class="mdi mdi-file text-white"></i></a>
+                                                            </td>
+                                                            <td class="text-left">
+                                                                @switch($tiket->role_id)
                                                                 @case(1)
-                                                                    <a href="#" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Profile Admin"><i class="mdi mdi-lock text-white"></i></a></td>
+                                                                    <a href="#" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Profile Admin"><i class="mb-1 col-xs-6 mdi mdi-lock text-white"></i></a>
                                                                     @break
                                                                 @case(2)
-                                                                    <a href="{{route('operator.show', $tiket->user_id)}}" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Profile Operator"><i class="mdi mdi-account-box text-white"></i></a></td>
+                                                                    <a href="{{route('operator.show', $tiket->user_id)}}" class="mb-1 col-xs-6 btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Profile Operator"><i class="mdi mdi-account-box text-white"></i></a>
                                                                     @break
                                                                 @default
-                                                                <a href="{{route('operator.client.show', $tiket->client_id)}}" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Profile Client"><i class="mdi mdi-account-box text-white"></i></a></td>
-                                                                    
+                                                                <a href="{{route('operator.client.show', $tiket->client_id)}}" class="mb-1 col-xs-6 btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Profile Client"><i class="mdi mdi-account-box text-white"></i></a>
                                                             @endswitch
-                                                            
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
                                         <div class="row justify-content-center">
                                             <nav class="mt-5" aria-label="...">
                                                 <ul class="pagination">

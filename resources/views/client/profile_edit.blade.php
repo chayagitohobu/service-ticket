@@ -32,7 +32,7 @@
                                                     <h4 class="mt-0 header-title">Profile</h4>
                                                     <p class="text-muted">Berikut adalah informasi pribadi anda.</p>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                {{-- <div class="col-lg-6">
                                                     <div class="card m-b-30">
                                                         <div class="card-body">
                                                             <h4 class="mt-0 header-title">Logo Perusahaan</h4>
@@ -41,7 +41,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <div class="col-lg-6">
                                                     <div class="form-group col-lg-12">
                                                         <label>Nama</label>

@@ -24,10 +24,10 @@
                 <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
                 aria-haspopup="false" aria-expanded="false">
                     {{-- <img src="{{ asset('assets/images/users/avatar-6.jpg') }}" alt="user" class="rounded-circle"> --}}
-                    <span class="d-none d-md-inline-block ml-1">{{Auth::guard('user')->user()->name}} <i class="mdi mdi-chevron-down"></i> </span>
+                    <span class="d-md-inline-block ml-1">{{Auth::guard('user')->user()->name}} <i class="mdi mdi-chevron-down"></i> </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown">
-                    <a class="dropdown-item" href="{{'operator.show'}}"><i class="dripicons-user text-muted"></i> Profile</a>
+                    <a class="dropdown-item" href="{{ route('operator.show')}}"><i class="dripicons-user text-muted"></i> Profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();

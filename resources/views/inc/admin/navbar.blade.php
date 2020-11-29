@@ -15,7 +15,7 @@
             <li class="list-inline-item dropdown notification-list nav-user">
                 <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
                 aria-haspopup="false" aria-expanded="false">
-                    <span class="d-none d-md-inline-block ml-1">{{Auth::guard('user')->user()->name}} <i class="mdi mdi-chevron-down"></i> </span>
+                    <span class="d-md-inline-block ml-1">{{Auth::guard('user')->user()->name}} <i class="mdi mdi-chevron-down"></i> </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown">
                     <a class="dropdown-item" href="{{route('admin.show')}}"><i class="dripicons-user text-muted"></i> Profile</a>

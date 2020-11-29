@@ -32,11 +32,12 @@
                                            <div class="col-xl-12">
                                                 @include('inc.messages')
                                            </div>
-                                            <div class="col-xl-8">
+                                            <div class="col-xl-9 mb-3">
                                                 <h4 class="mt-0 header-title">Daftar Divisi</h4>
                                                 <p class="text-muted">Berikut adalah daftar data Divisi</p>
                                             </div>
-                                            <div class="col-xl-4 text-right">
+
+                                            <div class="col-xl-3 text-left">
                                                 <a href="{{route('admin.divisi.create')}}">
                                                     <button type="button" class="btn btn-info btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-plus noti-icon mr-3"></i>Tambah Divisi</button>
                                                 </a>
@@ -65,38 +66,43 @@
                                                 </div>
                                             </div>
                                         </div> --}}
-                                        
-                                        <table id="mainTable" class="table table-striped mb-0 mt-2">
-                                            <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Nama Divisi</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            
-                                            {{-- @for ($i = 0; $i < 5; $i++) --}}
-                                            @foreach ($divisis as $divisi)
+                                        <div style="overflow-x: auto">
+                                            <table id="mainTable" class="table table-striped mb-0 mt-2">
+                                                <thead>
                                                 <tr>
-                                                    <td>{{$divisi->id}}</td>
-                                                    <td>{{$divisi->divisi}}</td>
-                                                    <td><a href="{{route('admin.divisi.edit', $divisi->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit "><i class="fas fa-pen text-white"></i></a> 
-                                                        | <form class="d-inline" action="{{route('admin.divisi.destroy', $divisi->id)}}" method="POST">
-                                                            @csrf
-                                                            {{ method_field('DELETE') }}
-                                                            <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i class="fas fa-trash text-white"></i></button>
-                                                        </form>
-                                                    </td>
-                                                        {{-- <a href="{{route('divisi.destroy', $divisi->id)}}" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i class="fas fa-trash text-white"></i></a></td> --}}
+                                                    <th>ID</th>
+                                                    <th>Nama Divisi</th>
+                                                    <th colspan="2" class="text-center">Aksi</th>
                                                 </tr>
-                                            @endforeach
-                                            
-                                            {{-- @endfor --}}
-                                            
-                                            
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                
+                                                {{-- @for ($i = 0; $i < 5; $i++) --}}
+                                                @foreach ($divisis as $divisi)
+                                                    <tr>
+                                                        <td>{{$divisi->id}}</td>
+                                                        <td>{{$divisi->divisi}}</td>
+                                                        <td class="text-right">
+                                                            <a href="{{route('admin.divisi.edit', $divisi->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit "><i class="fas fa-pen text-white"></i></a> 
+                                                        </td>
+                                                        <td class="text-left">
+                                                            <form class="d-inline" action="{{route('admin.divisi.destroy', $divisi->id)}}" method="POST">
+                                                                @csrf
+                                                                {{ method_field('DELETE') }}
+                                                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i class="fas fa-trash text-white"></i></button>
+                                                            </form>
+                                                        </td>
+                                                            {{-- <a href="{{route('divisi.destroy', $divisi->id)}}" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i class="fas fa-trash text-white"></i></a></td> --}}
+                                                    </tr>
+                                                @endforeach
+                                                
+                                                {{-- @endfor --}}
+                                                
+                                                
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
                                         <div class="row justify-content-center">
                                             <nav class="mt-5" aria-label="...">
                                                 <ul class="pagination">
