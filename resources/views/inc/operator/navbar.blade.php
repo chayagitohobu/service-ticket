@@ -7,7 +7,6 @@
     </div>
 
     <nav class="navbar-custom">
-
          <!-- Search input -->
          <div class="search-wrap" id="search-wrap">
             <div class="search-bar">

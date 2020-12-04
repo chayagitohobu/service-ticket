@@ -26,7 +26,11 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="card m-b-30 p-4">
+                                    <div class="col-xl-12">
+                                        @include('inc.messages')
+                                    </div>
                                     <div class="card-body">
+                                        
                                         <h4 class="mt-0 header-title">Tiket saya</h4>
                                         <p class="text-muted m-b-30">Pilih tiket yang ingin dilihat dengan mengklik baris pada tabel</p>
                                         <form id="form_search" action="{{route('client.tiket.judul_search')}}" method="GET">

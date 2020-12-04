@@ -32,6 +32,7 @@
                                                     <h4 class="mt-0 header-title">Profile</h4>
                                                     <p class="text-muted">Berikut adalah informasi pribadi anda.</p>
                                                 </div>
+                                                
                                                 <div class="col-lg-6">
                                                     <div class="form-group col-lg-12">
                                                         <label>Nama</label>

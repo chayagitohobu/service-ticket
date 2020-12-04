@@ -24,7 +24,11 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card m-b-30 p-4">
+                                    <div class="col-xl-12">
+                                        @include('inc.messages')
+                                    </div>
                                     <div class="card-body">
+                                        
                                         <form class="" action="#">
                                             <div class="row">
                                                 <div class="col-lg-12 pl-4 pr-4">

@@ -26,11 +26,12 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="card m-b-30 p-4">
+                                    <div class="col-xl-12">
+                                        @include('inc.messages')
+                                    </div>
                                     <div class="card-body">
                                         <div class="row mb-4">
-                                            <div class="col-xl-12">
-                                                @include('inc.messages')
-                                            </div>
+                                            
                                             <div class="col-xl-9">
                                                 <h4 class="mt-0 header-title">Daftar Tiket</h4>
                                                 <p class="text-muted">Berikut adalah daftar Tiket</p>
