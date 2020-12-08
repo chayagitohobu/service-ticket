@@ -40,24 +40,25 @@ Route::prefix('admin')->group(function () {
     Route::get('profile', [App\Http\Controllers\AdminController::class, 'show'])->name('admin.show');
 
     // Client search
-    Route::get('client/email_search', [App\Http\Controllers\AdminSearchController::class, 'email_client'])->name('admin.client.email_search');
-    Route::get('client/name_search', [App\Http\Controllers\AdminSearchController::class, 'name_client'])->name('admin.client.name_search');
-    Route::get('client/name_perusahaan_search', [App\Http\Controllers\AdminSearchController::class, 'name_perusahaan_client'])->name('admin.client.name_perusahaan_search');
-    Route::get('client/telp_search', [App\Http\Controllers\AdminSearchController::class, 'telp_client'])->name('admin.client.telp_search');
-    Route::get('client/role_search', [App\Http\Controllers\AdminSearchController::class, 'role_client'])->name('admin.client.role_search');
+    Route::get('client/email_search', [App\Http\Controllers\AdminFilterController::class, 'email_client'])->name('admin.client.email_search');
+    Route::get('client/name_search', [App\Http\Controllers\AdminFilterController::class, 'name_client'])->name('admin.client.name_search');
+    Route::get('client/name_perusahaan_search', [App\Http\Controllers\AdminFilterController::class, 'name_perusahaan_client'])->name('admin.client.name_perusahaan_search');
+    Route::get('client/telp_search', [App\Http\Controllers\AdminFilterController::class, 'telp_client'])->name('admin.client.telp_search');
+    Route::get('client/role_search', [App\Http\Controllers\AdminFilterController::class, 'role_client'])->name('admin.client.role_search');
 
     // User search
-    Route::get('user/email_search', [App\Http\Controllers\AdminSearchController::class, 'email_user'])->name('admin.user.email_search');
-    Route::get('user/name_search', [App\Http\Controllers\AdminSearchController::class, 'name_user'])->name('admin.user.name_search');
-    Route::get('user/divisi_search', [App\Http\Controllers\AdminSearchController::class, 'divisi_user'])->name('admin.user.divisi_search');
-    Route::get('user/telp_search', [App\Http\Controllers\AdminSearchController::class, 'telp_user'])->name('admin.user.telp_search');
-    Route::get('user/role_search', [App\Http\Controllers\AdminSearchController::class, 'role_user'])->name('admin.user.role_search');
+    Route::get('user/email_search', [App\Http\Controllers\AdminFilterController::class, 'email_user'])->name('admin.user.email_search');
+    Route::get('user/name_search', [App\Http\Controllers\AdminFilterController::class, 'name_user'])->name('admin.user.name_search');
+    Route::get('user/divisi_search', [App\Http\Controllers\AdminFilterController::class, 'divisi_user'])->name('admin.user.divisi_search');
+    Route::get('user/telp_search', [App\Http\Controllers\AdminFilterController::class, 'telp_user'])->name('admin.user.telp_search');
+    Route::get('user/role_search', [App\Http\Controllers\AdminFilterController::class, 'role_user'])->name('admin.user.role_search');
 
     // Tiket search
-    Route::get('tiket/judul_search', [App\Http\Controllers\AdminSearchController::class, 'judul_tiket'])->name('admin.tiket.judul_search');
-    Route::get('tiket/status_search', [App\Http\Controllers\AdminSearchController::class, 'status_tiket'])->name('admin.tiket.status_search');
-    Route::get('tiket/divisi_search', [App\Http\Controllers\AdminSearchController::class, 'divisi_tiket'])->name('admin.tiket.divisi_search');
-    Route::get('tiket/balasan_terbaru_search', [App\Http\Controllers\AdminSearchController::class, 'balasan_terbaru_tiket'])->name('admin.tiket.balasan_terbaru_search');
+    Route::get('tiket/search', [App\Http\Controllers\AdminFilterController::class, 'search'])->name('admin.tiket.search');
+    Route::get('tiket/status_filter/{status}', [App\Http\Controllers\AdminFilterController::class, 'status_tiket'])->name('admin.tiket.status_filter');
+    Route::get('tiket/divisi_filter/{divisi}', [App\Http\Controllers\AdminFilterController::class, 'divisi_tiket'])->name('admin.tiket.divisi_filter');
+    Route::get('tiket/name_filter/{name}', [App\Http\Controllers\AdminFilterController::class, 'name_tiket'])->name('admin.tiket.name_filter');
+    Route::get('tiket/balasan_terbaru_filter', [App\Http\Controllers\AdminFilterController::class, 'balasan_terbaru_tiket'])->name('admin.tiket.balasan_terbaru_filter');
 
     // Download
     Route::post('tiket/file_download', [App\Http\Controllers\AdminDownloadController::class, 'tiket_file_download'])->name('admin.tiket.file_download');

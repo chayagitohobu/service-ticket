@@ -29,7 +29,14 @@ class AdminTiketController extends Controller
     {
         $tikets = DB::table('tikets')
             ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
+            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
+            ->leftJoin('users', 'tikets.user_id', 'users.id')
             ->select(
+                'clients.id as client_id',
+                'clients.name as client_name',
+                'users.id as user_id',
+                'users.name as user_name',
+                'users.role_id',
                 'divisis.divisi',
                 'tikets.judul',
                 'tikets.status',
@@ -39,7 +46,22 @@ class AdminTiketController extends Controller
             )
             ->paginate(8);
 
+        $namas = DB::table('tikets')
+            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
+            ->leftJoin('users', 'tikets.user_id', 'users.id')
+            ->select(
+                'clients.name as client_name',
+                'users.name as user_name',
+                'users.role_id',
+            )
+            ->groupBy('users.name', 'clients.name', 'users.role_id')
+            ->get();
+
+        $divisis = Divisi::all();
+
         return view('admin.tiket')
+            ->with('namas', $namas)
+            ->with('divisis', $divisis)
             ->with('tikets', $tikets);
     }
 

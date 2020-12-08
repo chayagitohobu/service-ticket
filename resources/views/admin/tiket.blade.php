@@ -42,69 +42,76 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        
-                                        <form id="form_search" action="{{route('admin.tiket.judul_search')}}" method="GET">
-                                        {{ csrf_field() }}
-                                        <div class="row mt-5">
-                                            <div class="col-xl-8">
-                                                <div class="form-group">
-                                                    <label class="col-form-label">Cari berdasarkan</label>
-                                                    <select id="kategori_search" name="kategori_search" class="form-control">
-                                                        <option
-                                                        @if (!empty($_GET['kategori_search']))
-                                                            @if ($_GET['kategori_search'] == 'Judul')
-                                                                {{'selected'}}
-                                                            @endif
-                                                        @endif
-                                                        >Judul</option>
-
-                                                        <option
-                                                        @if (!empty($_GET['kategori_search']))
-                                                            @if ($_GET['kategori_search'] == 'Divisi')
-                                                                {{'selected'}}
-                                                            @endif
-                                                        @endif
-                                                        >Divisi</option>
-
-                                                        <option
-                                                        @if (!empty($_GET['kategori_search']))
-                                                            @if ($_GET['kategori_search'] == 'Status')
-                                                                {{'selected'}}
-                                                            @endif
-                                                        @endif
-                                                        >Status</option>
-
-                                                        <option
-                                                        @if (!empty($_GET['kategori_search']))
-                                                            @if ($_GET['kategori_search'] == 'Update Terakhir')
-                                                                {{'selected'}}
-                                                            @endif
-                                                        @endif
-                                                        >Update Terakhir</option>
-
-                                                    </select>
+                                        <div class="row mb-4">
+                                            <div class="mr-auto mt-2">
+                                                <div class="dropdown m-3 d-inline-block">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Nama
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownDivisi">
+                                                    <a class="dropdown-item" href="{{route('admin.tiket.index')}}">Semua</a>
+                                                        @foreach ($namas as $nama)
+                                                            @switch($nama->role_id)
+                                                                @case(1)
+                                                                    <a class="dropdown-item" href="{{route('admin.tiket.name_filter', $nama->user_name)}}">{{$nama->user_name}} (admin) </a>
+                                                                    @break
+                                                                    @case(2)
+                                                                    <a class="dropdown-item" href="{{route('admin.tiket.name_filter', $nama->user_name)}}">{{$nama->user_name}} (operator) </a>
+                                                                    @break
+                                                                @default
+                                                                <a class="dropdown-item" href="{{route('admin.tiket.name_filter', $nama->client_name)}}">{{$nama->client_name}}</a>
+                                                            @endswitch
+                                                        
+                                                        @endforeach
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-4">
-                                                <div class="form-group">
-                                                    <label id="label_form_search">Cari </label>
-                                                    <div>
-                                                        <div class="input-group">
-                                                            <input name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
-                                                            <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
-                                                                <span class="input-group-text"><small> Search	&nbsp;</small> <i class="mdi mdi-magnify noti-icon"></i></span>
-                                                            </button>
-                                                        </div><!-- input-group -->
+                                                <div class="dropdown m-3 d-inline-block">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Divisi
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownDivisi">
+                                                    <a class="dropdown-item" href="{{route('admin.tiket.index')}}">Semua</a>
+                                                        @foreach ($divisis as $divisi)
+                                                        <a class="dropdown-item" href="{{route('admin.tiket.divisi_filter', $divisi->divisi)}}">{{$divisi->divisi}}</a>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                                <div class="dropdown m-3 d-inline-block">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Status
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownStatus">
+                                                    <a class="dropdown-item" href="{{route('admin.tiket.index')}}">Semua</a>
+                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Buka')}}">Buka</a>
+                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Tutup')}}">Tutup</a>
+                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Balasan Operator')}}">Balasan Operator</a>
+                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Balasan Client')}}">Balasan Client</a>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="ml-auto">
+                                                <form id="form_search" action="{{route('admin.tiket.search')}}" method="GET">
+                                                    {{ csrf_field() }}
+                                                    <div class="col-xl-4 d-inline">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <input placeholder="Cari judul"  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                                <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
+                                                                    <span class="input-group-text"><small> Search	&nbsp;</small> <i class="mdi mdi-magnify noti-icon"></i></span>
+                                                                </button>
+                                                            </div><!-- input-group -->
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            
                                         </div>
-                                        </form>
-                                        
+                                       
                                         <div style="overflow-x: auto;">
                                             <table id="mainTable" class="table table-striped mb-0 mt-2">
                                                 <thead>
                                                 <tr>
+                                                    <th>Nama</th>
                                                     <th>Divisi</th>
                                                     <th>Judul</th>
                                                     <th>Status</th>
@@ -115,6 +122,20 @@
                                                 <tbody>
                                                 @foreach ($tikets as $tiket)
                                                     <tr>
+                                                    @if (empty($tiket->client_name))
+                                                            @switch($tiket->role_id)
+                                                                @case(1)
+                                                                    <td>{{$tiket->user_name}} (admin)</td>
+                                                                    @break
+                                                                @case(2)
+                                                                    <td>{{$tiket->user_name}} (operator)</td>
+                                                                    @break
+                                                                @default
+                                                                    
+                                                            @endswitch
+                                                        @else
+                                                            <td> {{$tiket->client_name}} {{$tiket->user_name}} </td>
+                                                        @endif
                                                         <td>{{$tiket->divisi}}</td>
                                                         <td>{{$tiket->judul}}</td>
                                                         @switch($tiket->status)
@@ -182,42 +203,4 @@
 
     </div>
     <!-- END wrapper -->
-@endsection
-
-@section('script')
-    <script>
-        function myFunction() {
-            var selected = $('#kategori_search').val();
-            switch(selected) {
-                case 'Judul':
-                    $('#form_search').attr('action', "{{route('admin.tiket.judul_search')}}");
-                    $('#label_form_search').text('Cari Judul');
-                    break;
-                case 'Divisi':
-                    $('#form_search').attr('action', "{{route('admin.tiket.divisi_search')}}");
-                    $('#label_form_search').text('Cari Divisi');
-                    break;
-                case 'Status':
-                    $('#form_search').attr('action', "{{route('admin.tiket.status_search')}}");
-                    $('#label_form_search').text('Cari Status');
-                    break;
-                case 'Update Terakhir':
-                    $('#form_search').attr('action', "{{route('admin.tiket.balasan_terbaru_search')}}");
-                    $('#label_form_search').text('Cari Update Terakhir');
-                    break;
-                default:
-                    alert('input salah !!');
-                    $('#form_search').attr('action', "{{route('admin.tiket.judul_search')}}");
-                    $('#label_form_search').text('Cari Judul');
-                }
-        }
-
-        window.onload = function() {
-            myFunction();
-
-            $("#kategori_search").change(function(){
-                myFunction(); 
-            });
-        }
-    </script>
 @endsection

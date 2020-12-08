@@ -46,6 +46,7 @@ class OperatorTiketController extends Controller
                 'tikets.id'
             )
             ->paginate(8);
+
         return view('operator.tiket')->with('tikets', $tikets)->with('divisi', $divisi);
     }
 

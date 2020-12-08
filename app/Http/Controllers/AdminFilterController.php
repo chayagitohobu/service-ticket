@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Divisi;
 
-
-class AdminSearchController extends Controller
+class AdminFilterController extends Controller
 {
 
     public function __construct()
@@ -136,21 +137,35 @@ class AdminSearchController extends Controller
             ->join('divisis', 'users.divisi_id', 'divisis.id')
             ->join('roles', 'users.role_id', 'roles.id')
             ->where('telp', 'like', "%" . $search . "%")
-            ->select('users.id', 'users.email', 'users.name', 'users.telp', 'divisis.divisi', 'roles.role')
+            ->select(
+                'users.id',
+                'users.email',
+                'users.name',
+                'users.telp',
+                'divisis.divisi',
+                'roles.role'
+            )
             ->paginate(8);
 
         return view('admin.user')->with('users', $users);
     }
 
     // TIKET SEARCH 
-    public function judul_tiket(Request $request)
+    public function search(Request $request)
     {
         $search = $request->search;
 
         $tikets = DB::table('tikets')
             ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
+            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
+            ->leftJoin('users', 'tikets.user_id', 'users.id')
             ->where('judul', 'like', "%" . $search . "%")
             ->select(
+                'clients.id as client_id',
+                'clients.name as client_name',
+                'users.id as user_id',
+                'users.name as user_name',
+                'users.role_id',
                 'divisis.divisi',
                 'tikets.judul',
                 'tikets.status',
@@ -162,17 +177,39 @@ class AdminSearchController extends Controller
             )
             ->paginate(8);
 
-        return view('admin.tiket')->with('tikets', $tikets);
+        $namas = DB::table('tikets')
+            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
+            ->leftJoin('users', 'tikets.user_id', 'users.id')
+            ->select(
+                'clients.name as client_name',
+                'users.name as user_name',
+                'users.role_id',
+            )
+            ->groupBy('users.name', 'clients.name', 'users.role_id')
+            ->get();
+
+        $divisis = Divisi::all();
+
+        return view('admin.tiket')
+            ->with('namas', $namas)
+            ->with('divisis', $divisis)
+            ->with('tikets', $tikets);
     }
 
-    public function divisi_tiket(Request $request)
+    public function name_tiket($name)
     {
-        $search = $request->search;
-
         $tikets = DB::table('tikets')
-            ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
-            ->where('divisi', 'like', "%" . $search . "%")
+            ->leftJoin('divisis', 'tikets.divisi_id', '=', 'divisis.id')
+            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
+            ->leftJoin('users', 'tikets.user_id', 'users.id')
+            ->where('clients.name', 'like', "%" . $name . "%")
+            ->orWhere('users.name', 'like', "%" . $name . "%")
             ->select(
+                'clients.id as client_id',
+                'clients.name as client_name',
+                'users.id as user_id',
+                'users.name as user_name',
+                'users.role_id',
                 'divisis.divisi',
                 'tikets.judul',
                 'tikets.status',
@@ -183,17 +220,79 @@ class AdminSearchController extends Controller
             )
             ->paginate(8);
 
-        return view('admin.tiket')->with('tikets', $tikets);
+        $namas = DB::table('tikets')
+            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
+            ->leftJoin('users', 'tikets.user_id', 'users.id')
+            ->select(
+                'clients.name as client_name',
+                'users.name as user_name',
+                'users.role_id',
+            )
+            ->groupBy('users.name', 'clients.name', 'users.role_id')
+            ->get();
+
+        $divisis = Divisi::all();
+
+        return view('admin.tiket')
+            ->with('namas', $namas)
+            ->with('divisis', $divisis)
+            ->with('tikets', $tikets);
+    }
+    public function divisi_tiket($divisi)
+    {
+        $tikets = DB::table('tikets')
+            ->leftJoin('divisis', 'tikets.divisi_id', '=', 'divisis.id')
+            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
+            ->leftJoin('users', 'tikets.user_id', 'users.id')
+            ->where('divisi', 'like', "%" . $divisi . "%")
+            ->select(
+                'clients.id as client_id',
+                'clients.name as client_name',
+                'users.id as user_id',
+                'users.name as user_name',
+                'users.role_id',
+                'divisis.divisi',
+                'tikets.judul',
+                'tikets.status',
+                'tikets.updated_at',
+                'tikets.id',
+                'tikets.balasan_terbaru',
+                'tikets.created_at'
+            )
+            ->paginate(8);
+
+        $namas = DB::table('tikets')
+            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
+            ->leftJoin('users', 'tikets.user_id', 'users.id')
+            ->select(
+                'clients.name as client_name',
+                'users.name as user_name',
+                'users.role_id',
+            )
+            ->groupBy('users.name', 'clients.name', 'users.role_id')
+            ->get();
+
+        $divisis = Divisi::all();
+
+        return view('admin.tiket')
+            ->with('namas', $namas)
+            ->with('divisis', $divisis)
+            ->with('tikets', $tikets);
     }
 
-    public function status_tiket(Request $request)
+    public function status_tiket($status)
     {
-        $search = $request->search;
-
         $tikets = DB::table('tikets')
             ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
-            ->where('status', 'like', "%" . $search . "%")
+            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
+            ->leftJoin('users', 'tikets.user_id', 'users.id')
+            ->where('status', 'like', "%" . $status . "%")
             ->select(
+                'clients.id as client_id',
+                'clients.name as client_name',
+                'users.id as user_id',
+                'users.name as user_name',
+                'users.role_id',
                 'divisis.divisi',
                 'tikets.judul',
                 'tikets.status',
@@ -205,7 +304,23 @@ class AdminSearchController extends Controller
             )
             ->paginate(8);
 
-        return view('admin.tiket')->with('tikets', $tikets);
+        $namas = DB::table('tikets')
+            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
+            ->leftJoin('users', 'tikets.user_id', 'users.id')
+            ->select(
+                'clients.name as client_name',
+                'users.name as user_name',
+                'users.role_id',
+            )
+            ->groupBy('users.name', 'clients.name', 'users.role_id')
+            ->get();
+
+        $divisis = Divisi::all();
+
+        return view('admin.tiket')
+            ->with('namas', $namas)
+            ->with('divisis', $divisis)
+            ->with('tikets', $tikets);
     }
 
     public function balasan_terbaru_tiket(Request $request)
@@ -214,8 +329,15 @@ class AdminSearchController extends Controller
 
         $tikets = DB::table('tikets')
             ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
+            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
+            ->leftJoin('users', 'tikets.user_id', 'users.id')
             ->where('tikets.balasan_terbaru', 'like', "%" . $search . "%")
             ->select(
+                'clients.id as client_id',
+                'clients.name as client_name',
+                'users.id as user_id',
+                'users.name as user_name',
+                'users.role_id',
                 'divisis.divisi',
                 'tikets.judul',
                 'tikets.status',
@@ -226,6 +348,22 @@ class AdminSearchController extends Controller
             )
             ->paginate(8);
 
-        return view('admin.tiket')->with('tikets', $tikets);
+        $namas = DB::table('tikets')
+            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
+            ->leftJoin('users', 'tikets.user_id', 'users.id')
+            ->select(
+                'clients.name as client_name',
+                'users.name as user_name',
+                'users.role_id',
+            )
+            ->groupBy('users.name', 'clients.name', 'users.role_id')
+            ->get();
+
+        $divisis = Divisi::all();
+
+        return view('admin.tiket')
+            ->with('namas', $namas)
+            ->with('divisis', $divisis)
+            ->with('tikets', $tikets);
     }
 }
