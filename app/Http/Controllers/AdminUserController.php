@@ -30,7 +30,10 @@ class AdminUserController extends Controller
             ->select('users.id', 'users.email', 'users.name', 'users.telp', 'divisis.divisi', 'roles.role')
             ->paginate(8);
 
-        return view('admin.user')->with('users', $users);
+        $divisis = Divisi::all();
+        return view('admin.user')
+            ->with('divisis', $divisis)
+            ->with('users', $users);
     }
 
     /**
@@ -42,7 +45,9 @@ class AdminUserController extends Controller
     {
         $divisis = Divisi::all();
         $roles = Role::all();
-        return view('admin.create_user')->with('divisis', $divisis)->with('roles', $roles);
+        return view('admin.create_user')
+            ->with('divisis', $divisis)
+            ->with('roles', $roles);
     }
 
     /**

@@ -43,8 +43,8 @@
                                             </div>
                                         </div>
                                         <div class="row mb-4">
-                                            <div class="mr-auto mt-2">
-                                                <div class="dropdown m-3 d-inline-block">
+                                            <div class="mr-auto mt-4 col-xl-5">
+                                                <div class="dropdown m-1 d-inline-block">
                                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Nama
                                                     </button>
@@ -65,7 +65,7 @@
                                                         @endforeach
                                                     </div>
                                                 </div>
-                                                <div class="dropdown m-3 d-inline-block">
+                                                <div class="dropdown m-1 d-inline-block">
                                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Divisi
                                                     </button>
@@ -76,7 +76,7 @@
                                                         @endforeach
                                                     </div>
                                                 </div>
-                                                <div class="dropdown m-3 d-inline-block">
+                                                <div class="dropdown m-1 d-inline-block">
                                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Status
                                                     </button>
@@ -88,9 +88,7 @@
                                                     <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Balasan Client')}}">Balasan Client</a>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="ml-auto">
-                                                <form id="form_search" action="{{route('admin.tiket.search')}}" method="GET">
+                                                <form class="mt-1" id="form_search" action="{{route('admin.tiket.search')}}" method="GET">
                                                     {{ csrf_field() }}
                                                     <div class="col-xl-4 d-inline">
                                                         <div class="form-group">
@@ -104,6 +102,24 @@
                                                     </div>
                                                 </form>
                                             </div>
+                                            <form action="{{route('admin.tiket.update_filter')}}" class="ml-3 mt-3 col-xl-6">
+                                                @csrf
+                                                <label for="">Filter update terakhir</label>
+                                                <hr>
+                                                <div class="form-group d-inline-block ">
+                                                    <label for="dari">Dari:</label>
+                                                    <br>
+                                                    <input type="date" id="dari" name="dari">
+                                                </div>
+                                                <div class="form-group d-inline-block mr-2">
+                                                    <label for="sampai">Sampai:</label>
+                                                    <br>
+                                                    <input type="date" id="sampai" name="sampai">
+                                                </div>
+                                                <button type="submit" style="border:none; padding:0;">
+                                                    <span class="input-group-text"><small>Filter &nbsp;</small> <i class="mdi mdi-magnify noti-icon"></i></span>
+                                                </button>
+                                            </form>
                                             
                                         </div>
                                        
@@ -186,7 +202,6 @@
                                                 </ul>
                                             </nav>
                                         </div>
-                                        {{-- <button id="option">test</button> --}}
                                     </div>
                                 </div>
                             </div> <!-- end col -->

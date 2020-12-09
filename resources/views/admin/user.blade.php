@@ -41,67 +41,76 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <form id="form_search" action="{{route('admin.user.name_search')}}" method="GET">
-                                            <div class="row">
-                                                <div class="col-xl-8">
-                                                    <div class="form-group">
-                                                        <label class="col-form-label">Cari berdasarkan</label>
-                                                        <select name="kategori_search" id="kategori_search" class="form-control">
-                                                            <option
-                                                            @if (!empty($_GET['kategori_search']))
-                                                                @if ($_GET['kategori_search'] == 'Nama')
-                                                                    {{'selected'}}
-                                                                @endif
-                                                            @endif
-                                                            >Nama</option>
-
-                                                            <option
-                                                            @if (!empty($_GET['kategori_search']))
-                                                                @if ($_GET['kategori_search'] == 'Email')
-                                                                    {{'selected'}}
-                                                                @endif
-                                                            @endif
-                                                            >Email</option>
-                                                            <option
-                                                            @if (!empty($_GET['kategori_search']))
-                                                                @if ($_GET['kategori_search'] == 'Divisi')
-                                                                    {{'selected'}}
-                                                                @endif
-                                                            @endif
-                                                            >Divisi</option>
-                                                            <option
-                                                            @if (!empty($_GET['kategori_search']))
-                                                                @if ($_GET['kategori_search'] == 'Role')
-                                                                    {{'selected'}}
-                                                                @endif
-                                                            @endif
-                                                            >Role</option>
-                                                            <option
-                                                            @if (!empty($_GET['kategori_search']))
-                                                                @if ($_GET['kategori_search'] == 'No Telp')
-                                                                    {{'selected'}}
-                                                                @endif
-                                                            @endif
-                                                            >No Telp</option>
-                                                        </select>
+                                        <div class="row mt-5">
+                                            <div class="col-xl-12">
+                                                <div class="d-inline-block mr-5  mb-5">
+                                                    <div class="m-1 dropdown d-inline-block">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Role
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownDivisi">
+                                                            <a class="dropdown-item" href="{{route('admin.user.index')}}">Semua</a>
+                                                            <a class="dropdown-item" href="{{route('admin.user.role_filter', $role = 'operator')}}">Operator</a>
+                                                            <a class="dropdown-item" href="{{route('admin.user.role_filter', $role = 'admin')}}">Admin</a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-4 d-inline">
-                                                    {{ csrf_field() }}
-                                                    <div class="form-group">
-                                                        <label id="label_form_search">Cari </label>
-                                                        <div>
-                                                            <div class="input-group">
-                                                                <input  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
-                                                                <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
-                                                                    <span class="input-group-text"><small> Search	&nbsp;</small> <i class="mdi mdi-magnify noti-icon"></i></span>
-                                                                </button>
-                                                            </div><!-- input-group -->
+                                                    <div class="m-1 dropdown d-inline-block">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Divisi
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownDivisi">
+                                                        <a class="dropdown-item" href="{{route('admin.user.index')}}">Semua</a>
+                                                            @foreach ($divisis as $divisi)
+                                                            <a class="dropdown-item" href="{{route('admin.user.divisi_filter', $divisi->divisi)}}">{{$divisi->divisi}}</a>
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="d-inline-block">
+                                                    <div class="d-inline-block mr-2">
+                                                        <form id="form_search" action="{{route('admin.user.email_search')}}" method="GET">
+                                                        {{ csrf_field() }}
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <input placeholder="Cari Email"  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                                    <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
+                                                                        <span class="input-group-text"><i class="mdi mdi-magnify noti-icon"></i></span>
+                                                                    </button>
+                                                                </div><!-- input-group -->
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="d-inline-block mr-2">
+                                                        <form id="form_search" action="{{route('admin.user.name_search')}}" method="GET">
+                                                        {{ csrf_field() }}
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <input placeholder="Cari Nama"  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                                    <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
+                                                                        <span class="input-group-text"><i class="mdi mdi-magnify noti-icon"></i></span>
+                                                                    </button>
+                                                                </div><!-- input-group -->
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="d-inline-block mr-2">
+                                                        <form id="form_search" action="{{route('admin.user.telp_search')}}" method="GET">
+                                                        {{ csrf_field() }}
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <input placeholder="Cari No Telp"  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                                    <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
+                                                                        <span class="input-group-text"><i class="mdi mdi-magnify noti-icon"></i></span>
+                                                                    </button>
+                                                                </div><!-- input-group -->
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                
                                             </div>
-                                        </form>
+                                        </div>
+                                        
                                         <div style="overflow-x: auto;">
                                             <table id="mainTable" class="table table-striped mb-0 mt-2">
                                                 <thead>
@@ -166,48 +175,4 @@
 
     </div>
     <!-- END wrapper -->
-@endsection
-
-@section('script')
-    <script>
-        function myFunction() {
-            var selected = $('#kategori_search').val();
-            switch(selected) {
-                case 'Email':
-                    $('#form_search').attr('action', "{{route('admin.user.email_search')}}");
-                    $('#search').val();
-                    $('#label_form_search').text('Cari Email');
-                    break;
-                case 'Nama':
-                    $('#form_search').attr('action', "{{route('admin.user.name_search')}}");
-                    $('#label_form_search').text('Cari Nama');
-                    break;
-                case 'Divisi':
-                    $('#form_search').attr('action', "{{route('admin.user.divisi_search')}}");
-                    $('#label_form_search').text('Cari Divisi');
-                    break;
-                case 'Role':
-                    $('#form_search').attr('action', "{{route('admin.user.role_search')}}");
-                    $('#label_form_search').text('Cari Role');
-                    break;
-                case 'No Telp':
-                    $('#form_search').attr('action', "{{route('admin.user.telp_search')}}");
-                    $('#label_form_search').text('Cari No Telp');
-                    break;
-                default:
-                    alert('input salah !!');
-                    $('#form_search').attr('action', "{{route('admin.user.name_search')}}");
-                    $('#label_form_search').text('Cari Nama');
-                }
-        }
-
-        window.onload = function() {
-            myFunction();
-
-            $("#kategori_search").change(function(){
-                myFunction(); 
-            });
-        }
-    </script>
-
 @endsection

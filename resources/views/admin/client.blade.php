@@ -41,60 +41,65 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <form id="form_search" action="{{route('admin.client.name_search')}}" method="GET">
-                                        {{ csrf_field() }}
-                                        <div class="row">
-                                            <div class="col-xl-8">
-                                                <div class="form-group">
-                                                    <label class="col-form-label">Cari berdasarkan</label>
-                                                    <select name="kategori_search" id="kategori_search" class="form-control">
-                                                        <option
-                                                        @if (!empty($_GET['kategori_search']))
-                                                            @if ($_GET['kategori_search'] == 'Nama')
-                                                                {{'selected'}}
-                                                            @endif
-                                                        @endif
-                                                        >Nama</option>
-                                                        <option
-                                                        @if (!empty($_GET['kategori_search']))
-                                                            @if ($_GET['kategori_search'] == 'Email')
-                                                                {{'selected'}}
-                                                            @endif
-                                                        @endif
-                                                        >Email</option>
-                                                        <option
-                                                        @if (!empty($_GET['kategori_search']))
-                                                            @if ($_GET['kategori_search'] == 'Nama Perusahaan')
-                                                                {{'selected'}}
-                                                            @endif
-                                                        @endif
-                                                        >Nama Perusahaan</option>
-                                                        <option
-                                                        @if (!empty($_GET['kategori_search']))
-                                                            @if ($_GET['kategori_search'] == 'No Telp')
-                                                                {{'selected'}}
-                                                            @endif
-                                                        @endif
-                                                        >No Telp</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4">
-                                                    <div class="form-group">
-                                                        <label id="label_form_search">Cari </label>
-                                                        <div>
-                                                            <div class="input-group">
-                                                                <input name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
-                                                                <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
-                                                                    <span class="input-group-text"><small> Search	&nbsp;</small> <i class="mdi mdi-magnify noti-icon"></i></span>
-                                                                </button>
-                                                            </div><!-- input-group -->
-                                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col-xl-12">
+                                                <div class="d-inline-block">
+                                                    <div class="d-inline-block mr-1">
+                                                        <form id="form_search" action="{{route('admin.client.email_search')}}" method="GET">
+                                                        {{ csrf_field() }}
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <input placeholder="Cari Email"  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                                    <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
+                                                                        <span class="input-group-text"><i class="mdi mdi-magnify noti-icon"></i></span>
+                                                                    </button>
+                                                                </div><!-- input-group -->
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                    
+                                                    <div class="d-inline-block mr-1">
+                                                        <form id="form_search" action="{{route('admin.client.name_search')}}" method="GET">
+                                                        {{ csrf_field() }}
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <input placeholder="Cari Nama"  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                                    <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
+                                                                        <span class="input-group-text"><i class="mdi mdi-magnify noti-icon"></i></span>
+                                                                    </button>
+                                                                </div><!-- input-group -->
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="d-inline-block mr-1">
+                                                        <form id="form_search" action="{{route('admin.client.perusahaan_search')}}" method="GET">
+                                                        {{ csrf_field() }}
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <input placeholder="Cari Perusahaan"  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                                    <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
+                                                                        <span class="input-group-text"><i class="mdi mdi-magnify noti-icon"></i></span>
+                                                                    </button>
+                                                                </div><!-- input-group -->
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="d-inline-block mr-1">
+                                                        <form id="form_search" action="{{route('admin.client.telp_search')}}" method="GET">
+                                                        {{ csrf_field() }}
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <input placeholder="Cari No Telp"  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                                    <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
+                                                                        <span class="input-group-text"><i class="mdi mdi-magnify noti-icon"></i></span>
+                                                                    </button>
+                                                                </div><!-- input-group -->
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 </div>
+                                                
+                                            </div>
                                         </div>
-                                        </form>
                                         <div style="overflow-x: auto;">
                                             <table id="mainTable" class="table table-striped mb-0 mt-2">
                                                 <thead>
@@ -160,43 +165,4 @@
 
     </div>
     <!-- END wrapper -->
-@endsection
-
-@section('script')
-    <script>
-        function myFunction() {
-            var selected = $('#kategori_search').val();
-            switch(selected) {
-                case 'Email':
-                    $('#form_search').attr('action', "{{route('admin.client.email_search')}}");
-                    $('#label_form_search').text('Cari Email');
-                    break;
-                case 'Nama':
-                    $('#form_search').attr('action', "{{route('admin.client.name_search')}}");
-                    $('#label_form_search').text('Cari Nama');
-                    break;
-                case 'Nama Perusahaan':
-                    $('#form_search').attr('action', "{{route('admin.client.name_perusahaan_search')}}");
-                    $('#label_form_search').text('Cari Nama Perusahaan');
-                    break;
-                case 'No Telp':
-                    $('#form_search').attr('action', "{{route('admin.client.telp_search')}}");
-                    $('#label_form_search').text('Cari No Telp');
-                    break;
-                default:
-                    alert('input salah !!');
-                    $('#form_search').attr('action', "{{route('admin.client.name_search')}}");
-                    $('#label_form_search').text('Cari Nama');
-                }
-        }
-
-        window.onload = function() {
-            myFunction();
-
-            $("#kategori_search").change(function(){
-                myFunction(); 
-            });
-        }
-    </script>    
-
 @endsection

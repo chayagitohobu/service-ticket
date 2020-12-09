@@ -83,8 +83,10 @@ class AdminFilterController extends Controller
             ->where('email', 'like', "%" . $search . "%")
             ->select('users.id', 'users.email', 'users.name', 'users.telp', 'divisis.divisi', 'roles.role')
             ->paginate(8);
-
-        return view('admin.user')->with('users', $users);
+        $divisis = Divisi::all();
+        return view('admin.user')
+            ->with('divisis', $divisis)
+            ->with('users', $users);
     }
 
     public function name_user(Request $request)
@@ -97,37 +99,12 @@ class AdminFilterController extends Controller
             ->where('name', 'like', "%" . $search . "%")
             ->select('users.id', 'users.email', 'users.name', 'users.telp', 'divisis.divisi', 'roles.role')
             ->paginate(8);
-
-        return view('admin.user')->with('users', $users);
+        $divisis = Divisi::all();
+        return view('admin.user')
+            ->with('divisis', $divisis)
+            ->with('users', $users);
     }
 
-    public function divisi_user(Request $request)
-    {
-        $search = $request->search;
-
-        $users = DB::table('users')
-            ->join('divisis', 'users.divisi_id', 'divisis.id')
-            ->join('roles', 'users.role_id', 'roles.id')
-            ->where('divisi', 'like', "%" . $search . "%")
-            ->select('users.id', 'users.email', 'users.name', 'users.telp', 'divisis.divisi', 'roles.role')
-            ->paginate(8);
-
-        return view('admin.user')->with('users', $users);
-    }
-
-    public function role_user(Request $request)
-    {
-        $search = $request->search;
-
-        $users = DB::table('users')
-            ->join('divisis', 'users.divisi_id', 'divisis.id')
-            ->join('roles', 'users.role_id', 'roles.id')
-            ->where('role', 'like', "%" . $search . "%")
-            ->select('users.id', 'users.email', 'users.name', 'users.telp', 'divisis.divisi', 'roles.role')
-            ->paginate(8);
-
-        return view('admin.user')->with('users', $users);
-    }
 
     public function telp_user(Request $request)
     {
@@ -147,7 +124,41 @@ class AdminFilterController extends Controller
             )
             ->paginate(8);
 
-        return view('admin.user')->with('users', $users);
+        $divisis = Divisi::all();
+        return view('admin.user')
+            ->with('divisis', $divisis)
+            ->with('users', $users);
+    }
+
+    public function divisi_user($divisi)
+    {
+
+        $users = DB::table('users')
+            ->join('divisis', 'users.divisi_id', 'divisis.id')
+            ->join('roles', 'users.role_id', 'roles.id')
+            ->where('divisi', 'like', "%" . $divisi . "%")
+            ->select('users.id', 'users.email', 'users.name', 'users.telp', 'divisis.divisi', 'roles.role')
+            ->paginate(8);
+
+        $divisis = Divisi::all();
+        return view('admin.user')
+            ->with('divisis', $divisis)
+            ->with('users', $users);
+    }
+
+    public function role_user($role)
+    {
+        $users = DB::table('users')
+            ->join('divisis', 'users.divisi_id', 'divisis.id')
+            ->join('roles', 'users.role_id', 'roles.id')
+            ->where('role', 'like', "%" . $role . "%")
+            ->select('users.id', 'users.email', 'users.name', 'users.telp', 'divisis.divisi', 'roles.role')
+            ->paginate(8);
+
+        $divisis = Divisi::all();
+        return view('admin.user')
+            ->with('divisis', $divisis)
+            ->with('users', $users);
     }
 
     // TIKET SEARCH 
@@ -323,15 +334,18 @@ class AdminFilterController extends Controller
             ->with('tikets', $tikets);
     }
 
-    public function balasan_terbaru_tiket(Request $request)
+    public function update_tiket(Request $request)
     {
-        $search = $request->search;
+        $dari =  date($request->input('dari'));
+        $sampai =  date($request->input('sampai'));
+        // $from = date('2020-11-01');
+        // $to = date('2020-11-30');
 
         $tikets = DB::table('tikets')
             ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
             ->leftJoin('clients', 'tikets.client_id', 'clients.id')
             ->leftJoin('users', 'tikets.user_id', 'users.id')
-            ->where('tikets.balasan_terbaru', 'like', "%" . $search . "%")
+            ->whereBetween('tikets.balasan_terbaru', [$dari, $sampai])
             ->select(
                 'clients.id as client_id',
                 'clients.name as client_name',
@@ -348,6 +362,7 @@ class AdminFilterController extends Controller
             )
             ->paginate(8);
 
+        // dd($tikets);
         $namas = DB::table('tikets')
             ->leftJoin('clients', 'tikets.client_id', 'clients.id')
             ->leftJoin('users', 'tikets.user_id', 'users.id')
