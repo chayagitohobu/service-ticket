@@ -47,7 +47,21 @@ class OperatorTiketController extends Controller
             )
             ->paginate(8);
 
-        return view('operator.tiket')->with('tikets', $tikets)->with('divisi', $divisi);
+        $namas = DB::table('tikets')
+            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
+            ->leftJoin('users', 'tikets.user_id', 'users.id')
+            ->select(
+                'clients.name as client_name',
+                'users.name as user_name',
+                'users.role_id',
+            )
+            ->groupBy('users.name', 'clients.name', 'users.role_id')
+            ->get();
+
+        return view('operator.tiket')
+            ->with('namas', $namas)
+            ->with('tikets', $tikets)
+            ->with('divisi', $divisi);
     }
 
     /**

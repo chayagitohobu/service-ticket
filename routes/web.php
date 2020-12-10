@@ -84,11 +84,10 @@ Route::prefix('operator')->group(function () {
     Route::post('profile/update', [App\Http\Controllers\OperatorController::class, 'update'])->name('operator.update');
 
     // Tiket search
-    Route::get('tiket/user_search', [App\Http\Controllers\OperatorSearchController::class, 'user_tiket'])->name('operator.tiket.user_search');
-    Route::get('tiket/client_search', [App\Http\Controllers\OperatorSearchController::class, 'client_tiket'])->name('operator.tiket.client_search');
-    Route::get('tiket/judul_search', [App\Http\Controllers\OperatorSearchController::class, 'judul_tiket'])->name('operator.tiket.judul_search');
-    Route::get('tiket/status_search', [App\Http\Controllers\OperatorSearchController::class, 'status_tiket'])->name('operator.tiket.status_search');
-    Route::get('tiket/balasan_terbaru_search', [App\Http\Controllers\OperatorSearchController::class, 'balasan_terbaru_tiket'])->name('operator.tiket.balasan_terbaru_search');
+    Route::get('tiket/name_filter/{name}', [App\Http\Controllers\OperatorFilterController::class, 'name_tiket'])->name('operator.tiket.name_filter');
+    Route::get('tiket/judul_search', [App\Http\Controllers\OperatorFilterController::class, 'judul_tiket'])->name('operator.tiket.judul_search');
+    Route::get('tiket/status_filter/{status}', [App\Http\Controllers\OperatorFilterController::class, 'status_tiket'])->name('operator.tiket.status_filter');
+    Route::get('tiket/update_filter', [App\Http\Controllers\OperatorFilterController::class, 'update_tiket'])->name('operator.tiket.update_filter');
 
     // Download
     Route::post('tiket/file_download', [App\Http\Controllers\OperatorDownloadController::class, 'tiket_file_download'])->name('operator.tiket.file_download');

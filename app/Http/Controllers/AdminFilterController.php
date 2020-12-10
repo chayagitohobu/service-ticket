@@ -338,8 +338,6 @@ class AdminFilterController extends Controller
     {
         $dari =  date($request->input('dari'));
         $sampai =  date($request->input('sampai'));
-        // $from = date('2020-11-01');
-        // $to = date('2020-11-30');
 
         $tikets = DB::table('tikets')
             ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')

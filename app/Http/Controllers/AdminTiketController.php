@@ -46,7 +46,6 @@ class AdminTiketController extends Controller
             )
             ->paginate(8);
 
-
         $namas = DB::table('tikets')
             ->leftJoin('clients', 'tikets.client_id', 'clients.id')
             ->leftJoin('users', 'tikets.user_id', 'users.id')
