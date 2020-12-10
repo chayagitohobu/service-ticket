@@ -40,7 +40,11 @@ class ClientTiketController extends Controller
                 'divisis.divisi'
             )
             ->paginate(8);
-        return view('client.tiket')->with('tikets', $tikets);
+
+        $divisis = Divisi::all();
+        return view('client.tiket')
+            ->with('divisis', $divisis)
+            ->with('tikets', $tikets);
     }
 
     /**

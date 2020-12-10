@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Divisi;
 
-class ClientSearchController extends Controller
+class ClientFilterController extends Controller
 {
 
     public function __construct()
@@ -35,17 +36,19 @@ class ClientSearchController extends Controller
             ->where('tikets.client_id', '=', $user_id)
             ->paginate(8);
 
-        return view('client.tiket')->with('tikets', $tikets);
+        $divisis = Divisi::all();
+        return view('client.tiket')
+            ->with('divisis', $divisis)
+            ->with('tikets', $tikets);
     }
 
-    public function divisi_tiket(Request $request)
+    public function divisi_tiket($divisi)
     {
-        $search = $request->search;
         $user_id = Auth::guard('client')->user()->id;
 
         $tikets = DB::table('tikets')
             ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
-            ->where('divisi', 'like', "%" . $search . "%")
+            ->where('divisi', 'like', "%" . $divisi . "%")
             ->select(
                 'divisis.divisi',
                 'tikets.judul',
@@ -58,17 +61,19 @@ class ClientSearchController extends Controller
             ->where('tikets.client_id', '=', $user_id)
             ->paginate(8);
 
-        return view('client.tiket')->with('tikets', $tikets);
+        $divisis = Divisi::all();
+        return view('client.tiket')
+            ->with('divisis', $divisis)
+            ->with('tikets', $tikets);
     }
 
-    public function status_tiket(Request $request)
+    public function status_tiket($status)
     {
-        $search = $request->search;
         $user_id = Auth::guard('client')->user()->id;
 
         $tikets = DB::table('tikets')
             ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
-            ->where('status', 'like', "%" . $search . "%")
+            ->where('status', 'like', "%" . $status . "%")
             ->select(
                 'divisis.divisi',
                 'tikets.judul',
@@ -81,17 +86,21 @@ class ClientSearchController extends Controller
             ->where('tikets.client_id', '=', $user_id)
             ->paginate(8);
 
-        return view('client.tiket')->with('tikets', $tikets);
+        $divisis = Divisi::all();
+        return view('client.tiket')
+            ->with('divisis', $divisis)
+            ->with('tikets', $tikets);
     }
 
-    public function balasan_terbaru_tiket(Request $request)
+    public function update_tiket(Request $request)
     {
-        $search = $request->search;
         $user_id = Auth::guard('client')->user()->id;
+        $dari =  date($request->input('dari'));
+        $sampai =  date($request->input('sampai'));
 
         $tikets = DB::table('tikets')
             ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
-            ->where('tikets.balasan_terbaru', 'like', "%" . $search . "%")
+            ->whereBetween('tikets.balasan_terbaru', [$dari, $sampai])
             ->select(
                 'divisis.divisi',
                 'tikets.judul',
@@ -104,6 +113,9 @@ class ClientSearchController extends Controller
             ->paginate(8);
 
 
-        return view('client.tiket')->with('tikets', $tikets);
+        $divisis = Divisi::all();
+        return view('client.tiket')
+            ->with('divisis', $divisis)
+            ->with('tikets', $tikets);
     }
 }

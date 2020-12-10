@@ -33,60 +33,65 @@
                                         
                                         <h4 class="mt-0 header-title">Tiket saya</h4>
                                         <p class="text-muted m-b-30">Pilih tiket yang ingin dilihat dengan mengklik baris pada tabel</p>
-                                        <form id="form_search" action="{{route('client.tiket.judul_search')}}" method="GET">
-                                        {{ csrf_field() }}
-                                        <div class="row mt-5">
-                                            <div class="col-xl-8">
-                                                <div class="form-group">
-                                                    <label class="col-form-label">Cari berdasarkan</label>
-                                                    <select name="kategori_search" id="kategori_search" class="form-control">
-                                                        <option
-                                                        @if (!empty($_GET['kategori_search']))
-                                                            @if ($_GET['kategori_search'] == 'Judul')
-                                                                {{'selected'}}
-                                                            @endif
-                                                        @endif
-                                                        >Judul</option>
-
-                                                        <option
-                                                        @if (!empty($_GET['kategori_search']))
-                                                            @if ($_GET['kategori_search'] == 'Divisi')
-                                                                {{'selected'}}
-                                                            @endif
-                                                        @endif
-                                                        >Divisi</option>
-                                                        <option
-                                                        @if (!empty($_GET['kategori_search']))
-                                                            @if ($_GET['kategori_search'] == 'Status')
-                                                                {{'selected'}}
-                                                            @endif
-                                                        @endif
-                                                        >Status</option>
-                                                        <option
-                                                        @if (!empty($_GET['kategori_search']))
-                                                            @if ($_GET['kategori_search'] == 'Update Terakhir')
-                                                                {{'selected'}}
-                                                            @endif
-                                                        @endif
-                                                        >Update Terakhir</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4">
-                                                <div class="form-group">
-                                                    <label id="label_form_search">Cari Judul</label>
-                                                    <div>
-                                                        <div class="input-group">
-                                                            <input name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
-                                                            <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
-                                                                <span class="input-group-text"><small> Search	&nbsp;</small> <i class="mdi mdi-magnify noti-icon"></i></span>
-                                                            </button>
-                                                        </div><!-- input-group -->
+                                        <div class="row mb-4">
+                                            <div class="mr-auto mt-4 col-xl-5">
+                                                <div class="dropdown m-1 d-inline-block">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Divisi
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownDivisi">
+                                                    <a class="dropdown-item" href="{{route('client.tiket.index')}}">Semua</a>
+                                                        @foreach ($divisis as $divisi)
+                                                        <a class="dropdown-item" href="{{route('client.tiket.divisi_filter', $divisi->divisi)}}">{{$divisi->divisi}}</a>
+                                                        @endforeach
                                                     </div>
                                                 </div>
+                                                <div class="dropdown m-1 d-inline-block">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Status
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownStatus">
+                                                    <a class="dropdown-item" href="{{route('client.tiket.index')}}">Semua</a>
+                                                    <a class="dropdown-item" href="{{route('client.tiket.status_filter', $status = 'Buka')}}">Buka</a>
+                                                    <a class="dropdown-item" href="{{route('client.tiket.status_filter', $status = 'Tutup')}}">Tutup</a>
+                                                    <a class="dropdown-item" href="{{route('client.tiket.status_filter', $status = 'Balasan Operator')}}">Balasan Operator</a>
+                                                    <a class="dropdown-item" href="{{route('client.tiket.status_filter', $status = 'Balasan Client')}}">Balasan Client</a>
+                                                    </div>
+                                                </div>
+                                                <form class="mt-1" id="form_search" action="{{route('client.tiket.judul_search')}}" method="GET">
+                                                    {{ csrf_field() }}
+                                                    <div class="col-xl-4 d-inline">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <input placeholder="Cari judul"  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                                <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
+                                                                    <span class="input-group-text"><small> Search	&nbsp;</small> <i class="mdi mdi-magnify noti-icon"></i></span>
+                                                                </button>
+                                                            </div><!-- input-group -->
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
+                                            <form action="{{route('client.tiket.update_filter')}}" class="ml-3 mt-3 col-xl-6">
+                                                @csrf
+                                                <label for="">Filter update terakhir</label>
+                                                <hr>
+                                                <div class="form-group d-inline-block ">
+                                                    <label for="dari">Dari:</label>
+                                                    <br>
+                                                    <input type="date" id="dari" name="dari">
+                                                </div>
+                                                <div class="form-group d-inline-block mr-2">
+                                                    <label for="sampai">Sampai:</label>
+                                                    <br>
+                                                    <input type="date" id="sampai" name="sampai">
+                                                </div>
+                                                <button type="submit" style="border:none; padding:0;">
+                                                    <span class="input-group-text"><small>Filter &nbsp;</small> <i class="mdi mdi-magnify noti-icon"></i></span>
+                                                </button>
+                                            </form>
+                                            
                                         </div>
-                                        </form>
                                         
                                         <div style="overflow-x:auto;">
                                             <table id="mainTable" class="table table-striped mb-0 mt-2">
@@ -155,43 +160,4 @@
 
     </div>
     <!-- END wrapper -->
-@endsection
-
-@section('script')
-<script>
-    function myFunction() {
-        var selected = $('#kategori_search').val();
-        switch(selected) {
-            case 'Judul':
-                    $('#form_search').attr('action', "{{route('client.tiket.judul_search')}}");
-                    $('#label_form_search').text('Cari Judul');
-                    break;
-                case 'Divisi':
-                    $('#form_search').attr('action', "{{route('client.tiket.divisi_search')}}");
-                    $('#label_form_search').text('Cari Divisi');
-                    break;
-                case 'Status':
-                    $('#form_search').attr('action', "{{route('client.tiket.status_search')}}");
-                    $('#label_form_search').text('Cari Status');
-                    break;
-                case 'Update Terakhir':
-                    $('#form_search').attr('action', "{{route('client.tiket.balasan_terbaru_search')}}");
-                    $('#label_form_search').text('Cari Update Terakhir');
-                    break;
-                default:
-                    alert('input salah !!');
-                    $('#form_search').attr('action', "{{route('client.tiket.judul_search')}}");
-                    $('#label_form_search').text('Cari Judul');
-            }
-    }
-
-    window.onload = function() {
-        myFunction();
-
-        $("#kategori_search").change(function(){
-            myFunction(); 
-        });
-    }
-</script>
-
 @endsection

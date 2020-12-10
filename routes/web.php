@@ -112,10 +112,10 @@ Route::prefix('client')->group(function () {
     Route::post('profile/update', [App\Http\Controllers\ClientController::class, 'update'])->name('client.update');
 
     // Tiket search
-    Route::get('tiket/judul_search', [App\Http\Controllers\ClientSearchController::class, 'judul_tiket'])->name('client.tiket.judul_search');
-    Route::get('tiket/status_search', [App\Http\Controllers\ClientSearchController::class, 'status_tiket'])->name('client.tiket.status_search');
-    Route::get('tiket/divisi_search', [App\Http\Controllers\ClientSearchController::class, 'divisi_tiket'])->name('client.tiket.divisi_search');
-    Route::get('tiket/balasan_terbaru_search', [App\Http\Controllers\ClientSearchController::class, 'balasan_terbaru_tiket'])->name('client.tiket.balasan_terbaru_search');
+    Route::get('tiket/judul_search', [App\Http\Controllers\ClientFilterController::class, 'judul_tiket'])->name('client.tiket.judul_search');
+    Route::get('tiket/status_filter/{status}', [App\Http\Controllers\ClientFilterController::class, 'status_tiket'])->name('client.tiket.status_filter');
+    Route::get('tiket/divisi_filter/{divisi}', [App\Http\Controllers\ClientFilterController::class, 'divisi_tiket'])->name('client.tiket.divisi_filter');
+    Route::get('tiket/update_filter', [App\Http\Controllers\ClientFilterController::class, 'update_tiket'])->name('client.tiket.update_filter');
 
     // Download
     Route::post('tiket/file_download', [App\Http\Controllers\ClientDownloadController::class, 'tiket_file_download'])->name('client.tiket.file_download');
