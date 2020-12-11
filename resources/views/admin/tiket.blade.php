@@ -1,5 +1,47 @@
 @extends('layouts.app')
 
+@section('style')
+    <style>
+        @media screen {
+            div.printFooter {
+                display: none;
+            }
+            div.printHeader {
+                display: none;
+            }
+        }
+
+        @media print {
+            body * {
+            visibility: hidden;
+            }
+
+            body * #hide{
+                display: none;
+            }
+            #section-to-print, #section-to-print * {
+            visibility: visible;
+            }
+            #section-to-print {
+            position: static;
+            left: 0;
+            top: 1;
+            }
+            #section-to-print, #section-to-print #aksi {
+            visibility: hidden;
+            }
+            div.printFooter {
+                position: fixed;
+                bottom: 0;
+            }
+            div.printHeader {
+                position: fixed;
+                top: 0;
+            }
+        }
+    </style>
+@endsection
+
 @section('content')
     <!-- Begin page -->
     <div id="wrapper">
@@ -30,16 +72,19 @@
                                         @include('inc.messages')
                                     </div>
                                     <div class="card-body">
-                                        <div class="row mb-4">
+                                        <div id="hide" class="row mb-4">
                                             
-                                            <div class="col-xl-9">
+                                            <div class="col-xl-8">
                                                 <h4 class="mt-0 header-title">Daftar Tiket</h4>
                                                 <p class="text-muted">Berikut adalah daftar Tiket</p>
                                             </div>
-                                            <div class="col-xl-3 text-left">
-                                                <a href="{{route('admin.tiket.create')}}">
+                                            <div class="col-xl-4 text-left">
+                                                <a class="d-inline-block mr-2" href="{{route('admin.tiket.create')}}">
                                                     <button type="button" class="btn btn-info btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-plus noti-icon mr-3"></i>Tambah Tiket</button>
                                                 </a>
+                                                <div class="d-inline-block">
+                                                    <button onclick="window.print()" type="button" class="btn btn-success btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-print mr-3"></i>Cetak</button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row mb-4">
@@ -123,8 +168,58 @@
                                             
                                         </div>
                                        
-                                        <div style="overflow-x: auto;">
-                                            <table id="mainTable" class="table table-striped mb-0 mt-2">
+                                        <div id="section-to-print" style="overflow-x: auto;">
+                                            <div class="printHeader" >
+                                                <div>
+                                                    <div style="min-height: 5vh"></div>
+                                                    <img src=" {{asset('assets/images/logo_dark.png')}}" height="30" alt="logo">
+                                                </div>
+                                                <div>
+                                                    <div style="min-height: 3vh"></div>
+                                                    <h1>Laporan Tiket</h1>
+                                                    <p> URL : {{Request::fullUrl()}}</p>
+                                                </div>
+                                                <hr class="container">
+                                                <div>
+                                                    <br>
+                                                    <p>Tanggal : {{ date('Y-m-d H:i:s') }}</p>
+                                                    @if (!empty($_GET['search']))
+                                                        @switch(Request::segment(3))
+                                                            @case('search')
+                                                            <p>Judul Search : {{$_GET['search']}}</p>
+                                                                @break
+                                                            @default
+                                                            <p>Search : {{$_GET['search']}}</p>
+                                                        @endswitch
+                                                    @endif
+                                                    <p>
+                                                        @switch(Request::segment(3))
+                                                            @case('name_filter')
+                                                            Nama Filter : {{Request::segment(4)}}
+                                                                @break
+                                                            @case('divisi_filter')
+                                                            Divisi Filter : {{Request::segment(4)}}
+                                                                @break
+                                                            @case('status_filter')
+                                                            Status Filter : {{Request::segment(4)}}
+                                                                @break
+                                                            @case('update_filter')
+                                                            Update Terakhir Filter : 
+                                                            <br>
+                                                            Dari : {{$_GET['dari']}}
+                                                            <br>
+                                                            Sampai : {{$_GET['sampai']}}
+                                                                @break
+                                                            @default
+                                                                
+                                                        @endswitch
+                                                    </p>
+
+                                                    <p>Halaman : {{$tikets->currentPage()}}</p>
+                                                </div>
+                                                
+                                            </div>
+                                            <table id="mainTable" class="table table-striped table-bordered mb-0 mt-2">
                                                 <thead>
                                                 <tr>
                                                     <th>Nama</th>
@@ -132,7 +227,7 @@
                                                     <th>Judul</th>
                                                     <th>Status</th>
                                                     <th>Update terakhir</th>
-                                                    <th colspan="3" class="text-center">Aksi</th>
+                                                    <th id="aksi" colspan="3" class="text-center">Aksi</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -176,24 +271,25 @@
                                                             <td>{{$tiket->balasan_terbaru}}</td>
                                                         @endif
                                                         
-                                                        <td class="text-right"><a href="{{route('admin.tiket.show', $tiket->id)}}" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Lihat "><i class="mdi mdi-eye text-white"></i></a> 
+                                                        <td id="aksi" class="text-right"><a id="aksi" href="{{route('admin.tiket.show', $tiket->id)}}" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Lihat "><i id="aksi" class="mdi mdi-eye text-white"></i></a> 
                                                             
                                                         </td>
-                                                        <td class="text-center">
-                                                            <a href="{{route('admin.tiket.edit', $tiket->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fas fa-pen text-white"></i></a>
+                                                        <td id="aksi" class="text-center">
+                                                            <a id="aksi" href="{{route('admin.tiket.edit', $tiket->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit"><i id="aksi" class="fas fa-pen text-white"></i></a>
                                                             
                                                         </td>
-                                                        <td class="text-left">
+                                                        <td id="aksi" class="text-left">
                                                             <form class="d-inline" action="{{route('admin.tiket.destroy', $tiket->id)}}" method="POST">
                                                                 @csrf
                                                                 {{ method_field('DELETE') }}
-                                                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i class="fas fa-trash text-white"></i></button>
+                                                                <button id="aksi" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i id="aksi" class="fas fa-trash text-white"></i></button>
                                                             </form>
                                                         </td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
-                                            </table>    
+                                            </table>
+                                            <div class="printFooter">{{ date('Y-m-d H:i:s') }}</div>    
                                         </div>
                                         <div class="row justify-content-center">
                                             <nav class="mt-5" aria-label="...">

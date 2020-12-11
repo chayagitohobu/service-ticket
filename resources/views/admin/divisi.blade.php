@@ -1,5 +1,43 @@
 @extends('layouts.app')
 
+@section('style')
+    <style>
+        @media screen {
+            div.printFooter {
+                display: none;
+            }
+            div.printHeader {
+                display: none;
+            }
+        }
+
+        @media print {
+            body * {
+            visibility: hidden;
+            }
+            #section-to-print, #section-to-print * {
+            visibility: visible;
+            }
+            #section-to-print {
+            position: static;
+            left: 0;
+            top: 50;
+            }
+            #section-to-print, #section-to-print #aksi {
+            visibility: hidden;
+            }
+            div.printFooter {
+                position: fixed;
+                bottom: 0;
+            }
+            div.printHeader {
+                position: fixed;
+                top: 0;
+            }
+        }
+    </style>
+@endsection
+
 @section('content')
     <!-- Begin page -->
     <div id="wrapper">
@@ -32,64 +70,62 @@
                                            <div class="col-xl-12">
                                                 @include('inc.messages')
                                            </div>
-                                            <div class="col-xl-9 mb-3">
+                                            <div class="col-xl-8 mb-3">
                                                 <h4 class="mt-0 header-title">Daftar Divisi</h4>
                                                 <p class="text-muted">Berikut adalah daftar data Divisi</p>
                                             </div>
 
-                                            <div class="col-xl-3 text-left">
-                                                <a href="{{route('admin.divisi.create')}}">
+                                            <div class="col-xl-4 text-left">
+                                                <a class="d-inline-block mr-2" href="{{route('admin.divisi.create')}}">
                                                     <button type="button" class="btn btn-info btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-plus noti-icon mr-3"></i>Tambah Divisi</button>
                                                 </a>
+                                                <div class="d-inline-block">
+                                                    <button onclick="window.print()" type="button" class="btn btn-success btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-print mr-3"></i>Cetak</button>
+                                                </div>
                                             </div>
                                         </div>
-                                        {{-- <div class="row">
-                                            <div class="col-xl-8">
-                                                <div class="form-group">
-                                                    <label class="col-form-label">Urutkan berdasarkan </label>
-                                                    <select class="form-control">
-                                                        <option>Select</option>
-                                                        <option>Large select</option>
-                                                        <option>Small select</option>
-                                                    </select>
+                                        <div id="section-to-print" style="overflow-x: auto">
+                                            <div class="printHeader" >
+                                                <div>
+                                                    <div style="min-height: 5vh"></div>
+                                                    <img src=" {{asset('assets/images/logo_dark.png')}}" height="30" alt="logo">
+                                                </div>
+                                                <div>
+                                                    <div style="min-height: 3vh"></div>
+                                                    <h1>Laporan Divisi</h1>
+                                                    <p> URL : {{Request::fullUrl()}}</p>
+                                                </div>
+                                                <hr class="container">
+                                                <div>
+                                                    <br>
+                                                    <p>Tanggal : {{ date('Y-m-d H:i:s') }}</p>
+                                                    <p>Halaman : {{$divisis->currentPage()}}</p>
+                                                    
                                                 </div>
                                             </div>
-                                            <div class="col-xl-4">
-                                                <div class="form-group">
-                                                    <label>Cari Divisi</label>
-                                                    <div>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control mt-1 p-3">
-                                                            <div class="input-group-append bg-custom b-0"><span class="input-group-text"><i class="mdi mdi-magnify noti-icon"></i></span></div>
-                                                        </div><!-- input-group -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
-                                        <div style="overflow-x: auto">
-                                            <table id="mainTable" class="table table-striped mb-0 mt-2">
+                                            <div style="min-height: 5vh"></div>
+                                            <table id="mainTable" class="table table-striped table-bordered mb-0 mt-2">
                                                 <thead>
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>Nama Divisi</th>
-                                                    <th colspan="2" class="text-center">Aksi</th>
+                                                    <th id="aksi" colspan="2" class="text-center">Aksi</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 
-                                                {{-- @for ($i = 0; $i < 5; $i++) --}}
                                                 @foreach ($divisis as $divisi)
                                                     <tr>
                                                         <td>{{$divisi->id}}</td>
                                                         <td>{{$divisi->divisi}}</td>
-                                                        <td class="text-right">
-                                                            <a href="{{route('admin.divisi.edit', $divisi->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit "><i class="fas fa-pen text-white"></i></a> 
+                                                        <td id="aksi" class="text-right">
+                                                            <a id="aksi" href="{{route('admin.divisi.edit', $divisi->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit "><i id="aksi" class="fas fa-pen text-white"></i></a> 
                                                         </td>
-                                                        <td class="text-left">
+                                                        <td id="aksi" class="text-left">
                                                             <form class="d-inline" action="{{route('admin.divisi.destroy', $divisi->id)}}" method="POST">
                                                                 @csrf
                                                                 {{ method_field('DELETE') }}
-                                                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i class="fas fa-trash text-white"></i></button>
+                                                                <button id="aksi" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i id="aksi" class="fas fa-trash text-white"></i></button>
                                                             </form>
                                                         </td>
                                                             {{-- <a href="{{route('divisi.destroy', $divisi->id)}}" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i class="fas fa-trash text-white"></i></a></td> --}}
@@ -101,6 +137,7 @@
                                                 
                                                 </tbody>
                                             </table>
+                                            <div class="printFooter">{{ date('Y-m-d H:i:s') }}</div>
                                         </div>
                                         
                                         <div class="row justify-content-center">

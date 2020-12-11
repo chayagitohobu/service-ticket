@@ -64,6 +64,7 @@ Route::prefix('admin')->group(function () {
     Route::post('tiket/file_download', [App\Http\Controllers\AdminDownloadController::class, 'tiket_file_download'])->name('admin.tiket.file_download');
     Route::post('balasan/file_download', [App\Http\Controllers\AdminDownloadController::class, 'balasan_file_download'])->name('admin.balasan.file_download');
 
+
     // Tutup Tiket
     Route::get('tiket/tutup/{id}', [App\Http\Controllers\AdminTiketController::class, 'tutupTiket'])->name('admin.tiket.tutup');
 
