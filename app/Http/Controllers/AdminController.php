@@ -30,23 +30,78 @@ class AdminController extends Controller
 
     public function index()
     {
-        $users = User::all();
-        // $banyak_users = count($users);
 
-        $clients = Client::all();
-        // $banyak_clients = count($clients);
+        $jan = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '01')
+            ->count();
 
-        $divisis = Divisi::all();
-        // $banyak_divisis = count($divisis);
+        $feb = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '02')
+            ->count();
 
-        $tikets = Tiket::all();
-        // $banyak_tikets = count($tikets);
+        $mar = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '03')
+            ->count();
+
+        $apr = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '04')
+            ->count();
+
+        $mei = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '05')
+            ->count();
+
+        $jun = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '06')
+            ->count();
+
+        $jul = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '07')
+            ->count();
+
+        $agu = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '08')
+            ->count();
+
+        $sep = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '09')
+            ->count();
+
+        $okt = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '10')
+            ->count();
+
+        $nov = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '11')
+            ->count();
+
+        $des = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '12')
+            ->count();
+
+        // $bulan = array();
+
+        // for ($i = 1; $i < 13; $i++) {
+
+        //     $bulan[] = Tiket::whereYear('created_at', '=', '2020')
+        //         ->whereMonth('created_at', '=', $i)
+        //         ->count();
+        // }
+
 
         return view('admin.dashboard')
-            ->with('users', $users)
-            ->with('clients', $clients)
-            ->with('divisis', $divisis)
-            ->with('tikets', $tikets);
+            ->with('jan', $jan)
+            ->with('feb', $feb)
+            ->with('mar', $mar)
+            ->with('apr', $apr)
+            ->with('mei', $mei)
+            ->with('jun', $jun)
+            ->with('jul', $jul)
+            ->with('agu', $agu)
+            ->with('sep', $sep)
+            ->with('okt', $okt)
+            ->with('nov', $nov)
+            ->with('des', $des);
     }
 
 

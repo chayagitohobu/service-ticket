@@ -96,6 +96,8 @@ class OperatorFilterController extends Controller
             ->where('judul', 'like', "%" . $search . "%")
             ->paginate(8);
 
+        $tikets->appends(array('search' => $request->search));
+
         $namas = DB::table('tikets')
             ->leftJoin('clients', 'tikets.client_id', 'clients.id')
             ->leftJoin('users', 'tikets.user_id', 'users.id')
@@ -185,6 +187,8 @@ class OperatorFilterController extends Controller
             )
             ->whereBetween('tikets.balasan_terbaru', [$dari, $sampai])
             ->paginate(8);
+
+        $tikets->appends(array('dari' => date($request->input('dari')), 'sampai' => date($request->input('sampai'))));
 
         $namas = DB::table('tikets')
             ->leftJoin('clients', 'tikets.client_id', 'clients.id')

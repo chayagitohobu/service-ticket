@@ -114,7 +114,12 @@
                                                         {{ csrf_field() }}
                                                             <div class="form-group">
                                                                 <div class="input-group">
-                                                                    <input placeholder="Cari Email"  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                                    @if ( !empty($_GET['email_search']))
+                                                                    <input placeholder="Cari Email"  name="email_search" value="{{$_GET['email_search']}}" type="text" class="form-control mt-1 p-3">
+                                                                    @else
+                                                                    <input placeholder="Cari Email"  name="email_search" value="" type="text" class="form-control mt-1 p-3">
+                                                                    @endif
+                                                                    
                                                                     <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
                                                                         <span class="input-group-text"><i class="mdi mdi-magnify noti-icon"></i></span>
                                                                     </button>
@@ -127,7 +132,12 @@
                                                         {{ csrf_field() }}
                                                             <div class="form-group">
                                                                 <div class="input-group">
-                                                                    <input placeholder="Cari Nama"  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                                    @if ( !empty($_GET['name_search']))
+                                                                    <input placeholder="Cari Nama"  name="name_search" value="{{$_GET['name_search']}}" type="text" class="form-control mt-1 p-3">
+                                                                    @else
+                                                                    <input placeholder="Cari Nama"  name="name_search" value="" type="text" class="form-control mt-1 p-3">
+                                                                    @endif
+                                                                    
                                                                     <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
                                                                         <span class="input-group-text"><i class="mdi mdi-magnify noti-icon"></i></span>
                                                                     </button>
@@ -140,7 +150,12 @@
                                                         {{ csrf_field() }}
                                                             <div class="form-group">
                                                                 <div class="input-group">
-                                                                    <input placeholder="Cari No Telp"  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                                    @if ( !empty($_GET['telp_search']))
+                                                                    <input placeholder="Cari No Telp"  name="telp_search" value="{{$_GET['telp_search']}}" type="text" class="form-control mt-1 p-3">
+                                                                    @else
+                                                                    <input placeholder="Cari No Telp"  name="telp_search" value="" type="text" class="form-control mt-1 p-3">
+                                                                    @endif
+                                                                    
                                                                     <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
                                                                         <span class="input-group-text"><i class="mdi mdi-magnify noti-icon"></i></span>
                                                                     </button>

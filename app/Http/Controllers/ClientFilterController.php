@@ -36,6 +36,8 @@ class ClientFilterController extends Controller
             ->where('tikets.client_id', '=', $user_id)
             ->paginate(8);
 
+        $tikets->appends(array('search' => $request->search));
+
         $divisis = Divisi::all();
         return view('client.tiket')
             ->with('divisis', $divisis)
@@ -112,6 +114,7 @@ class ClientFilterController extends Controller
             ->where('tikets.client_id', '=', $user_id)
             ->paginate(8);
 
+        $tikets->appends(array('dari' => date($request->input('dari')), 'sampai' => date($request->input('sampai'))));
 
         $divisis = Divisi::all();
         return view('client.tiket')

@@ -138,7 +138,11 @@
                                                     <div class="col-xl-4 d-inline">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                <input placeholder="Cari judul"  name="search" value="{{ old('search') }}" type="text" class="form-control mt-1 p-3">
+                                                                @if ( !empty($_GET['search']))
+                                                                    <input placeholder="Cari judul"  name="search" value="{{ $_GET['search'] }}" type="text" class="form-control mt-1 p-3">
+                                                                @else
+                                                                    <input placeholder="Cari judul"  name="search" value="" type="text" class="form-control mt-1 p-3">
+                                                                @endif
                                                                 <button type="submit" class="input-group-append bg-custom b-0" style="border:none; padding:0;">
                                                                     <span class="input-group-text"><small> Search	&nbsp;</small> <i class="mdi mdi-magnify noti-icon"></i></span>
                                                                 </button>
@@ -147,20 +151,35 @@
                                                     </div>
                                                 </form>
                                             </div>
+
                                             <form action="{{route('admin.tiket.update_filter')}}" class="ml-3 mt-3 col-xl-6">
                                                 @csrf
                                                 <label for="">Filter update terakhir</label>
                                                 <hr>
-                                                <div class="form-group d-inline-block ">
-                                                    <label for="dari">Dari:</label>
-                                                    <br>
-                                                    <input type="date" id="dari" name="dari">
-                                                </div>
-                                                <div class="form-group d-inline-block mr-2">
-                                                    <label for="sampai">Sampai:</label>
-                                                    <br>
-                                                    <input type="date" id="sampai" name="sampai">
-                                                </div>
+                                                @if (empty($_GET['dari']) && empty($_GET['sampai']))
+                                                    <div class="form-group d-inline-block ">
+                                                        <label for="dari">Dari:</label>
+                                                        <br>
+                                                        <input type="date" id="dari" name="dari">
+                                                    </div>
+                                                    <div class="form-group d-inline-block mr-2">
+                                                        <label for="sampai">Sampai:</label>
+                                                        <br>
+                                                        <input type="date" id="sampai" name="sampai">
+                                                    </div>
+                                                @else
+                                                    <div class="form-group d-inline-block ">
+                                                        <label for="dari">Dari:</label>
+                                                        <br>
+                                                        <input value="{{$_GET['dari']}}" type="date" id="dari" name="dari">
+                                                    </div>
+                                                    <div class="form-group d-inline-block mr-2">
+                                                        <label for="sampai">Sampai:</label>
+                                                        <br>
+                                                        <input value="{{$_GET['sampai']}}" type="date" id="sampai" name="sampai">
+                                                    </div>
+                                                @endif
+                                                
                                                 <button type="submit" style="border:none; padding:0;">
                                                     <span class="input-group-text"><small>Filter &nbsp;</small> <i class="mdi mdi-magnify noti-icon"></i></span>
                                                 </button>
@@ -294,7 +313,9 @@
                                         <div class="row justify-content-center">
                                             <nav class="mt-5" aria-label="...">
                                                 <ul class="pagination">
+                                                    {{-- {{$tikets->appends('tikets')->links("pagination::bootstrap-4")}} --}}
                                                     {{$tikets->links("pagination::bootstrap-4")}}
+                                                    {{-- {!! $tikets->render() !!} --}}
                                                 </ul>
                                             </nav>
                                         </div>
