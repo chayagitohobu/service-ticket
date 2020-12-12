@@ -270,16 +270,16 @@
                                                         <td>{{$tiket->judul}}</td>
                                                         @switch($tiket->status)
                                                             @case('Buka')
-                                                                <td><i class="mdi mdi-record text-success"></i> Buka</td>
+                                                                <td><i style="font-size: 1.5em;" class="mdi mdi-record text-success"></i> Buka</td>
                                                                 @break
                                                             @case('Tutup')
-                                                                <td><i class="mdi mdi-record text-danger"></i> Tutup</td>
+                                                                <td><i style="font-size: 1.3em;" class="mdi mdi-record text-danger"></i> Tutup</td>
                                                                 @break
                                                             @case('Balasan operator')
-                                                                <td><i class="mdi mdi-record text-primary"></i> Balasan Operator</td>
+                                                                <td><i style="font-size: 1.3em;" class="mdi mdi-record text-primary"></i> Balasan Operator</td>
                                                                 @break
                                                             @case('Balasan client')
-                                                                <td><i class="mdi mdi-record text-info"></i> Balasan Client</td>
+                                                                <td><i style="font-size: 1.3em;" class="mdi mdi-record text-info"></i> Balasan Client</td>
                                                                 @break
                                                             @default
                                                                 
