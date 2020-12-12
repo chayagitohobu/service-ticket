@@ -116,6 +116,7 @@ class AdminTiketController extends Controller
         $tiket->ket = $request->input('ket');
         $tiket->status = 'Buka';
         $tiket->file = $store_file;
+        $tiket->balasan_terbaru = now();
         $tiket->save();
 
         return redirect('admin/tiket')->with('success', 'Tiket berhasil di buat !!');

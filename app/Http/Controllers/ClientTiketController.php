@@ -98,6 +98,7 @@ class ClientTiketController extends Controller
         $tiket->divisi_id = $request->input('divisi');
         $tiket->client_id = Auth::guard('client')->user()->id;
         $tiket->file = $store_file;
+        $tiket->balasan_terbaru = now();
         $tiket->save();
 
         return redirect('client/tiket')->with('success', 'Tiket berhasil dibuat !');

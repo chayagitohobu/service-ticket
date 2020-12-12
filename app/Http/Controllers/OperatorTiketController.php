@@ -114,6 +114,7 @@ class OperatorTiketController extends Controller
         $tiket->judul = $request->input('judul');
         $tiket->ket = $request->input('ket');
         $tiket->file = $store_file;
+        $tiket->balasan_terbaru = now();
         $tiket->save();
 
         return redirect('operator/tiket')->with('success', 'Tiket berhasil di buat !!');
