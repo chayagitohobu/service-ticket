@@ -27,31 +27,39 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="card m-b-30 card-body text-center">
-                                            <h3 class="card-title font-16 mt-0">Tiket yang telah dibuat </h3>
-                                            <h3 class="card-title font-16 mt-0">5</h3>
+                                            <label class=" mt-0">Tiket yang telah dibuat</label>
+                                            <br>
+                                            <h3 class="mt-0">{{$jumlah_tiket}}</h3>
+                                            <br>
                                             <a href="#" class="btn btn-primary waves-effect waves-light">Buat tiket baru</a>
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="card m-b-30 card-body text-center">
-                                            <h3 class="card-title font-16 mt-0"> Tiket yang belum terjawab </h3>
-                                            <h3 class="card-title font-16 mt-0">3</h3>
+                                            <label class="mt-0"> Tiket yang belum terjawab </label>
+                                            <br>
+                                            <h3 class="mt-0">{{$belum_terjawab}}</h3>
+                                            <br>
                                             <a href="#" class="btn btn-primary waves-effect waves-light">Lihat tiket</a>
                                         </div>
                                     </div>
                                     
                                     <div class="col-xl-6">
                                         <div class="card m-b-30 card-body text-center">
-                                            <h3 class="card-title font-16 mt-0"> Status tiket buka </h3>
-                                            <h3 class="card-title font-16 mt-0">3</h3>
+                                            <label class="mt-0"> Status tiket buka </label>
+                                            <br>
+                                            <h3 class="mt-0">{{$status_buka}}</h3>
+                                            <br>
                                             <a href="#" class="btn btn-primary waves-effect waves-light">Lihat tiket</a>
                                         </div>
                                     </div>
                                     
                                     <div class="col-xl-6">
                                         <div class="card m-b-30 card-body text-center">
-                                            <h3 class="card-title font-16 mt-0">Status tiket tutup </h3>
-                                            <h3 class="card-title font-16 mt-0">2</h3>
+                                            <label class="mt-0">Status tiket tutup </label>
+                                            <br>
+                                            <h3 class="mt-0">{{$status_tutup}}</h3>
+                                            <br>
                                             <a href="#" class="btn btn-primary waves-effect waves-light">lihat tiket</a>
                                         </div>
                                     </div>
@@ -62,32 +70,15 @@
                                     <div class="card-body">
                                         <h4 class="mt-0 header-title mb-4">Aktivitas terbaru</h4>
                                         <ol class="activity-feed mb-0">
+                                            @foreach ($aktivitas_terbarus as $aktivitas_terbaru)
                                             <li class="feed-item">
                                                 <div class="feed-item-list">
-                                                    <span class="date text-white-50">Jan 10 (20:30)</span>
-                                                    <span class="activity-text text-white">Balasan untuk tiket “Lorem ipsum dolor sit amet.”</span>
+                                                    <span class="date text-white-50">{{$aktivitas_terbaru->balasan_terbaru}}</span>
+                                                    <span class="activity-text text-white">Balasan untuk tiket “{{$aktivitas_terbaru->judul}}”</span>
                                                 </div>
                                             </li>
-                                            <li class="feed-item">
-                                                <div class="feed-item-list">
-                                                    <span class="date text-white-50">Jan 10 (20:30)</span>
-                                                    <span class="activity-text text-white">Balasan untuk tiket “Lorem ipsum dolor sit amet.”</span>
-                                                </div>
-                                            </li>
-                                            <li class="feed-item">
-                                                <div class="feed-item-list">
-                                                    <span class="date text-white-50">Jan 10 (20:30)</span>
-                                                    <span class="activity-text text-white">Balasan untuk tiket “Lorem ipsum dolor sit amet.”</span>
-                                                </div>
-                                            </li>
-                                            <li class="feed-item">
-                                                <div class="feed-item-list">
-                                                    <span class="date text-white-50">Jan 10 (20:30)</span>
-                                                    <span class="activity-text text-white">Balasan untuk tiket “Lorem ipsum dolor sit amet.”</span>
-                                                </div>
-                                            </li>
+                                            @endforeach
                                         </ol>
-        
                                     </div>
                                 </div>
                             </div>

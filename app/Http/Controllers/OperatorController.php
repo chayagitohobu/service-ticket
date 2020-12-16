@@ -26,7 +26,41 @@ class OperatorController extends Controller
 
     public function index()
     {
-        return view('operator.dashboard');
+        $user =  Auth::guard('user')->user();
+
+        $jumlah_tiket =  DB::table('tikets')
+            ->where('tikets.user_id', '=', $user->id)
+            ->count();
+
+        $status_buka = DB::table('tikets')
+            ->where('tikets.divisi_id', '=', $user->divisi_id)
+            ->where('status', '=', 'Buka')
+            ->count();
+
+        $status_tutup = DB::table('tikets')
+            ->where('tikets.divisi_id', '=', $user->divisi_id)
+            ->where('status', '=', 'Tutup')
+            ->count();
+
+        $belum_terjawab = DB::table('tikets')
+            ->where('tikets.divisi_id', '=', $user->divisi_id)
+            ->where('status', '=', 'Balasan Client')
+            ->count();
+
+        $aktivitas_terbarus = DB::table('tikets')
+            ->where('tikets.divisi_id', '=', $user->divisi_id)
+            ->leftJoin('balasans', 'tikets.id', 'balasans.tiket_id')
+            ->latest('tikets.balasan_terbaru', 'DESC')
+            ->select('tikets.judul', 'tikets.balasan_terbaru')
+            ->take(4)
+            ->get();
+
+        return view('operator.dashboard')
+            ->with('jumlah_tiket', $jumlah_tiket)
+            ->with('status_buka', $status_buka)
+            ->with('status_tutup', $status_tutup)
+            ->with('belum_terjawab', $belum_terjawab)
+            ->with('aktivitas_terbarus', $aktivitas_terbarus);
     }
 
 

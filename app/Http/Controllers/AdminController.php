@@ -87,6 +87,12 @@ class AdminController extends Controller
         //         ->whereMonth('created_at', '=', $i)
         //         ->count();
         // }
+        $aktivitas_terbarus = DB::table('tikets')
+            ->leftJoin('balasans', 'tikets.id', 'balasans.tiket_id')
+            ->latest('tikets.balasan_terbaru', 'DESC')
+            ->select('tikets.judul', 'tikets.balasan_terbaru')
+            ->take(4)
+            ->get();
 
 
         return view('admin.dashboard')
@@ -101,7 +107,8 @@ class AdminController extends Controller
             ->with('sep', $sep)
             ->with('okt', $okt)
             ->with('nov', $nov)
-            ->with('des', $des);
+            ->with('des', $des)
+            ->with('aktivitas_terbarus', $aktivitas_terbarus);
     }
 
 

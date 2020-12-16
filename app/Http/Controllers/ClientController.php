@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Client;
+use App\Models\Tiket;
 
 class ClientController extends Controller
 {
@@ -25,7 +27,42 @@ class ClientController extends Controller
 
     public function index()
     {
-        return view('client.dashboard');
+        $user_id = Auth::guard('client')->user()->id;
+
+
+        $jumlah_tiket =  DB::table('tikets')
+            ->where('tikets.client_id', '=', $user_id)
+            ->count();
+
+        $status_buka = DB::table('tikets')
+            ->where('tikets.client_id', '=', $user_id)
+            ->where('status', '=', 'Buka')
+            ->count();
+
+        $status_tutup = DB::table('tikets')
+            ->where('tikets.client_id', '=', $user_id)
+            ->where('status', '=', 'Tutup')
+            ->count();
+
+        $belum_terjawab = DB::table('tikets')
+            ->where('tikets.client_id', '=', $user_id)
+            ->where('status', '=', 'Balasan Operator')
+            ->count();
+
+        $aktivitas_terbarus = DB::table('tikets')
+            ->where('tikets.client_id', '=', $user_id)
+            ->leftJoin('balasans', 'tikets.id', 'balasans.tiket_id')
+            ->latest('tikets.balasan_terbaru', 'DESC')
+            ->select('tikets.judul', 'tikets.balasan_terbaru')
+            ->take(4)
+            ->get();
+
+        return view('client.dashboard')
+            ->with('jumlah_tiket', $jumlah_tiket)
+            ->with('status_buka', $status_buka)
+            ->with('status_tutup', $status_tutup)
+            ->with('belum_terjawab', $belum_terjawab)
+            ->with('aktivitas_terbarus', $aktivitas_terbarus);
     }
 
     /**

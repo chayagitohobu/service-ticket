@@ -33,30 +33,15 @@
                                     <div class="card-body">
                                         <h4 class="mt-0 header-title mb-4">Aktivitas terbaru</h4>
                                         <ol class="activity-feed mb-0">
+                                            @foreach ($aktivitas_terbarus as $aktivitas_terbaru)
+                                                
                                             <li class="feed-item">
                                                 <div class="feed-item-list">
-                                                    <span class="date text-white-50">Jan 10 (20:30)</span>
-                                                    <span class="activity-text text-white">Balasan untuk tiket “Lorem ipsum dolor sit amet.”</span>
+                                                    <span class="date text-white-50">{{$aktivitas_terbaru->balasan_terbaru}}</span>
+                                                    <span class="activity-text text-white">Balasan untuk tiket “{{$aktivitas_terbaru->judul}}”</span>
                                                 </div>
                                             </li>
-                                            <li class="feed-item">
-                                                <div class="feed-item-list">
-                                                    <span class="date text-white-50">Jan 10 (20:30)</span>
-                                                    <span class="activity-text text-white">Balasan untuk tiket “Lorem ipsum dolor sit amet.”</span>
-                                                </div>
-                                            </li>
-                                            <li class="feed-item">
-                                                <div class="feed-item-list">
-                                                    <span class="date text-white-50">Jan 10 (20:30)</span>
-                                                    <span class="activity-text text-white">Balasan untuk tiket “Lorem ipsum dolor sit amet.”</span>
-                                                </div>
-                                            </li>
-                                            <li class="feed-item">
-                                                <div class="feed-item-list">
-                                                    <span class="date text-white-50">Jan 10 (20:30)</span>
-                                                    <span class="activity-text text-white">Balasan untuk tiket “Lorem ipsum dolor sit amet.”</span>
-                                                </div>
-                                            </li>
+                                            @endforeach
                                         </ol>
         
                                     </div>
@@ -82,7 +67,7 @@
     var ctx = document.getElementById('myChart').getContext('2d');
 
     var myLineChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: ['Januari', 'Februari', 'Maret','April', 'Mei', 'Juni', 
             'Juli', 'Agustus', 'September', 'Oktober' , 'November', 'Desember',],
@@ -92,24 +77,46 @@
                 data: [{{$jan}},{{$feb}},{{$mar}},{{$apr}},{{$mei}},
                 {{$jun}},{{$jul}},{{$agu}},{{$sep}},{{$okt}},{{$nov}},{{$des}}],
                 backgroundColor: [
-                    'rgba(0, 0, 0, 0)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
                 ],
                 borderColor: [
                     '#46cd93'
                 ],
+                
                 borderWidth: 4
             }],
             
         },
         options: {
             // This chart will not respond to mousemove, etc
-            events: ['click']
+            // events: ['click']
             // onClick: testClick
+            onClick: handleClick
         }
     }); 
     
-    function testClick(){
-        console.log('test');
-    }
+    function handleClick(evt) {
+        var col;
+
+        this.getElementsAtEventForMode(evt, "x", 1).forEach(function(item) { col = item._index });
+
+        if (!col) {
+            return;
+        }
+
+        alert("Column " + col + " was selected");
+    };
+    
 </script>
 @endsection
