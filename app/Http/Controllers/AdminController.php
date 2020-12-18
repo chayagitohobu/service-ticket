@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -23,61 +24,78 @@ class AdminController extends Controller
      *
      * @return void
      */
+
+    protected $jan;
+    protected $feb;
+    protected $mar;
+    protected $apr;
+    protected $mei;
+    protected $jun;
+    protected $jul;
+    protected $agu;
+    protected $sep;
+    protected $okt;
+    protected $nov;
+    protected $des;
+    protected $jumlah_client;
+
     public function __construct()
     {
         $this->middleware('admin');
+
+        $this->jumlah_client = Client::all()->count();
+
+        $this->jan = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '01')
+            ->count();
+
+        $this->feb = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '02')
+            ->count();
+
+        $this->mar = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '03')
+            ->count();
+
+        $this->apr = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '04')
+            ->count();
+
+        $this->mei = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '05')
+            ->count();
+
+        $this->jun = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '06')
+            ->count();
+
+        $this->jul = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '07')
+            ->count();
+
+        $this->agu = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '08')
+            ->count();
+
+        $this->sep = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '09')
+            ->count();
+
+        $this->okt = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '10')
+            ->count();
+
+        $this->nov = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '11')
+            ->count();
+
+        $this->des = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '12')
+            ->count();
     }
 
     public function index()
     {
-
-        $jan = Tiket::whereYear('created_at', '=', '2020')
-            ->whereMonth('created_at', '=', '01')
-            ->count();
-
-        $feb = Tiket::whereYear('created_at', '=', '2020')
-            ->whereMonth('created_at', '=', '02')
-            ->count();
-
-        $mar = Tiket::whereYear('created_at', '=', '2020')
-            ->whereMonth('created_at', '=', '03')
-            ->count();
-
-        $apr = Tiket::whereYear('created_at', '=', '2020')
-            ->whereMonth('created_at', '=', '04')
-            ->count();
-
-        $mei = Tiket::whereYear('created_at', '=', '2020')
-            ->whereMonth('created_at', '=', '05')
-            ->count();
-
-        $jun = Tiket::whereYear('created_at', '=', '2020')
-            ->whereMonth('created_at', '=', '06')
-            ->count();
-
-        $jul = Tiket::whereYear('created_at', '=', '2020')
-            ->whereMonth('created_at', '=', '07')
-            ->count();
-
-        $agu = Tiket::whereYear('created_at', '=', '2020')
-            ->whereMonth('created_at', '=', '08')
-            ->count();
-
-        $sep = Tiket::whereYear('created_at', '=', '2020')
-            ->whereMonth('created_at', '=', '09')
-            ->count();
-
-        $okt = Tiket::whereYear('created_at', '=', '2020')
-            ->whereMonth('created_at', '=', '10')
-            ->count();
-
-        $nov = Tiket::whereYear('created_at', '=', '2020')
-            ->whereMonth('created_at', '=', '11')
-            ->count();
-
-        $des = Tiket::whereYear('created_at', '=', '2020')
-            ->whereMonth('created_at', '=', '12')
-            ->count();
 
         // $bulan = array();
 
@@ -87,28 +105,125 @@ class AdminController extends Controller
         //         ->whereMonth('created_at', '=', $i)
         //         ->count();
         // }
-        $aktivitas_terbarus = DB::table('tikets')
-            ->leftJoin('balasans', 'tikets.id', 'balasans.tiket_id')
-            ->latest('tikets.balasan_terbaru', 'DESC')
-            ->select('tikets.judul', 'tikets.balasan_terbaru')
-            ->take(4)
-            ->get();
 
+        $technology = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '1')
+            ->where('divisi_id', '=', 1)
+            ->count();
+        $marketing = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '1')
+            ->where('divisi_id', '=', 2)
+            ->count();
+        $human_resource = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '1')
+            ->where('divisi_id', '=', 3)
+            ->count();
+        $finance = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', '1')
+            ->where('divisi_id', '=', 4)
+            ->count();
 
         return view('admin.dashboard')
-            ->with('jan', $jan)
-            ->with('feb', $feb)
-            ->with('mar', $mar)
-            ->with('apr', $apr)
-            ->with('mei', $mei)
-            ->with('jun', $jun)
-            ->with('jul', $jul)
-            ->with('agu', $agu)
-            ->with('sep', $sep)
-            ->with('okt', $okt)
-            ->with('nov', $nov)
-            ->with('des', $des)
-            ->with('aktivitas_terbarus', $aktivitas_terbarus);
+            ->with('jumlah_client', $this->jumlah_client)
+            ->with('jan', $this->jan)
+            ->with('feb', $this->feb)
+            ->with('mar', $this->mar)
+            ->with('apr', $this->apr)
+            ->with('mei', $this->mei)
+            ->with('jun', $this->jun)
+            ->with('jul', $this->jul)
+            ->with('agu', $this->agu)
+            ->with('sep', $this->sep)
+            ->with('okt', $this->okt)
+            ->with('nov', $this->nov)
+            ->with('des', $this->des)
+            ->with('technology', $technology)
+            ->with('marketing', $marketing)
+            ->with('human_resource', $human_resource)
+            ->with('finance', $finance);
+    }
+
+    public function divisi_bulan($bulan)
+    {
+
+        $bulan_convert = '';
+
+        switch ($bulan) {
+            case 'januari':
+                $bulan_convert = 1;
+                break;
+            case 'februari':
+                $bulan_convert = 2;
+                break;
+            case 'maret':
+                $bulan_convert = 3;
+                break;
+            case 'april':
+                $bulan_convert = 4;
+                break;
+            case 'mei':
+                $bulan_convert = 5;
+                break;
+            case 'juni':
+                $bulan_convert = 6;
+                break;
+            case 'juli':
+                $bulan_convert = 7;
+                break;
+            case 'agustus':
+                $bulan_convert = 8;
+                break;
+            case 'september':
+                $bulan_convert = 9;
+                break;
+            case 'oktober':
+                $bulan_convert = 10;
+                break;
+            case 'november':
+                $bulan_convert = 11;
+                break;
+            case 'desember':
+                $bulan_convert = 12;
+                break;
+        }
+
+
+        $technology = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', $bulan_convert)
+            ->where('divisi_id', '=', 1)
+            ->count();
+        $marketing = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', $bulan_convert)
+            ->where('divisi_id', '=', 2)
+            ->count();
+        $human_resource = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', $bulan_convert)
+            ->where('divisi_id', '=', 3)
+            ->count();
+        $finance = Tiket::whereYear('created_at', '=', '2020')
+            ->whereMonth('created_at', '=', $bulan_convert)
+            ->where('divisi_id', '=', 4)
+            ->count();
+
+        return view('admin.dashboard')
+            ->with('jumlah_client', $this->jumlah_client)
+            ->with('jan', $this->jan)
+            ->with('feb', $this->feb)
+            ->with('mar', $this->mar)
+            ->with('apr', $this->apr)
+            ->with('mei', $this->mei)
+            ->with('jun', $this->jun)
+            ->with('jul', $this->jul)
+            ->with('agu', $this->agu)
+            ->with('sep', $this->sep)
+            ->with('okt', $this->okt)
+            ->with('nov', $this->nov)
+            ->with('des', $this->des)
+            ->with('bulan', $bulan)
+            ->with('technology', $technology)
+            ->with('marketing', $marketing)
+            ->with('human_resource', $human_resource)
+            ->with('finance', $finance);
     }
 
 

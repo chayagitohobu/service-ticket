@@ -25,26 +25,29 @@
                             <div class="card col-xl-8">
                                 
                                 <div class="card-body">
-                                    <canvas id="myChart" width="400" height="300"></canvas>
+                                    <canvas id="lineChart" width="400" height="300"></canvas>
                                 </div>
                               </div>
                             <div class="col-xl-4">
                                 <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="mt-0 header-title mb-4">Aktivitas terbaru</h4>
-                                        <ol class="activity-feed mb-0">
-                                            @foreach ($aktivitas_terbarus as $aktivitas_terbaru)
-                                                
-                                            <li class="feed-item">
-                                                <div class="feed-item-list">
-                                                    <span class="date text-white-50">{{$aktivitas_terbaru->balasan_terbaru}}</span>
-                                                    <span class="activity-text text-white">Balasan untuk tiket “{{$aktivitas_terbaru->judul}}”</span>
-                                                </div>
-                                            </li>
-                                            @endforeach
-                                        </ol>
-        
+                                    <div class="card-body text-center">
+                                        <p class="header-title"> <small>Distribusi Divisi Tiket Pada Bulan</small> </p>
+                                        
+                                        @if (empty($bulan))
+                                        <p class="header-title"><b> JANUARI</b></p>
+                                        @else
+                                        <p class="header-title"><b> {{$bulan}}</b></p>
+                                        @endif
+                                        
+                                        <hr>
+                                        <canvas id="pieChart" width="400" height="300"></canvas>
                                     </div>
+                                  </div>
+                                  <div class="card card-body text-center">
+                                    <p class="header-title"> <small>jumlah client</small> </p>
+                                    <hr>
+                                    <h5 class="mt-0" style="font-size: 3em"> <b>{{$jumlah_client}}</b></h5>
+                                    <br>
                                 </div>
                             </div>
                         </div>
@@ -64,9 +67,11 @@
 @section('script')
 <script>
     
-    var ctx = document.getElementById('myChart').getContext('2d');
+    var lineChart = document.getElementById('lineChart').getContext('2d');
+    var pieChart = document.getElementById('pieChart').getContext('2d');
+    
 
-    var myLineChart = new Chart(ctx, {
+    var myLineChart = new Chart(lineChart, {
         type: 'bar',
         data: {
             labels: ['Januari', 'Februari', 'Maret','April', 'Mei', 'Juni', 
@@ -74,24 +79,26 @@
             datasets: [{
                 label: 'Jumlah Tiket',
                 
-                data: [{{$jan}},{{$feb}},{{$mar}},{{$apr}},{{$mei}},
-                {{$jun}},{{$jul}},{{$agu}},{{$sep}},{{$okt}},{{$nov}},{{$des}}],
+                data: [{{$jan}},{{$feb}},{{$mar}},
+                {{$apr}},{{$mei}},{{$jun}},{{$jul}},
+                {{$agu}},{{$sep}},{{$okt}},{{$nov}},{{$des}}],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(20, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64, 0.5)',
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64, 0.5)'
                 ],
                 borderColor: [
-                    '#46cd93'
+                    // '#46cd93'
+                    '#0000'
                 ],
                 
                 borderWidth: 4
@@ -99,23 +106,79 @@
             
         },
         options: {
-            // This chart will not respond to mousemove, etc
-            // events: ['click']
-            // onClick: testClick
             onClick: handleClick
         }
     }); 
-    
+
+
+    var pieChart = new Chart(pieChart, {
+    type: 'pie',
+    data: {
+        labels: ["Technology", "Marketing", "Human Resource", "Finance"],
+        datasets: [{
+        backgroundColor: [
+            "#2ecc71",
+            "#3498db",
+            "#95a5a6",
+            "#9b59b6"
+        ],
+        data: [{{$technology}}, {{$marketing}}, {{$human_resource}}, {{$finance}}]
+        }]
+    }
+    });
+
     function handleClick(evt) {
         var col;
 
         this.getElementsAtEventForMode(evt, "x", 1).forEach(function(item) { col = item._index });
 
-        if (!col) {
-            return;
+        // if (!col) {
+        //     return;
+        // }
+
+        // var test = 'test';
+        switch(col){
+            case 0 :
+            window.location.href = 'http://127.0.0.1:8000/admin/home/bulan/januari';
+            break;
+            case 1 :
+            window.location.href = 'http://127.0.0.1:8000/admin/home/bulan/februari';
+            break;
+            case 2 :
+            window.location.href = 'http://127.0.0.1:8000/admin/home/bulan/maret';
+            break;
+            case 3 :
+            window.location.href = 'http://127.0.0.1:8000/admin/home/bulan/april';
+            break;
+            case 4 :
+            window.location.href = 'http://127.0.0.1:8000/admin/home/bulan/mei';
+            break;
+            case 5 :
+            window.location.href = 'http://127.0.0.1:8000/admin/home/bulan/juni';
+            break;
+            case 6 :
+            window.location.href = 'http://127.0.0.1:8000/admin/home/bulan/juli';
+            break;
+            case 7 :
+            window.location.href = 'http://127.0.0.1:8000/admin/home/bulan/agustus';
+            break;
+            case 8 :
+            window.location.href = 'http://127.0.0.1:8000/admin/home/bulan/september';
+            break;
+            case 9 :
+            window.location.href = 'http://127.0.0.1:8000/admin/home/bulan/oktober';
+            break;
+            case 10 :
+            window.location.href = 'http://127.0.0.1:8000/admin/home/bulan/november';
+            break;
+            case 11 :
+            window.location.href = 'http://127.0.0.1:8000/admin/home/bulan/desember';
+            break;
+            default:
+            window.location.href = 'http://127.0.0.1:8000/admin/home';
         }
 
-        alert("Column " + col + " was selected");
+        
     };
     
 </script>

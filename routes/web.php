@@ -37,6 +37,7 @@ Route::prefix('admin')->group(function () {
     // Route::get('/admin', [App\Http\Controllers\TolakController::class, 'index']);
     Route::get('/', [App\Http\Controllers\TolakController::class, 'index']);
     Route::get('home', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
+    Route::get('home/bulan/{bulan}', [App\Http\Controllers\AdminController::class, 'divisi_bulan'])->name('admin.home.divisi_bulan');
     Route::get('profile', [App\Http\Controllers\AdminController::class, 'show'])->name('admin.show');
 
     // Client search

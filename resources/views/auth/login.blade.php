@@ -10,7 +10,7 @@
                     <div >
                         <a href="index.html" class="logo logo-admin"><img src="assets/images/logo_dark.png" height="60" alt="logo"></a>
                     </div>
-                    <h5 class="font-14 text-muted mb-4">Responsive Bootstrap 4 Admin Dashboard</h5>
+                    <h5 class="font-14 text-muted mb-4">Sistem Informasi Tiket Pelayanan</h5>
                     <p class="text-muted mb-4">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
 
                     <h5 class="font-14 text-muted mb-4">Terms :</h5>
