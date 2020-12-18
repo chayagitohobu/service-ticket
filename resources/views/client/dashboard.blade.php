@@ -27,11 +27,11 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="card m-b-30 card-body text-center">
-                                            <label class=" mt-0">Tiket yang telah dibuat</label>
+                                            <label class=" mt-0">Jumlah tiket yang dibuat</label>
                                             <br>
                                             <h3 class="mt-0">{{$jumlah_tiket}}</h3>
                                             <br>
-                                            <a href="#" class="btn btn-primary waves-effect waves-light">Buat tiket baru</a>
+                                            <a href="{{route('client.tiket.create')}}" class="btn btn-primary waves-effect waves-light">Buat tiket baru</a>
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
@@ -40,7 +40,7 @@
                                             <br>
                                             <h3 class="mt-0">{{$belum_terjawab}}</h3>
                                             <br>
-                                            <a href="#" class="btn btn-primary waves-effect waves-light">Lihat tiket</a>
+                                            <a href="{{route('client.tiket.status_filter', $status = 'Balasan operator')}}" class="btn btn-primary waves-effect waves-light">Lihat tiket</a>
                                         </div>
                                     </div>
                                     
@@ -50,7 +50,7 @@
                                             <br>
                                             <h3 class="mt-0">{{$status_buka}}</h3>
                                             <br>
-                                            <a href="#" class="btn btn-primary waves-effect waves-light">Lihat tiket</a>
+                                            <a href="{{route('client.tiket.status_filter', $status = 'Buka')}}" class="btn btn-primary waves-effect waves-light">Lihat tiket</a>
                                         </div>
                                     </div>
                                     
@@ -60,7 +60,7 @@
                                             <br>
                                             <h3 class="mt-0">{{$status_tutup}}</h3>
                                             <br>
-                                            <a href="#" class="btn btn-primary waves-effect waves-light">lihat tiket</a>
+                                            <a href="{{route('client.tiket.status_filter', $status = 'Tutup')}}" class="btn btn-primary waves-effect waves-light">lihat tiket</a>
                                         </div>
                                     </div>
                                 </div>
