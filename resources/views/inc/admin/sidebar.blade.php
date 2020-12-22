@@ -50,13 +50,6 @@
                         <span> Tiket</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#" class="waves-effect">
-                        <i class="dripicons-document"></i>
-                        <span> Laporan</span>
-                    </a>
-                </li>
-
             </ul>
         </div>
         <div class="clearfix"></div>

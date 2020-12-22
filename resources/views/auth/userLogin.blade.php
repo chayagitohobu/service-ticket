@@ -10,14 +10,19 @@
                     <div >
                         <a href="index.html" class="logo logo-admin"><img src=" {{asset('assets/images/logo_dark.png')}}" height="60" alt="logo"></a>
                     </div>
-                    <h5 class="font-14 text-muted mb-4">Responsive Bootstrap 4 Admin Dashboard</h5>
-                    <p class="text-muted mb-4">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
-
-                    <h5 class="font-14 text-muted mb-4">Terms :</h5>
+                    <h5 class="font-14 text-muted mb-4">SISTEM INFORMASI TIKET PELAYANAN</h5>
+                    <p class="text-muted mb-4">
+                        Sistem informasi tiket pelayanan digunakan untuk menjawab, memanajemen, dan menjaga daftar masalah yang biasa di alami oleh client
+                    </p>
+                    <h5 class="font-14 text-muted mb-4">DOSEN PEMBIMBING :</h5>
                     <div>
-                        <p><i class="mdi mdi-arrow-right text-primary mr-2"></i>At solmen va esser necessi far uniform paroles.</p>
-                        <p><i class="mdi mdi-arrow-right text-primary mr-2"></i>Donec sapien ut libero venenatis faucibus.</p>
-                        <p><i class="mdi mdi-arrow-right text-primary mr-2"></i>Nemo enim ipsam voluptatem quia voluptas sit .</p>
+                        <p><i class="mdi mdi-arrow-right text-primary mr-2"></i>Desi Andreswari, S.T., M.Cs.</p>
+                    </div>
+                    <h5 class="font-14 text-muted mb-4">DAFTAR ANGGOTA KELOMPOK :</h5>
+                    <div>
+                        <p><i class="mdi mdi-arrow-right text-primary mr-2"></i>Meli Tri Yanti (G1A018008)</p>
+                        <p><i class="mdi mdi-arrow-right text-primary mr-2"></i>Naufal Rizky Ananda (G1018037)</p>
+                        <p><i class="mdi mdi-arrow-right text-primary mr-2"></i>Harizaldy Cahya Pratama (G1A018057)</p>
                     </div>
                 </div>
             </div>

@@ -33,7 +33,6 @@
                                                 <div class="form-group col-lg-6">
                                                     <label>Nama</label>
                                                     <input name="name" value="{{$user->name}}" readonly type="text" class="form-control" placeholder="Type something"/>
-                                                    
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label>Email</label>
@@ -111,4 +110,3 @@
     </div>
     <!-- END wrapper -->
 @endsection
-
