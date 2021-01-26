@@ -27,7 +27,7 @@ class AdminUserController extends Controller
         $users = DB::table('users')
             ->join('divisis', 'users.divisi_id', 'divisis.id')
             ->join('roles', 'users.role_id', 'roles.id')
-            ->select('users.id', 'users.email', 'users.name', 'users.telp', 'divisis.divisi', 'roles.role')
+            ->select('users.id', 'users.email', 'users.name', 'users.telp', 'users.created_at', 'divisis.divisi', 'roles.role')
             ->paginate(8);
 
         $divisis = Divisi::all();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2020 at 10:29 AM
+-- Generation Time: Jan 26, 2021 at 08:25 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.4.8
 
@@ -44,9 +44,17 @@ CREATE TABLE `balasans` (
 --
 
 INSERT INTO `balasans` (`id`, `tiket_id`, `user_id`, `client_id`, `divisi_id`, `balasan`, `file`, `created_at`, `updated_at`) VALUES
-(5, 11, 11, NULL, 2, '<p>asdaad</p>', '[\"1605930785-Sequence diagram.png\"]', '2020-11-20 20:53:05', '2020-11-20 20:53:05'),
-(10, 13, NULL, 11, NULL, '<p>dfdsasdsdgf</p>', '[\"1605932802-1605932061-Bab II.pdf\",\"1605932802-solution.pdf\"]', '2020-11-20 21:26:42', '2020-11-20 21:26:42'),
-(11, 14, 12, NULL, 3, '<p>sadfda</p>', '[\"1605933776-Panduan KP.pdf\"]', '2020-11-20 21:42:56', '2020-11-20 21:42:56');
+(61, 49, 1, NULL, 1, '<p>Apakah anda dapat menambahkan detail error tersebut ?&nbsp; &nbsp;</p>', NULL, '2020-12-20 08:24:01', '2020-12-20 08:24:01'),
+(62, 52, 1, NULL, 1, '<p>apakah anda dapat menambahkan lampiran contoh fitur tersebut ?</p>', NULL, '2020-12-20 08:25:15', '2020-12-20 08:25:15'),
+(63, 49, NULL, 1, NULL, '<p>saya akan melampirkan screenshoot error yang saya alami&nbsp;</p>', '[\"1608478033-Screenshot_20201220_163618.jpg\"]', '2020-12-20 08:27:13', '2020-12-20 08:27:13'),
+(64, 49, 1, NULL, 1, '<p>Terima kasih kami akan segera memperbaiki nya&nbsp;</p>', NULL, '2020-12-20 08:28:39', '2020-12-20 08:28:39'),
+(65, 50, 13, NULL, 4, '<p>sekitar 1jt rupiah</p>', NULL, '2020-12-20 08:30:33', '2020-12-20 08:30:33'),
+(66, 50, NULL, 1, NULL, '<p>ok</p>', NULL, '2020-12-20 08:31:16', '2020-12-20 08:31:16'),
+(67, 50, NULL, 1, NULL, '<p>Berapa jika saya ingin menambahkan 2 fitur ?&nbsp;</p>', NULL, '2020-12-20 08:31:54', '2020-12-20 08:31:54'),
+(68, 51, 12, NULL, 3, '<p>kami akan segera memperbaiki nya....&nbsp;</p>', NULL, '2021-01-10 02:30:54', '2021-01-10 02:30:54'),
+(69, 54, 12, NULL, 3, '<p>kami akan segera kerjakan</p>', NULL, '2021-01-10 02:39:41', '2021-01-10 02:39:41'),
+(70, 49, NULL, 1, NULL, '<p>test</p>', NULL, '2021-01-22 20:20:42', '2021-01-22 20:20:42'),
+(71, 49, 1, NULL, 1, '<p>test</p>', '[\"1611372439- 4  G1A018057 Harizaldy Cahya Pratama.docx\"]', '2021-01-22 20:27:19', '2021-01-22 20:27:19');
 
 -- --------------------------------------------------------
 
@@ -60,7 +68,6 @@ CREATE TABLE `clients` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name_perusahaan` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `role` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `telp` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -72,18 +79,21 @@ CREATE TABLE `clients` (
 -- Dumping data for table `clients`
 --
 
-INSERT INTO `clients` (`id`, `email`, `password`, `name`, `name_perusahaan`, `role`, `telp`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'gschuppe@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Amya Stroman', NULL, NULL, NULL, '2020-11-20 06:51:38', 'ZJOdSC7vY3', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
-(2, 'rosario48@example.net', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Sallie Ondricka', NULL, NULL, NULL, '2020-11-20 06:51:38', 'RoA6UvjtSq', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
-(3, 'trinity.cremin@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Scottie O\'Kon', NULL, NULL, NULL, '2020-11-20 06:51:38', 'u6PugsjyKr', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
-(4, 'iboyer@example.org', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dax Jerde', NULL, NULL, NULL, '2020-11-20 06:51:38', 'RKgWt2GVKN', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
-(5, 'tromp.mac@example.org', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dale Ernser', NULL, NULL, NULL, '2020-11-20 06:51:38', 'x0jbntV5eV', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
-(6, 'crooks.rickie@example.org', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Brenden Purdy', NULL, NULL, NULL, '2020-11-20 06:51:38', '7NrzOiMDBD', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
-(7, 'danielle93@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Tianna Hills', NULL, NULL, NULL, '2020-11-20 06:51:38', 'aIGlnBAuh2', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
-(8, 'rosemary.altenwerth@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Royal Rodriguez', NULL, NULL, NULL, '2020-11-20 06:51:38', 'GbKHWDHB3t', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
-(9, 'branson44@example.org', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Joyce Mitchell', NULL, NULL, NULL, '2020-11-20 06:51:38', 'dxhGM5XA2S', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
-(10, 'vladimir.mckenzie@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Shakira Sauer', NULL, NULL, NULL, '2020-11-20 06:51:38', 'zeI5kIKg6d', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
-(11, 'wahyu@gmail.com', '$2y$10$1Wz2T34zTs8xTmb3Hv5jvuu4in/kMaXNmd9dI/332EhJxOhuNkBcy', 'wahyuu', 'wahyu inc', 'Manager', '12345432', NULL, NULL, '2020-11-20 20:57:46', '2020-11-21 01:37:47');
+INSERT INTO `clients` (`id`, `email`, `password`, `name`, `name_perusahaan`, `telp`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'meli@gmail.com', '$2y$10$Gd3z9uwqErVie2ozkKljL.AsRdqQ6MyBdQmrWYOQogOK2J9HFMcA2', 'meli2', 'meli', '08765436543', '2020-11-20 06:51:38', 'ZJOdSC7vY3', '2020-11-20 06:51:38', '2021-01-22 20:18:09'),
+(2, 'rosario48@example.net', '$2y$10$Em/7qT5IgTjgaKTlZCsNKO/s.a6t9evlsdtnCkDhhR4E0fcUhllly', 'Sallie Ondricka', 'example', '084512345678', '2020-11-20 06:51:38', 'RoA6UvjtSq', '2020-11-20 06:51:38', '2020-12-19 22:32:24'),
+(3, 'trinity.cremin@example.com', '$2y$10$7mgRYy/jIHZQUyiChSUJduNzTAwCXbgV1/OtvAmdOSZrQA.QbcE4S', 'Scottie O\'Kon', 'example', '085678906543', '2020-11-20 06:51:38', 'u6PugsjyKr', '2020-11-20 06:51:38', '2020-12-19 22:32:46'),
+(4, 'iboyer@example.org', '$2y$10$dEwNlFv6TEbHsBwmDGS/1.0nCpZlfqI3eYXFLfmyT62wTRhH1aoka', 'Dax Jerde', 'example', '082345432145', '2020-11-20 06:51:38', 'RKgWt2GVKN', '2020-11-20 06:51:38', '2020-12-19 22:33:30'),
+(5, 'tromp.mac@example.org', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dale Ernser', 'example', NULL, '2020-11-20 06:51:38', 'x0jbntV5eV', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
+(6, 'crooks.rickie@example.org', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Brenden Purdy', 'example', NULL, '2020-11-20 06:51:38', '7NrzOiMDBD', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
+(7, 'danielle93@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Tianna Hills', 'example', NULL, '2020-11-20 06:51:38', 'aIGlnBAuh2', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
+(8, 'rosemary.altenwerth@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Royal Rodriguez', 'example', NULL, '2020-11-20 06:51:38', 'GbKHWDHB3t', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
+(9, 'branson44@example.org', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Joyce Mitchell', 'example', NULL, '2020-11-20 06:51:38', 'dxhGM5XA2S', '2020-11-20 06:51:38', '2020-11-20 06:51:38'),
+(10, 'vladimir.mckenzie@example.com', '$2y$10$8y4SbMGT.g7Is3CRfqquwO24ryJFiuqwPo1W1aAd8nZnK4BhvOLDm', 'test', 'example', '675645343', '2020-11-20 06:51:38', 'zeI5kIKg6d', '2020-11-20 06:51:38', '2020-12-12 13:01:08'),
+(11, 'wahyu@gmail.com', '$2y$10$1Wz2T34zTs8xTmb3Hv5jvuu4in/kMaXNmd9dI/332EhJxOhuNkBcy', 'wahyu', 'wahyu test', '12345432', NULL, NULL, '2020-11-20 20:57:46', '2020-12-04 08:14:39'),
+(12, 'test@gmail.com', '$2y$10$8z9jfsxfe3yRqJ/in1t7uesymiaQrTQR.Gi/dQJprrLlMBViMEq2K', 'test', 'test inc', '65445654', NULL, NULL, '2020-11-21 03:34:11', '2020-11-21 03:34:11'),
+(13, 'danny@gmail.com', '$2y$10$lYA.rnuWFLGYAI6fjPL9TeSWC/SajsaYHYwCzsUScIxJL9tkS/sdG', 'dannyy', 'danny inc', '345673422345', NULL, NULL, '2020-11-27 11:16:26', '2020-11-27 11:16:41'),
+(15, 'coba@gmail.com', '$2y$10$LArxgk7mv80er6T4PTrDMeCidiAe21GHBEqCgDvmEN07JfBAm0Opa', 'coba coba', 'coba inc', '76544534343', NULL, NULL, '2021-01-22 20:38:37', '2021-01-22 20:38:37');
 
 -- --------------------------------------------------------
 
@@ -209,9 +219,37 @@ CREATE TABLE `tikets` (
 --
 
 INSERT INTO `tikets` (`id`, `user_id`, `client_id`, `divisi_id`, `judul`, `ket`, `file`, `balasan_terbaru`, `prioritas`, `status`, `created_at`, `updated_at`) VALUES
-(11, 11, NULL, 2, 'test', '<p>asdsadas</p>', '[\"1605930748-Harizaldy Cahya Pratama_G1A018057_Laporan3_Anaprancis.docx\",\"1605930748-Pendahuluan.docx\"]', '2020-11-20 20:53:50', 'Sedang', 'Buka', '2020-11-20 20:52:28', '2020-11-20 20:53:50'),
-(13, NULL, 11, 3, 'sdfgsfcvb', 'sdfghjfds', '[\"1605932061-Bab II.pdf\"]', '2020-11-20 21:26:42', 'Tinggi', 'Buka', '2020-11-20 21:14:21', '2020-11-20 21:26:42'),
-(14, 12, NULL, 3, 'adsfdg', '<p>asdfdsd</p>', '[\"1605933293-Cormen_Lin_Lee-Introduction_to_Algorithms_(Solutions)-EN.pdf\",\"1605933293-laporan_buku_2020-10-12_19-27-51.pdf\"]', '2020-11-20 21:42:56', 'Sedang', 'Buka', '2020-11-20 21:34:53', '2020-11-20 21:42:56');
+(49, NULL, 1, 1, 'Saya mengalami bugs pada bagian checkout', 'Pada bagian checkout jumlah perhitungan harga barang yang telah di beli salah', '[\"1608476973-Screenshot_20201220_163434.jpg\"]', '2021-01-22 20:27:19', 'Tinggi', 'Tutup', '2020-12-20 08:09:33', '2021-01-22 20:48:20'),
+(50, NULL, 1, 4, 'Berapa biaya penambahan fitur ?', 'Saya berencana untuk menambahkan fitur rekomendasi barang, berapakah biaya yang di perlukan ?', '[\"1608477233-Screenshot_20201220_163434.jpg\",\"1608477233-Screenshot_20201220_163530.jpg\"]', '2020-12-20 08:31:54', 'Rendah', 'Balasan client', '2020-12-20 08:13:53', '2020-12-20 08:31:54'),
+(51, NULL, 11, 3, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', '<span style=\"font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\">orem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</span>', NULL, '2021-01-10 02:30:54', 'Rendah', 'Balasan operator', '2020-04-20 08:17:48', '2021-01-10 02:30:54'),
+(52, NULL, 2, 1, 'Saya ingin penambahan fitur video', 'Saya ingin menambahkan fitur video pada website blog saya, sehingga saya dapat mengupload video', '[\"1608477735-Screenshot_20201220_163604.jpg\",\"1608477735-Screenshot_20201220_163618.jpg\"]', '2020-12-20 08:25:15', 'Rendah', 'Balasan operator', '2020-03-20 08:22:15', '2020-12-20 08:25:15'),
+(53, NULL, 1, 2, 'Ke divisi apa saya harus bertanya, jika saya ingin menambahkan fitur baru ?', 'Ke divisi apa saya harus bertanya, jika saya ingin menambahkan fitur baru ?', NULL, '2020-12-20 08:33:06', 'Sedang', 'Buka', '2020-08-20 08:33:06', '2020-12-20 08:33:06'),
+(54, NULL, 11, 3, 'Saya ingin menambah fitur', 'Saya ingin menambah fiturSaya ingin menambah fiturSaya ingin menambah fitur', NULL, '2021-01-10 02:39:41', 'Sedang', 'Balasan operator', '2021-08-10 02:38:08', '2021-01-10 02:39:41'),
+(55, NULL, 1, 1, 'Saya ingin menambah fitur baru', 'DFSDFSDFDSD', NULL, '2020-01-22 20:21:43', 'Tinggi', 'Buka', '2020-02-22 20:21:43', '2021-01-22 20:21:43'),
+(56, NULL, 11, 3, 'test', NULL, NULL, '2020-03-24 22:17:30', 'Sedang', 'Buka', '2020-03-24 22:17:30', '2021-01-24 22:17:30'),
+(57, NULL, 11, 3, 'test', NULL, NULL, '2020-03-10 22:17:39', 'Rendah', 'Buka', '2020-03-10 22:17:39', '2021-01-24 22:17:39'),
+(58, NULL, 11, 1, 'asd', NULL, NULL, '2020-04-15 22:17:49', 'Rendah', 'Buka', '2020-04-15 22:17:49', '2021-01-24 22:17:49'),
+(59, NULL, 11, 1, 'gfdas', NULL, NULL, '2020-12-07 22:17:59', 'Sedang', 'Buka', '2020-12-07 22:17:59', '2021-01-24 22:17:59'),
+(60, NULL, 11, 3, 'jkhd', NULL, NULL, '2020-12-06 22:18:14', 'Rendah', 'Buka', '2020-12-06 22:18:14', '2021-01-24 22:18:14'),
+(62, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-01-15 05:27:29', '2021-01-24 22:26:58'),
+(63, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-02-10 05:27:29', '2021-01-24 22:26:58'),
+(64, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-02-10 05:27:29', '2021-01-24 22:26:58'),
+(65, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-03-10 05:27:29', '2021-01-24 22:26:58'),
+(66, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-04-21 05:27:29', '2021-01-24 22:26:58'),
+(67, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-05-20 05:27:29', '2021-01-24 22:26:58'),
+(68, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-06-02 05:27:29', '2021-01-24 22:26:58'),
+(69, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-07-08 05:27:29', '2021-01-24 22:26:58'),
+(70, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-08-19 05:27:29', '2021-01-24 22:26:58'),
+(71, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-09-14 05:27:29', '2021-01-24 22:26:58'),
+(74, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-12-25 05:27:29', '2021-01-24 22:26:58'),
+(75, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-01-15 05:27:29', '2021-01-24 22:26:58'),
+(76, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-05-20 05:27:29', '2021-01-24 22:26:58'),
+(77, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-06-02 05:27:29', '2021-01-24 22:26:58'),
+(78, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-07-08 05:27:29', '2021-01-24 22:26:58'),
+(79, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-09-14 05:27:29', '2021-01-24 22:26:58'),
+(80, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-10-20 05:27:29', '2021-01-24 22:26:58'),
+(81, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-07-08 05:27:29', '2021-01-24 22:26:58'),
+(82, 11, NULL, 1, 'dsa', NULL, NULL, '2021-01-24 22:26:58', 'Rendah', 'Buka', '2020-08-19 05:27:29', '2021-01-24 22:26:58');
 
 -- --------------------------------------------------------
 
@@ -238,18 +276,21 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `divisi_id`, `name`, `telp`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'Chyna Stiedemann MD', NULL, 'devonte.thompson@example.net', '2020-11-20 06:51:30', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'qcs3cwpCva', '2020-11-20 06:51:30', '2020-11-20 06:51:30'),
-(2, 2, 1, 'Daren Beatty DDS', NULL, 'christine.runolfsdottir@example.com', '2020-11-20 06:51:30', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'AJ60uOy8L4', '2020-11-20 06:51:30', '2020-11-20 06:51:30'),
-(3, 2, 1, 'Magdalena Dibbert', NULL, 'kub.jared@example.com', '2020-11-20 06:51:30', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'T1zELdWyRK', '2020-11-20 06:51:30', '2020-11-20 06:51:30'),
-(4, 2, 1, 'Dr. Adriel Bahringer', NULL, 'rcrooks@example.net', '2020-11-20 06:51:30', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'xjCzblk8iG', '2020-11-20 06:51:30', '2020-11-20 06:51:30'),
+(1, 2, 1, 'noval', '086453445342', 'noval@gmail.com', '2020-11-20 06:51:30', '$2y$10$UPAXxhWTMW/vkXa3jUgUKegkf8Zs6Ad/BBi9mIZyfN3s.ZEonZ8uK', 'qcs3cwpCva', '2020-11-20 06:51:30', '2021-01-22 19:32:31'),
+(2, 1, 2, 'Daren Beatty DDS', '087642346532', 'christine.runolfsdottir@example.com', '2020-11-20 06:51:30', '$2y$10$CmLxi33CGFZ1S3X/onf0rO0t98HxhDa/FZcseolz56cBH7arShvpu', 'AJ60uOy8L4', '2020-11-20 06:51:30', '2020-12-19 22:28:37'),
+(3, 2, 3, 'Magdalena Dibbert', '087634567890', 'kub.jared@example.com', '2020-11-20 06:51:30', '$2y$10$rJgTHsy94ziavw6RbdvDheeMokcsPQvM/9I.nnCPI2FGH66nH6/uW', 'T1zELdWyRK', '2020-11-20 06:51:30', '2020-12-19 22:30:14'),
+(4, 2, 4, 'Dr. Adriel Bahringer', '083456788765', 'rcrooks@example.net', '2020-11-20 06:51:30', '$2y$10$qsazosudR/3baIMe7TZ9aepvvthj5ABaX3R2709vpf3TIcfJbigOa', 'xjCzblk8iG', '2020-11-20 06:51:30', '2020-12-19 22:30:49'),
 (5, 2, 1, 'Shakira Fisher', NULL, 'welch.arvilla@example.net', '2020-11-20 06:51:30', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '13Q2ugLPdm', '2020-11-20 06:51:30', '2020-11-20 06:51:30'),
 (6, 2, 1, 'Richmond Connelly', NULL, 'twolff@example.com', '2020-11-20 06:51:30', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'vBHa9o8vOt', '2020-11-20 06:51:30', '2020-11-20 06:51:30'),
 (7, 2, 1, 'Maia Vandervort', NULL, 'mclaughlin.demetrius@example.org', '2020-11-20 06:51:30', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '1j4MT0MHEn', '2020-11-20 06:51:30', '2020-11-20 06:51:30'),
 (8, 2, 1, 'Waldo Beahan', NULL, 'patrick51@example.com', '2020-11-20 06:51:30', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '2dDiX2D4pb', '2020-11-20 06:51:30', '2020-11-20 06:51:30'),
 (9, 2, 1, 'Judah Padberg III', NULL, 'enrico.stroman@example.net', '2020-11-20 06:51:30', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'tuCauwsfYz', '2020-11-20 06:51:30', '2020-11-20 06:51:30'),
-(10, 2, 1, 'Ebony Bashirian', NULL, 'rowe.hollie@example.net', '2020-11-20 06:51:30', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'hSOU3vf7id', '2020-11-20 06:51:30', '2020-11-20 06:51:30'),
-(11, 1, 1, 'harizaldy', '12345632', 'harizaldy@gmail.com', NULL, '$2y$10$QXrRjFffavsYGS7DxSVnW.0bnqVA36F7R14zL57eLK7EdgnoCEVSC', NULL, '2020-11-20 06:54:39', '2020-11-21 00:02:28'),
-(12, 2, 3, 'wasep', '323435465', 'wasep@gmail.com', NULL, '$2y$10$mC5WdSNASsR7n5KhR.6ma.WR..eGN7itIDVIoXypoxZgJmwxF7h1G', NULL, '2020-11-20 21:30:17', '2020-11-21 01:01:13');
+(10, 1, 1, 'wasep', NULL, 'rowe.hollie@example.net', '2020-11-20 06:51:30', '$2y$10$wBmVAcgYecMfYMF/L5YmNOl.fn2vnBv.2Xec8GM9npL.KMu9dpyaC', 'hSOU3vf7id', '2020-11-20 06:51:30', '2020-12-12 12:46:04'),
+(11, 1, 1, 'harizaldy', '12345632', 'harizaldy@gmail.com', NULL, '$2y$10$51Uc86tqb/CkN8Ti9QvCl.thmvQDkDi3jKBM6thhM7JTMI7FK/FfC', NULL, '2020-11-20 06:54:39', '2020-12-04 08:15:34'),
+(12, 2, 3, 'wasep', '323435465', 'wasep@gmail.com', NULL, '$2y$10$mC5WdSNASsR7n5KhR.6ma.WR..eGN7itIDVIoXypoxZgJmwxF7h1G', NULL, '2020-11-20 21:30:17', '2020-12-04 08:14:23'),
+(13, 2, 4, 'teddy', '34564345', 'teddy@gmail.com', NULL, '$2y$10$3gaV4K/hI4ctiE1S9LA/9up3qXiqtkAB.YDHz1lLg/l14ihLBGWhK', NULL, '2020-11-21 03:31:47', '2020-12-20 08:29:54'),
+(15, 1, 2, 'test2', '56433445434', 'test2@gmail.com', NULL, '$2y$10$LgFoBB1hbO2QnXH0lWKgmeU5hZoVyuME7jFske/Y7kvDTqw59HN/.', NULL, '2021-01-10 02:26:47', '2021-01-10 02:26:47'),
+(16, 2, 3, 'cobacoba', '5645342', 'coba@gmail,com', NULL, '$2y$10$8WcEI9HvEH6TKfgNLxS01ePx7aaypqnRc8dyovnaKdSnU98q.EA7W', NULL, '2021-01-22 20:41:30', '2021-01-22 20:41:30');
 
 --
 -- Indexes for dumped tables
@@ -320,19 +361,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `balasans`
 --
 ALTER TABLE `balasans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `divisis`
 --
 ALTER TABLE `divisis`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -356,13 +397,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `tikets`
 --
 ALTER TABLE `tikets`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

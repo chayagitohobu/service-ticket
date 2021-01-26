@@ -65,8 +65,12 @@
 @endsection
 
 @section('script')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
 <script>
     
+    // Chart.plugins.unregister(ChartDataLabels);
+
     var lineChart = document.getElementById('lineChart').getContext('2d');
     var pieChart = document.getElementById('pieChart').getContext('2d');
     
@@ -74,7 +78,7 @@
     var myLineChart = new Chart(lineChart, {
         type: 'bar',
         data: {
-            labels: ['Januari', 'Februari', 'Maret','April', 'Mei', 'Juni', 
+            labels: ['Januari ', 'Februari', 'Maret','April', 'Mei', 'Juni', 
             'Juli', 'Agustus', 'September', 'Oktober' , 'November', 'Desember',],
             datasets: [{
                 label: 'Jumlah Tiket',
@@ -83,18 +87,18 @@
                 {{$apr}},{{$mei}},{{$jun}},{{$jul}},
                 {{$agu}},{{$sep}},{{$okt}},{{$nov}},{{$des}}],
                 backgroundColor: [
-                    'rgba(20, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)',
-                    'rgba(75, 192, 192, 0.5)',
-                    'rgba(153, 102, 255, 0.5)',
-                    'rgba(255, 159, 64, 0.5)',
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)',
-                    'rgba(75, 192, 192, 0.5)',
-                    'rgba(153, 102, 255, 0.5)',
-                    'rgba(255, 159, 64, 0.5)'
+                    '#4c5f7a',
+                    '#393e6f',
+                    '#3d2e4f',
+                    '#321d2f',
+                    '#342056',
+                    '#220e24',
+                    '#353941',
+                    '#26282b',
+                    '#055e68',
+                    '#065471',
+                    '#0c2233',
+                    '#411e8f'
                 ],
                 borderColor: [
                     // '#46cd93'
@@ -105,25 +109,73 @@
             }],
             
         },
+        
         options: {
-            onClick: handleClick
+            onClick: handleClick,
+            tooltips: {
+                enabled: false
+            },
+            plugins:{
+            datalabels:{
+                color: '#ffff',
+                anchor: 'middle',
+                align:'start',
+                offset: -30,
+                borderWidth: 2,
+                borderColor: '#ffff',
+                borderRadius: 20,
+                backgroundColor: (context) => {
+                    return context.dataset.backgroundColor;
+                },
+                font:{
+                    weight: 'bold',
+                    size: 13,
+
+                }
+            }
+        }
         }
     }); 
 
 
     var pieChart = new Chart(pieChart, {
     type: 'pie',
-    data: {
+    data: { 
         labels: ["Technology", "Marketing", "Human Resource", "Finance"],
         datasets: [{
         backgroundColor: [
-            "#2ecc71",
-            "#3498db",
-            "#95a5a6",
-            "#9b59b6"
+            "#1a1a2e",
+            "#16213e",
+            "#0f3460",
+            "#310a5d"
         ],
         data: [{{$technology}}, {{$marketing}}, {{$human_resource}}, {{$finance}}]
         }]
+    },
+    options:{
+        legend:{
+            position:'bottom',
+            
+        },
+        plugins:{
+            datalabels:{
+                color: '#ffff',
+                anchor: 'end',
+                align:'start',
+                offset: -10,
+                borderWidth: 2,
+                borderColor: '#ffff',
+                borderRadius: 20,
+                backgroundColor: (context) => {
+                    return context.dataset.backgroundColor;
+                },
+                font:{
+                    weight: 'bold',
+                    size: 13,
+
+                }
+            }
+        }
     }
     });
 

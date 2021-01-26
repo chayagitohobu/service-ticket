@@ -226,6 +226,7 @@
                                                     <th>Divisi</th>
                                                     <th>Role</th>
                                                     <th>No Telp</th>
+                                                    <th>Tanggal Di Buat</th>
                                                     <th id="aksi" colspan="2" class="text-center">Aksi</th>
                                                 </tr>
                                                 </thead>
@@ -239,6 +240,7 @@
                                                             <td>{{$user->divisi}}</td>
                                                             <td>{{$user->role}}</td>
                                                             <td>{{$user->telp}}</td>
+                                                            <td>{{$user->created_at}}</td>
                                                             <td id="aksi" class="text-right">
                                                                 <a id="aksi" href="{{route('admin.user.edit', $user->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit ">
                                                                     <i id="aksi" class="fas fa-pen text-white"></i>
