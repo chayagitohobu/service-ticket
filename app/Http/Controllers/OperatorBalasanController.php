@@ -65,11 +65,43 @@ class OperatorBalasanController extends Controller
             $store_file = json_encode($files);
         }
 
+        if (!empty($request->balasan)) {
+            $storage = 'storage/tiket';
+            $dom = new \DOMDocument();
+            libxml_use_internal_errors(true);
+            // $dom->loadHTML($request->balasan, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NOIMPLIED);
+            $dom->loadHTML($request->balasan);
+            libxml_clear_errors();
+            $images = $dom->getElementsByTagName('img');
+            foreach ($images as $img) {
+                $src = $img->getAttribute('src');
+                if (preg_match('/data:image/', $src)) {
+                    preg_match('/data:image\/(?<mime>.*?)\;/', $src, $group);
+                    $mimetype = $group['mime'];
+                    $fileNameContent = uniqid();
+                    $fileNameContentRand = substr(md5($fileNameContent), 6, 6) . '_' . time();
+                    $filepath = ("$storage/$fileNameContentRand.$mimetype");
+                    $image = Image::make($src)
+                        ->encode($mimetype, 100)
+                        ->save($filepath);
+                    $new_src = asset($filepath);
+                    $img->removeAttribute('src');
+                    $img->setAttribute('src', $new_src);
+                    $img->setAttribute('class', 'img-fluid');
+                }
+            }
+        }
+
         $balasan = new Balasan;
         $balasan->tiket_id = $request->input('tiket_id');
         $balasan->divisi_id = $user_divisi_id;
         $balasan->user_id = $user->id;
-        $balasan->balasan = $request->input('balasan');
+        // $balasan->balasan = $request->input('balasan');
+        if (!empty($request->balasan)) {
+            $balasan->balasan = $dom->saveHTML();
+        } else {
+            $balasan->balasan = null;
+        }
         $balasan->file = $store_file;
         $balasan->save();
 

@@ -50,6 +50,12 @@
                         <span> Tiket</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{route('admin.pertanyaan.index')}}" class="waves-effect">
+                        <i class="dripicons-question"></i>
+                        <span>Pertanyaan</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="clearfix"></div>

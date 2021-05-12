@@ -70,11 +70,11 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row mb-4">
-                                            <div class="col-xl-8">
+                                            <div class="col-xl-4">
                                                 <h4 class="mt-0 header-title">Daftar User</h4>
                                                 <p class="text-muted">Berikut adalah daftar data User</p>
                                             </div>
-                                            <div class="col-xl-4 text-left">
+                                            <div class="col-xl-8 text-right">
                                                 <a class="d-inline-block mr-2" href="{{route('admin.user.create')}}">
                                                     <button type="button" class="btn btn-info btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-plus noti-icon mr-3"></i>Tambah User</button>
                                                 </a>
@@ -240,7 +240,12 @@
                                                             <td>{{$user->divisi}}</td>
                                                             <td>{{$user->role}}</td>
                                                             <td>{{$user->telp}}</td>
+                                                            @if (empty($user->created_at))
+                                                            <td> - </td>
+                                                            @else
                                                             <td>{{$user->created_at}}</td>
+                                                            @endif
+                                                            
                                                             <td id="aksi" class="text-right">
                                                                 <a id="aksi" href="{{route('admin.user.edit', $user->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit ">
                                                                     <i id="aksi" class="fas fa-pen text-white"></i>

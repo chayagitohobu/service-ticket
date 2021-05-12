@@ -8,6 +8,9 @@ use GuzzleHttp\Middleware;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+use App\Models\Faq;
 
 class LoginController extends Controller
 {
@@ -94,7 +97,7 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/login')
+        return redirect('/')
             ->withSuccess('Anda berhasil logout !');
     }
 }

@@ -45,51 +45,51 @@ class AdminController extends Controller
 
         $this->jumlah_client = Client::all()->count();
 
-        $this->jan = Tiket::whereYear('created_at', '=', '2020')
+        $this->jan = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '01')
             ->count();
 
-        $this->feb = Tiket::whereYear('created_at', '=', '2020')
+        $this->feb = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '02')
             ->count();
 
-        $this->mar = Tiket::whereYear('created_at', '=', '2020')
+        $this->mar = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '03')
             ->count();
 
-        $this->apr = Tiket::whereYear('created_at', '=', '2020')
+        $this->apr = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '04')
             ->count();
 
-        $this->mei = Tiket::whereYear('created_at', '=', '2020')
+        $this->mei = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '05')
             ->count();
 
-        $this->jun = Tiket::whereYear('created_at', '=', '2020')
+        $this->jun = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '06')
             ->count();
 
-        $this->jul = Tiket::whereYear('created_at', '=', '2020')
+        $this->jul = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '07')
             ->count();
 
-        $this->agu = Tiket::whereYear('created_at', '=', '2020')
+        $this->agu = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '08')
             ->count();
 
-        $this->sep = Tiket::whereYear('created_at', '=', '2020')
+        $this->sep = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '09')
             ->count();
 
-        $this->okt = Tiket::whereYear('created_at', '=', '2020')
+        $this->okt = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '10')
             ->count();
 
-        $this->nov = Tiket::whereYear('created_at', '=', '2020')
+        $this->nov = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '11')
             ->count();
 
-        $this->des = Tiket::whereYear('created_at', '=', '2020')
+        $this->des = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '12')
             ->count();
     }
@@ -101,24 +101,24 @@ class AdminController extends Controller
 
         // for ($i = 1; $i < 13; $i++) {
 
-        //     $bulan[] = Tiket::whereYear('created_at', '=', '2020')
+        //     $bulan[] = Tiket::whereYear('created_at', '=',  date('Y'))
         //         ->whereMonth('created_at', '=', $i)
         //         ->count();
         // }
 
-        $technology = Tiket::whereYear('created_at', '=', '2020')
+        $technology = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '1')
             ->where('divisi_id', '=', 1)
             ->count();
-        $marketing = Tiket::whereYear('created_at', '=', '2020')
+        $marketing = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '1')
             ->where('divisi_id', '=', 2)
             ->count();
-        $human_resource = Tiket::whereYear('created_at', '=', '2020')
+        $human_resource = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '1')
             ->where('divisi_id', '=', 3)
             ->count();
-        $finance = Tiket::whereYear('created_at', '=', '2020')
+        $finance = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '1')
             ->where('divisi_id', '=', 4)
             ->count();
@@ -188,19 +188,19 @@ class AdminController extends Controller
         }
 
 
-        $technology = Tiket::whereYear('created_at', '=', '2020')
+        $technology = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', $bulan_convert)
             ->where('divisi_id', '=', 1)
             ->count();
-        $marketing = Tiket::whereYear('created_at', '=', '2020')
+        $marketing = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', $bulan_convert)
             ->where('divisi_id', '=', 2)
             ->count();
-        $human_resource = Tiket::whereYear('created_at', '=', '2020')
+        $human_resource = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', $bulan_convert)
             ->where('divisi_id', '=', 3)
             ->count();
-        $finance = Tiket::whereYear('created_at', '=', '2020')
+        $finance = Tiket::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', $bulan_convert)
             ->where('divisi_id', '=', 4)
             ->count();

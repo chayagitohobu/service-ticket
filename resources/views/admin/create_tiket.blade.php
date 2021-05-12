@@ -84,7 +84,8 @@
                                             </div> --}}
                                             <div class="form-group">
                                                 <label>Upload file</label>
-                                                <input type="file" name="files[]" multiple>
+                                                <input type="file" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                                text/plain, application/pdf, application/rar,.zip,.rar,.7zip" name="files[]" multiple>
                                             </div>
                                             <div style="min-height:5vh;"></div>
                                             <div class="form-group">

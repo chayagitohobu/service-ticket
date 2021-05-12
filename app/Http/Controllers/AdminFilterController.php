@@ -83,7 +83,16 @@ class AdminFilterController extends Controller
             ->join('divisis', 'users.divisi_id', 'divisis.id')
             ->join('roles', 'users.role_id', 'roles.id')
             ->where('email', 'like', "%" . $search . "%")
-            ->select('users.id', 'users.email', 'users.name', 'users.telp', 'divisis.divisi', 'roles.role')
+            ->select(
+                'users.id',
+                'users.email',
+                'users.name',
+                'users.telp',
+                'users.created_at',
+                'users.updated_at',
+                'divisis.divisi',
+                'roles.role'
+            )
             ->paginate(8);
 
         $users->appends(array('email_search' => $request->input('email_search')));
@@ -102,7 +111,16 @@ class AdminFilterController extends Controller
             ->join('divisis', 'users.divisi_id', 'divisis.id')
             ->join('roles', 'users.role_id', 'roles.id')
             ->where('name', 'like', "%" . $search . "%")
-            ->select('users.id', 'users.email', 'users.name', 'users.telp', 'divisis.divisi', 'roles.role')
+            ->select(
+                'users.id',
+                'users.email',
+                'users.name',
+                'users.telp',
+                'users.created_at',
+                'users.updated_at',
+                'divisis.divisi',
+                'roles.role'
+            )
             ->paginate(8);
 
         $users->appends(array('name_search' => $request->input('name_search')));
@@ -127,6 +145,8 @@ class AdminFilterController extends Controller
                 'users.email',
                 'users.name',
                 'users.telp',
+                'users.created_at',
+                'users.updated_at',
                 'divisis.divisi',
                 'roles.role'
             )
@@ -146,7 +166,7 @@ class AdminFilterController extends Controller
             ->join('divisis', 'users.divisi_id', 'divisis.id')
             ->join('roles', 'users.role_id', 'roles.id')
             ->where('divisi', 'like', "%" . $divisi . "%")
-            ->select('users.id', 'users.email', 'users.name', 'users.telp', 'divisis.divisi', 'roles.role')
+            ->select('users.id', 'users.email', 'users.name', 'users.created_at', 'users.updated_at', 'users.telp', 'divisis.divisi', 'roles.role')
             ->paginate(8);
 
         $divisis = Divisi::all();
@@ -161,7 +181,7 @@ class AdminFilterController extends Controller
             ->join('divisis', 'users.divisi_id', 'divisis.id')
             ->join('roles', 'users.role_id', 'roles.id')
             ->where('role', 'like', "%" . $role . "%")
-            ->select('users.id', 'users.email', 'users.name', 'users.telp', 'divisis.divisi', 'roles.role')
+            ->select('users.id', 'users.email', 'users.name', 'users.telp', 'users.created_at', 'users.updated_at', 'divisis.divisi', 'roles.role')
             ->paginate(8);
 
         $divisis = Divisi::all();
@@ -195,7 +215,7 @@ class AdminFilterController extends Controller
                 'tikets.created_at'
 
             )
-            ->paginate(1);
+            ->paginate(8);
 
         $tikets->appends(array('search' => $request->search));
 

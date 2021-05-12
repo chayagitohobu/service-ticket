@@ -1,11 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminClientController;
 use App\Http\Controllers\AdminTiketController;
 use App\Http\Controllers\AdminDivisiController;
 use App\Http\Controllers\AdminBalasanController;
+use App\Http\Controllers\AdminPertanyaanController;
+use App\Http\Controllers\AdminFaqController;
 
 use App\Http\Controllers\OperatorClientController;
 use App\Http\Controllers\OperatorTiketController;
@@ -13,6 +17,7 @@ use App\Http\Controllers\OperatorBalasanController;
 
 use App\Http\Controllers\ClientTiketController;
 use App\Http\Controllers\ClientBalasanController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,13 +34,22 @@ Auth::routes();
 
 Route::get('login/user', [App\Http\Controllers\Auth\UserLoginController::class, 'showLoginForm'])->name('user.login');
 Route::post('login/user', [App\Http\Controllers\Auth\UserLoginController::class, 'login'])->name('user.loginSubmit');
+Route::post('logout/user', [App\Http\Controllers\Auth\UserLoginController::class, 'logout'])->name('user.logout');
+
+// Basis Informasi
+Route::get('basis_informasi', [App\Http\Controllers\ClientBasisinformasiController::class, 'index'])->name('client.basis_informasi.index');
+Route::get('basis_informasi/cari/', [App\Http\Controllers\ClientBasisinformasiController::class, 'cari'])->name('client.basis_informasi.cari');
+Route::get('/', function () {
+    $pertanyaans = DB::table('pertanyaans')->where('kategori', 'faq')->orderBy('created_at', 'desc')->get();
+    return view('home')->with('pertanyaans', $pertanyaans);
+});
 
 // Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm']);
-Route::get('/', [App\Http\Controllers\TolakController::class, 'index']);
+// Route::get('/', [App\Http\Controllers\TolakController::class, 'index']);
 
 Route::prefix('admin')->group(function () {
     // Route::get('/admin', [App\Http\Controllers\TolakController::class, 'index']);
-    Route::get('/', [App\Http\Controllers\TolakController::class, 'index']);
+    // Route::get('/', [App\Http\Controllers\TolakController::class, 'index']);
     Route::get('home', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
     Route::get('home/bulan/{bulan}', [App\Http\Controllers\AdminController::class, 'divisi_bulan'])->name('admin.home.divisi_bulan');
     Route::get('profile', [App\Http\Controllers\AdminController::class, 'show'])->name('admin.show');
@@ -65,7 +79,6 @@ Route::prefix('admin')->group(function () {
     Route::post('tiket/file_download', [App\Http\Controllers\AdminDownloadController::class, 'tiket_file_download'])->name('admin.tiket.file_download');
     Route::post('balasan/file_download', [App\Http\Controllers\AdminDownloadController::class, 'balasan_file_download'])->name('admin.balasan.file_download');
 
-
     // Tutup Tiket
     Route::get('tiket/tutup/{id}', [App\Http\Controllers\AdminTiketController::class, 'tutupTiket'])->name('admin.tiket.tutup');
 
@@ -75,11 +88,12 @@ Route::prefix('admin')->group(function () {
     Route::resource('tiket', AdminTiketController::class, ['as' => 'admin']);
     Route::resource('divisi', AdminDivisiController::class, ['as' => 'admin']);
     Route::resource('balasan', AdminBalasanController::class, ['as' => 'admin']);
+    Route::resource('pertanyaan', AdminPertanyaanController::class, ['as' => 'admin']);
 });
 
 Route::prefix('operator')->group(function () {
     // any route here will only be accessible for logged in users
-    Route::get('/', [App\Http\Controllers\TolakController::class, 'index']);
+    // Route::get('/', [App\Http\Controllers\TolakController::class, 'index']);
     Route::get('home', [App\Http\Controllers\OperatorController::class, 'index'])->name('operator');
     Route::get('profile', [App\Http\Controllers\OperatorController::class, 'show'])->name('operator.show');
     Route::get('profile/edit', [App\Http\Controllers\OperatorController::class, 'edit'])->name('operator.edit');
@@ -107,7 +121,7 @@ Route::prefix('operator')->group(function () {
 
 Route::prefix('client')->group(function () {
     // any route here will only be accessible for logged in users
-    Route::get('/', [App\Http\Controllers\TolakController::class, 'index']);
+    // Route::get('/', [App\Http\Controllers\TolakController::class, 'index']);
     Route::get('home', [App\Http\Controllers\ClientController::class, 'index'])->name('client');
     Route::get('profile', [App\Http\Controllers\ClientController::class, 'show'])->name('client.show');
     Route::get('profile/edit', [App\Http\Controllers\ClientController::class, 'edit'])->name('client.edit');

@@ -56,7 +56,6 @@
                                                             <input name="telp" type="text" class="form-control" required placeholder="Type something"/>
                                                         </div>
                                                     </div>
-                                                    
                                                 </div>
                                                 <div class="col-lg-4 mt-3 text-left">
                                                     <button type="submit" class="btn btn-primary btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="mdi mdi-pencil-outline mr-3"></i>Buat Client</button>
@@ -64,7 +63,6 @@
                                                 </div>
                                             </div>
                                         </form>
-
                                     </div>
                                 </div>
                             </div> <!-- end col -->

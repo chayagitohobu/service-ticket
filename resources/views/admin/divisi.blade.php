@@ -70,12 +70,12 @@
                                            <div class="col-xl-12">
                                                 @include('inc.messages')
                                            </div>
-                                            <div class="col-xl-8 mb-3">
+                                            <div class="col-xl-4 mb-3">
                                                 <h4 class="mt-0 header-title">Daftar Divisi</h4>
                                                 <p class="text-muted">Berikut adalah daftar data Divisi</p>
                                             </div>
 
-                                            <div class="col-xl-4 text-left">
+                                            <div class="col-xl-8 text-right">
                                                 <a class="d-inline-block mr-2" href="{{route('admin.divisi.create')}}">
                                                     <button type="button" class="btn btn-info btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-plus noti-icon mr-3"></i>Tambah Divisi</button>
                                                 </a>

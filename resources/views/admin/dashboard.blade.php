@@ -3,7 +3,6 @@
 @section('content')
     <!-- Begin page -->
     <div id="wrapper">
-
         <!-- ========== Left Sidebar Start ========== -->
         @include('inc.admin.sidebar')
         <!-- Left Sidebar End -->
@@ -18,12 +17,10 @@
                 <!-- Top Bar End -->
         
                 <div class="page-content-wrapper ">
-        
                     <div class="container-fluid">
                         <div class="container" style="min-height: 5vh"></div>
                         <div class="row">
                             <div class="card col-xl-8">
-                                
                                 <div class="card-body">
                                     <canvas id="lineChart" width="400" height="300"></canvas>
                                 </div>

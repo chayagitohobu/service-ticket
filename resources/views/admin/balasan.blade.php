@@ -38,7 +38,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Upload file</label>
-                                            <input type="file" name="files[]" multiple>
+                                            <input accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                            text/plain, application/pdf, application/rar,.zip,.rar,.7zip" type="file" name="files[]" multiple>
                                         </div>
                                         <input name="tiket_id" type="hidden" value="{{$tiket->id}}">
                                         <input name="divisi_id" type="hidden" value="{{$tiket->divisi_id}}">

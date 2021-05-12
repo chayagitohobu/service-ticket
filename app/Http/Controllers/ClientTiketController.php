@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Path\To\DOMdocument;
+use Intervention\Image\ImageManagerStatic as Image;
 
 use App\Models\Divisi;
 use App\Models\Tiket;
@@ -90,9 +92,41 @@ class ClientTiketController extends Controller
             $store_file = json_encode($files);
         }
 
+        if (!empty($request->ket)) {
+            $storage = 'storage/tiket';
+            $dom = new \DOMDocument();
+            libxml_use_internal_errors(true);
+            // $dom->loadHTML($request->ket, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NOIMPLIED);
+            $dom->loadHTML($request->ket);
+            libxml_clear_errors();
+            $images = $dom->getElementsByTagName('img');
+            foreach ($images as $img) {
+                $src = $img->getAttribute('src');
+                if (preg_match('/data:image/', $src)) {
+                    preg_match('/data:image\/(?<mime>.*?)\;/', $src, $group);
+                    $mimetype = $group['mime'];
+                    $fileNameContent = uniqid();
+                    $fileNameContentRand = substr(md5($fileNameContent), 6, 6) . '_' . time();
+                    $filepath = ("$storage/$fileNameContentRand.$mimetype");
+                    $image = Image::make($src)
+                        ->encode($mimetype, 100)
+                        ->save($filepath);
+                    $new_src = asset($filepath);
+                    $img->removeAttribute('src');
+                    $img->setAttribute('src', $new_src);
+                    $img->setAttribute('class', 'img-fluid');
+                }
+            }
+        }
+
         $tiket = new Tiket;
         $tiket->judul = $request->input('judul');
-        $tiket->ket = $request->input('ket');
+        // $tiket->ket = $request->input('ket');
+        if (!empty($request->ket)) {
+            $tiket->ket = $dom->saveHTML();
+        } else {
+            $tiket->ket = null;
+        }
         $tiket->prioritas = $request->input('prioritas');
         $tiket->status = 'Buka';
         $tiket->divisi_id = $request->input('divisi');

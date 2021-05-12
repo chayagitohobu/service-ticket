@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 
 class TolakController extends Controller
 {
@@ -15,11 +15,15 @@ class TolakController extends Controller
      */
     public function index()
     {
-        if (Auth::guard('client')->check() || Auth::guard('user')->check()) {
-            return back();
-        } else {
-            return view('auth.login');
-        }
+        // if (Auth::guard('client')->check() || Auth::guard('user')->check()) {
+        //     return back();
+        // } else {
+        //     $faqs = DB::table('faqs')->orderBy('created_at', 'desc')->get();
+        //     return view('home')->with('faqs', $faqs);
+        // }
+        // $pertanyaans = DB::table('pertanyaans')->where('kategori', 'faq')->orderBy('created_at', 'desc')->get();
+        $pertanyaans = DB::table('pertanyaans')->where('kategori', 'faq')->orderBy('created_at', 'desc')->get();
+        return view('home')->with('pertanyaans', $pertanyaans);
     }
 
     /**

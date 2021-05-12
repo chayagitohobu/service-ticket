@@ -15,17 +15,13 @@
             body * {
             visibility: hidden;
             }
-
-            body * #hide{
-                display: none;
-            }
             #section-to-print, #section-to-print * {
             visibility: visible;
             }
             #section-to-print {
             position: static;
             left: 0;
-            top: 1;
+            top: 50;
             }
             #section-to-print, #section-to-print #aksi {
             visibility: hidden;
@@ -74,11 +70,11 @@
                                     <div class="card-body">
                                         <div id="hide" class="row mb-4">
                                             
-                                            <div class="col-xl-8">
+                                            <div class="col-xl-4">
                                                 <h4 class="mt-0 header-title">Daftar Tiket</h4>
                                                 <p class="text-muted">Berikut adalah daftar Tiket</p>
                                             </div>
-                                            <div class="col-xl-4 text-left">
+                                            <div class="col-xl-8 text-right">
                                                 <a class="d-inline-block mr-2" href="{{route('admin.tiket.create')}}">
                                                     <button type="button" class="btn btn-info btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-plus noti-icon mr-3"></i>Tambah Tiket</button>
                                                 </a>

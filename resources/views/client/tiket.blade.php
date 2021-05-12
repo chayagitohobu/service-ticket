@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Begin page -->
+@include('inc.client.navbar');
+<!-- Begin page -->
     <div id="wrapper">
 
         <!-- ========== Left Sidebar Start ========== -->
