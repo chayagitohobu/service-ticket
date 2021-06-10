@@ -45,11 +45,11 @@
                                                     </div>
                                                     <div class="form-group col-lg-12">
                                                         <label>Divisi </label>
-                                                        <input value="{{$operator->divisi}}" type="text" class="form-control"  readonly aria-readonly="true" required placeholder="Type something"/>
+                                                        <input value="{{$operator->division}}" type="text" class="form-control"  readonly aria-readonly="true" required placeholder="Type something"/>
                                                     </div>
                                                     <div class="form-group col-lg-12">
                                                         <label>No. Telp</label>
-                                                        <input value="{{$operator->telp}}" type="text" class="form-control" readonly aria-readonly="true" required placeholder="Type something"/>
+                                                        <input value="{{$operator->phone}}" type="text" class="form-control" readonly aria-readonly="true" required placeholder="Type something"/>
                                                     </div>
                                                     <div class="form-group col-lg-12 text-center">
                                                         <a class="btn btn-primary waves-effect waves-light pl-5 pr-5" href="{{route('operator.edit')}}"> 

@@ -46,11 +46,11 @@
                                                     </div>
                                                     <div class="form-group col-lg-12">
                                                         <label>Divisi </label>
-                                                        <input value=" {{$user->divisi}} " type="text" class="form-control"  readonly aria-readonly="true" required placeholder="Type something"/>
+                                                        <input value=" {{$user->division}} " type="text" class="form-control"  readonly aria-readonly="true" required placeholder="Type something"/>
                                                     </div>
                                                     <div class="form-group col-lg-12">
                                                         <label>No. Telp</label>
-                                                        <input value=" {{$user->telp}} " type="text" class="form-control" readonly aria-readonly="true" required placeholder="Type something"/>
+                                                        <input value=" {{$user->phone}} " type="text" class="form-control" readonly aria-readonly="true" required placeholder="Type something"/>
                                                     </div>
                                                     <br>
                                                     <div class="form-group col-lg-12 text-center">

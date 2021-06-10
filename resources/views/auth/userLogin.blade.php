@@ -48,7 +48,7 @@
                                 </div>
 
                                 <div class="form-group m-t-10 mb-0 row">
-                                    <div class="col-sm-7 m-t-20">
+                                    <div class="col-sm-9 m-t-20">
                                         @if (Route::has('password.request'))
                                             <a href="{{ route('password.request') }}" class="text-muted"><i class="mdi mdi-lock"></i> Forgot your password?</a>
                                         @endif

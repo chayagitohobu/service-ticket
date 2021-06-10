@@ -18,8 +18,8 @@ class CreateClientsTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('name');
-            $table->string('name_perusahaan')->nullable();
-            $table->string('telp')->nullable();
+            $table->string('company')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

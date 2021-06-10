@@ -23,11 +23,14 @@
                         <div style="min-height: 5vh;"></div>
 
                         <div class="col-xl-12">
-                            <p>
-                                <button class="btn btn-block btn-secondary pt-2 pb-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                    <i class="mdi mdi-pencil"></i> Balas
+                            {{-- <div class="bg-dark d-inline mb-5 p-2">
+                                <button class="btn btn-sm btn-outline-dark" style="padding:0;" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    <i class="mdi mdi-pencil"></i> BALAS PESAN
                                 </button>
-                              </p>
+                              </div> --}}
+                              <button class="btn btn-dark " type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                <i class="fas fa-reply"></i> Balas Pesan
+                            </button>
                               <div class="collapse" id="collapseExample">
                                 <div class="card card-body">
                                     <form method="POST" action="{{route('admin.balasan.store')}}" enctype="multipart/form-data">
@@ -42,14 +45,14 @@
                                             text/plain, application/pdf, application/rar,.zip,.rar,.7zip" type="file" name="files[]" multiple>
                                         </div>
                                         <input name="tiket_id" type="hidden" value="{{$tiket->id}}">
-                                        <input name="divisi_id" type="hidden" value="{{$tiket->divisi_id}}">
+                                        <input name="divisi_id" type="hidden" value="{{$tiket->division_id}}">
                                         <div style="min-height:5vh;"></div>
                                         <div class="form-group">
                                             <div>
                                                 <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                     Submit
                                                 </button>
-                                                <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                                <button type="reset" class="btn btn-outline-dark waves-effect m-l-5">
                                                     Cancel
                                                 </button>
                                             </div>
@@ -110,7 +113,7 @@
                                         
                                         <div class="card-body">
                                             <p class="card-text">
-                                                {!! $balasan->balasan !!}
+                                                {!! $balasan->reply !!}
                                             </p>
                                             <div class="col-md-12 p-0 text-left">
                                                 <hr>
@@ -126,7 +129,7 @@
                                                     </button>
                                                         @break
                                                     @default
-                                                    <button class="btn btn-sm btn-secondary" type="button" data-toggle="collapse" data-target="#balasan_file_{{$balasan->id}}" aria-expanded="false" aria-controls="balasan_file">
+                                                    <button class="btn btn-sm btn-outline-dark" type="button" data-toggle="collapse" data-target="#balasan_file_{{$balasan->id}}" aria-expanded="false" aria-controls="balasan_file">
                                                         File pendukung <i class="mdi mdi-arrow-down"></i>
                                                     </button>
                                                 @endswitch
@@ -202,7 +205,7 @@
                                     @endswitch
                                     <div class="card-body">
                                         <p class="card-text">
-                                            {!! $tiket->ket !!}
+                                            {!! $tiket->detail !!}
                                         </p>
                                         <div class="col-md-12 p-0 text-left">
                                             <hr>
@@ -218,7 +221,7 @@
                                                 </button>
                                                     @break
                                                 @default
-                                                <button class="btn btn-sm btn-secondary" type="button" data-toggle="collapse" data-target="#tiket_file" aria-expanded="false" aria-controls="balasan_file">
+                                                <button class="btn btn-sm btn-outline-dark" type="button" data-toggle="collapse" data-target="#tiket_file" aria-expanded="false" aria-controls="balasan_file">
                                                     File pendukung <i class="mdi mdi-arrow-down"></i>
                                                 </button>
                                             @endswitch

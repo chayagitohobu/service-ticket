@@ -77,7 +77,7 @@ class UserLoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/login/user')
+        return redirect('/login')
             ->withSuccess('Anda berhasil logout !');
     }
 }

@@ -5,46 +5,47 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav m-auto">
+          <img src="{{asset('assets/images/logo.png')}}" class="mr-3" width="70" alt="">
+        <div class="navbar-nav ml-auto">
             @if (Request::segment(1) == null)
-                <a class="nav-item nav-link text-uppercase font-weight-bold active" href="{{App::make('url')->to('/')}}">Beranda</a>
+                <a class="ml-2 mr-2 nav-item nav-link text-uppercase font-weight-bold active" href="{{App::make('url')->to('/')}}">Beranda</a>
             @else
-                 <a class="nav-item nav-link text-uppercase font-weight-bold" href="/">Beranda</a>
+                 <a class="ml-2 mr-2 nav-item nav-link text-uppercase font-weight-bold" href="/">Beranda</a>
             @endif
 
             {{-- @if (Request::segment(1) == 'login')
-                <a class="nav-item nav-link text-uppercase font-weight-bold active" href="{{route('client.tiket.index')}}">Tiket Pelayanan</a>
+                <a class="ml-2 mr-2 nav-item nav-link text-uppercase font-weight-bold active" href="{{route('client.tiket.index')}}">Tiket Pelayanan</a>
             @else
-                <a class="nav-item nav-link text-uppercase font-weight-bold" href="{{route('login')}}">Tiket Pelayanan</a>
+                <a class="ml-2 mr-2 nav-item nav-link text-uppercase font-weight-bold" href="{{route('login')}}">Tiket Pelayanan</a>
             @endif --}}
 
             @if(Auth::guard('user')->check())
                 {{-- Hello {{Auth::guard('user')->user()->role_id}} --}}
                 @if (Auth::guard('user')->user()->role_id == 1)
-                <a class="nav-item nav-link text-uppercase font-weight-bold" href="{{route('admin.tiket.index')}}">Tiket Pelayanan</a>
+                <a class="ml-2 mr-2 nav-item nav-link text-uppercase font-weight-bold" href="{{route('admin.tiket.index')}}">Kirim Pertanyaan</a>
                 @else
-                <a class="nav-item nav-link text-uppercase font-weight-bold" href="{{route('operator.tiket.index')}}">Tiket Pelayanan</a>
+                <a class="ml-2 mr-2 nav-item nav-link text-uppercase font-weight-bold" href="{{route('operator.tiket.index')}}">Kirim Pertanyaan</a>
                 @endif
             @elseif(Auth::guard('client')->check())
-                <a class="nav-item nav-link text-uppercase font-weight-bold" href="{{route('client.tiket.index')}}">Tiket Pelayanan</a>
+                <a class="ml-2 mr-2 nav-item nav-link text-uppercase font-weight-bold" href="{{route('client.tiket.index')}}">Kirim Pertanyaan</a>
             @else
               @if (Request::segment(1) == 'login')
-                  <a class="nav-item nav-link text-uppercase font-weight-bold active" href="{{route('login')}}">Tiket Pelayanan</a>
+                  <a class="ml-2 mr-2 nav-item nav-link text-uppercase font-weight-bold active" href="{{route('login')}}">Kirim Pertanyaan</a>
               @else
-                  <a class="nav-item nav-link text-uppercase font-weight-bold" href="{{route('login')}}">Tiket Pelayanan</a>
+                  <a class="ml-2 mr-2 nav-item nav-link text-uppercase font-weight-bold" href="{{route('login')}}">Kirim Pertanyaan</a>
               @endif
             @endif
 
             @if (Request::segment(1) == 'basis_informasi')
-                <a class="nav-item nav-link text-uppercase font-weight-bold active" href="{{route('client.basis_informasi.index')}}">Basis Informasi</a> 
+                <a class="ml-2 mr-2 nav-item nav-link text-uppercase font-weight-bold active" href="{{route('client.basis_informasi.index')}}">Basis Informasi</a> 
             @else
-                <a class="nav-item nav-link text-uppercase font-weight-bold" href="{{route('client.basis_informasi.index')}}">Basis Informasi</a> 
+                <a class="ml-2 mr-2 nav-item nav-link text-uppercase font-weight-bold" href="{{route('client.basis_informasi.index')}}">Basis Informasi</a> 
             @endif
 
             @if (Request::segment(1) == '#pertanyaan_umum')
-                <a class="nav-item nav-link text-uppercase font-weight-bold" href="{{App::make('url')->to('/')}}#pertanyaan_umum">Pertanyaan Umum</a>    
+                <a class="ml-2 mr-2 nav-item nav-link text-uppercase font-weight-bold" href="{{App::make('url')->to('/')}}#pertanyaan_umum">Pertanyaan Umum</a>    
             @else
-                <a class="nav-item nav-link text-uppercase font-weight-bold" href="{{App::make('url')->to('/')}}#pertanyaan_umum">Pertanyaan Umum</a>    
+                <a class="ml-2 mr-2 nav-item nav-link text-uppercase font-weight-bold" href="{{App::make('url')->to('/')}}#pertanyaan_umum">Pertanyaan Umum</a>    
             @endif
         </div>
       </div>

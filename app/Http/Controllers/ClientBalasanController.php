@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Balasan;
-use App\Models\Tiket;
+use App\Models\Reply;
+use App\Models\Message;
 use PDO;
 use Path\To\DOMdocument;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -50,7 +50,6 @@ class ClientBalasanController extends Controller
         $client = Auth::guard('client')->user();
 
         if ($request->hasFile('files')) {
-
             foreach ($request->file('files') as $file) {
                 $filename = time() . '-' . $file->getClientOriginalName();
                 $remove = ['"', '[', ']', ','];
@@ -68,12 +67,12 @@ class ClientBalasanController extends Controller
             $store_file = json_encode($files);
         }
 
-        if (!empty($request->balasan)) {
+        if (!empty($request->reply)) {
             $storage = 'storage/tiket';
             $dom = new \DOMDocument();
             libxml_use_internal_errors(true);
-            // $dom->loadHTML($request->balasan, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NOIMPLIED);
-            $dom->loadHTML($request->balasan);
+            // $dom->loadHTML($request->reply, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NOIMPLIED);
+            $dom->loadHTML($request->reply);
             libxml_clear_errors();
             $images = $dom->getElementsByTagName('img');
             foreach ($images as $img) {
@@ -95,23 +94,23 @@ class ClientBalasanController extends Controller
             }
         }
 
-        $balasan = new Balasan;
-        $balasan->tiket_id = $request->input('tiket_id');
-        $balasan->client_id = $client->id;
-        // $balasan->balasan = $request->input('balasan');
-        if (!empty($request->balasan)) {
-            $balasan->balasan = $dom->saveHTML();
+        $replies = new Reply;
+        $replies->message_id = $request->input('message_id');
+        $replies->client_id = $client->id;
+        // $replies->reply = $request->input('balasan');
+        if (!empty($request->reply)) {
+            $replies->reply = $dom->saveHTML();
         } else {
-            $balasan->balasan = null;
+            $replies->reply = null;
         }
-        $balasan->file = $store_file;
+        $replies->file = $store_file;
 
-        $balasan->save();
+        $replies->save();
 
-        $tiket = Tiket::find($request->input('tiket_id'));
-        $tiket->balasan_terbaru = now();
-        $tiket->status = 'Balasan client';
-        $tiket->save();
+        $message = Message::find($request->input('message_id'));
+        $message->newest_reply = now();
+        $message->status = 'client reply';
+        $message->save();
 
         return back();
     }

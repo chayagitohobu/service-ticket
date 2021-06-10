@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Divisi;
+use App\Models\Division;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -25,14 +25,14 @@ class AdminUserController extends Controller
     public function index()
     {
         $users = DB::table('users')
-            ->join('divisis', 'users.divisi_id', 'divisis.id')
+            ->join('divisions', 'users.division_id', 'divisions.id')
             ->join('roles', 'users.role_id', 'roles.id')
-            ->select('users.id', 'users.email', 'users.name', 'users.telp', 'users.created_at', 'divisis.divisi', 'roles.role')
+            ->select('users.id', 'users.email', 'users.name', 'users.phone', 'users.created_at', 'divisions.division', 'roles.role')
             ->paginate(8);
 
-        $divisis = Divisi::all();
+        $divisis = Division::all();
         return view('admin.user')
-            ->with('divisis', $divisis)
+            ->with('divisions', $divisis)
             ->with('users', $users);
     }
 
@@ -43,10 +43,10 @@ class AdminUserController extends Controller
      */
     public function create()
     {
-        $divisis = Divisi::all();
+        $divisis = Division::all();
         $roles = Role::all();
         return view('admin.create_user')
-            ->with('divisis', $divisis)
+            ->with('divisions', $divisis)
             ->with('roles', $roles);
     }
 
@@ -62,10 +62,9 @@ class AdminUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'telp' => $request->telp,
-            'divisi_id' => $request->divisi,
+            'phone' => $request->phone,
+            'division_id' => $request->division,
             'role_id' => $request->role,
-            'telp' => $request->telp,
         ]);
 
         return redirect('admin/user')->with('success', 'User berhasil dibuat !');
@@ -92,12 +91,12 @@ class AdminUserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $divisis = Divisi::all();
+        $divisis = Division::all();
         $roles = Role::all();
 
         return view('admin.edit_user')
             ->with('user', $user)
-            ->with('divisis', $divisis)
+            ->with('divisions', $divisis)
             ->with('roles', $roles);
     }
 
@@ -114,9 +113,9 @@ class AdminUserController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
-        $user->divisi_id = $request->input('divisi');
+        $user->division_id = $request->input('division');
         $user->role_id = $request->input('role');
-        $user->telp = $request->input('telp');
+        $user->phone = $request->input('phone');
         $user->save();
 
         return redirect('admin/user')->with('success', 'User berhasil di update !!');

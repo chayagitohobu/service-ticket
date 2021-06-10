@@ -99,7 +99,7 @@
                                                 <div>
                                                     <br>
                                                     <p>Tanggal : {{ date('Y-m-d H:i:s') }}</p>
-                                                    <p>Halaman : {{$divisis->currentPage()}}</p>
+                                                    <p>Halaman : {{$divisions->currentPage()}}</p>
                                                     
                                                 </div>
                                             </div>
@@ -114,21 +114,21 @@
                                                 </thead>
                                                 <tbody>
                                                 
-                                                @foreach ($divisis as $divisi)
+                                                @foreach ($divisions as $division)
                                                     <tr>
-                                                        <td>{{$divisi->id}}</td>
-                                                        <td>{{$divisi->divisi}}</td>
+                                                        <td>{{$division->id}}</td>
+                                                        <td>{{$division->division}}</td>
                                                         <td id="aksi" class="text-right">
-                                                            <a id="aksi" href="{{route('admin.divisi.edit', $divisi->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit "><i id="aksi" class="fas fa-pen text-white"></i></a> 
+                                                            <a id="aksi" href="{{route('admin.divisi.edit', $division->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit "><i id="aksi" class="fas fa-pen text-white"></i></a> 
                                                         </td>
                                                         <td id="aksi" class="text-left">
-                                                            <form class="d-inline" action="{{route('admin.divisi.destroy', $divisi->id)}}" method="POST">
+                                                            <form class="d-inline" action="{{route('admin.divisi.destroy', $division->id)}}" method="POST">
                                                                 @csrf
                                                                 {{ method_field('DELETE') }}
                                                                 <button id="aksi" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i id="aksi" class="fas fa-trash text-white"></i></button>
                                                             </form>
                                                         </td>
-                                                            {{-- <a href="{{route('divisi.destroy', $divisi->id)}}" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i class="fas fa-trash text-white"></i></a></td> --}}
+                                                            {{-- <a href="{{route('divisi.destroy', $division->id)}}" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i class="fas fa-trash text-white"></i></a></td> --}}
                                                     </tr>
                                                 @endforeach
                                                 
@@ -143,7 +143,7 @@
                                         <div class="row justify-content-center">
                                             <nav class="mt-5" aria-label="...">
                                                 <ul class="pagination">
-                                                    {{$divisis->links("pagination::bootstrap-4")}}
+                                                    {{$divisions->links("pagination::bootstrap-4")}}
                                                 </ul>
                                             </nav>
                                         </div>

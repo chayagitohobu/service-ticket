@@ -25,7 +25,7 @@
                             <div class="col-lg-12">
                                 <div class="card p-4 m-b-30">
                                     <div class="card-body">
-                                        <form class="" action="{{route('admin.pertanyaan.update', $pertanyaan->id)}}" method="POST">
+                                        <form class="" action="{{route('admin.pertanyaan.update', $information->id)}}" method="POST">
                                             @csrf
                                             <h4 class="mt-0 header-title mt-5">Edit Pertanyaan</h4>
                                             <p class="text-muted m-b-30">Ubah pertanyaan yang telah dibuat sebelumnya dengan mengganti nilai form dibawah dan kemudian submit</p>
@@ -33,19 +33,19 @@
                                             <div class="form-group">
                                                 <label>Kategori : </label>
                                                 <br>
-                                                @if ($pertanyaan->kategori == 'faq')
+                                                @if ($information->category == 'faq')
                                                     <div class="d-inline-block mr-5 mt-3 mb-3">
                                                         <label>Umum</label>
-                                                        <input type="radio" name="kategori" value="umum" >
+                                                        <input type="radio" name="category" value="general" >
                                                     </div>
                                                     <div class="d-inline-block mr-5 mt-3 mb-3">
                                                         <label>FAQ : </label>
-                                                        <input type="radio" name="kategori" value="faq" checked>
+                                                        <input type="radio" name="category" value="faq" checked>
                                                     </div>
                                                 @else
                                                     <div class="d-inline-block mr-5 mt-3 mb-3">
                                                         <label>Umum</label>
-                                                        <input type="radio" name="kategori" value="umum" checked>
+                                                        <input type="radio" name="category" value="general" checked>
                                                     </div>
                                                     <div class="d-inline-block mr-5 mt-3 mb-3">
                                                         <label>FAQ : </label>
@@ -57,15 +57,15 @@
                                             <div class="form-group">
                                                 <label>Pertanyaan </label>
                                                 <div>
-                                                    <input value="{{$pertanyaan->pertanyaan}}" type="text" name="pertanyaan" class="form-control" required>
+                                                    <input value="{{$information->question}}" type="text" name="question" class="form-control" required>
                                                     {{-- <input name="pertanyaan" type="text" class="form-control" required placeholder="Type something"/> --}}
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="form-group">
                                                 <label>Jawaban</label>
-                                                <textarea class="summernote" name="jawaban">
-                                                    {!! $pertanyaan->jawaban !!}
+                                                <textarea class="summernote" name="answer">
+                                                    {!! $information->answer !!}
                                                 </textarea>
                                             </div>
                                             <div style="min-height:5vh;"></div>

@@ -28,7 +28,7 @@
                             <div class="col-xl-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <p class="header-title"> <small>Distribusi Divisi Tiket Pada Bulan</small> </p>
+                                        <p class="header-title"> <small>Distribusi Divisi Pertanyaan Pada Bulan</small> </p>
                                         
                                         @if (empty($bulan))
                                         <p class="header-title"><b> JANUARI</b></p>
@@ -78,7 +78,7 @@
             labels: ['Januari ', 'Februari', 'Maret','April', 'Mei', 'Juni', 
             'Juli', 'Agustus', 'September', 'Oktober' , 'November', 'Desember',],
             datasets: [{
-                label: 'Jumlah Tiket',
+                label: 'Jumlah Pertanyaan',
                 
                 data: [{{$jan}},{{$feb}},{{$mar}},
                 {{$apr}},{{$mei}},{{$jun}},{{$jul}},

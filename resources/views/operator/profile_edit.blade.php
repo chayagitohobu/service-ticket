@@ -40,7 +40,7 @@
                                                     </div>
                                                     <div class="form-group col-lg-12">
                                                         <label>No. Telp</label>
-                                                        <input name="telp" value="{{$operator->telp}}" type="text" class="form-control" required placeholder="Type something"/>
+                                                        <input name="phone" value="{{$operator->phone}}" type="text" class="form-control" required placeholder="Type something"/>
                                                     </div>
                                                     <div class="form-group col-lg-12 text-center">
                                                         <button type="submit" class="btn btn-primary waves-effect waves-light pl-5 pr-5"> 

@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Path\To\DOMdocument;
 use Intervention\Image\ImageManagerStatic as Image;
 
-use App\Models\Divisi;
-use App\Models\Tiket;
+use App\Models\Division;
+use App\Models\Message;
 
 
 class ClientTiketController extends Controller
@@ -30,23 +30,23 @@ class ClientTiketController extends Controller
     {
 
         $user_id = Auth::guard('client')->user()->id;
-        $tikets = DB::table('tikets')
-            ->where('tikets.client_id', '=', $user_id)
-            ->join('divisis', 'tikets.divisi_id', 'divisis.id')
+        $messages = DB::table('messages')
+            ->where('messages.client_id', '=', $user_id)
+            ->join('divisions', 'messages.division_id', 'divisions.id')
             ->select(
-                'tikets.id',
-                'tikets.judul',
-                'tikets.status',
-                'tikets.created_at',
-                'tikets.balasan_terbaru',
-                'divisis.divisi'
+                'messages.id',
+                'messages.title',
+                'messages.status',
+                'messages.created_at',
+                'messages.newest_reply',
+                'divisions.division'
             )
             ->paginate(8);
 
-        $divisis = Divisi::all();
+        $divisions = Division::all();
         return view('client.tiket')
-            ->with('divisis', $divisis)
-            ->with('tikets', $tikets);
+            ->with('divisions', $divisions)
+            ->with('messages', $messages);
     }
 
     /**
@@ -58,11 +58,11 @@ class ClientTiketController extends Controller
     {
 
         $user =  Auth::guard('client')->user();
-        $divisis = Divisi::all();
+        $divisions = Division::all();
 
         return view('client.create_tiket')
             ->with('user', $user)
-            ->with('divisis', $divisis);
+            ->with('divisions', $divisions);
     }
 
     /**
@@ -92,12 +92,12 @@ class ClientTiketController extends Controller
             $store_file = json_encode($files);
         }
 
-        if (!empty($request->ket)) {
+        if (!empty($request->detail)) {
             $storage = 'storage/tiket';
             $dom = new \DOMDocument();
             libxml_use_internal_errors(true);
-            // $dom->loadHTML($request->ket, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NOIMPLIED);
-            $dom->loadHTML($request->ket);
+            // $dom->loadHTML($request->detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NOIMPLIED);
+            $dom->loadHTML($request->detail);
             libxml_clear_errors();
             $images = $dom->getElementsByTagName('img');
             foreach ($images as $img) {
@@ -119,30 +119,30 @@ class ClientTiketController extends Controller
             }
         }
 
-        $tiket = new Tiket;
-        $tiket->judul = $request->input('judul');
-        // $tiket->ket = $request->input('ket');
-        if (!empty($request->ket)) {
-            $tiket->ket = $dom->saveHTML();
+        $message = new Message;
+        $message->title = $request->input('title');
+        // $message->detail = $request->input('ket');
+        if (!empty($request->detail)) {
+            $message->detail = $dom->saveHTML();
         } else {
-            $tiket->ket = null;
+            $message->detail = null;
         }
-        $tiket->prioritas = $request->input('prioritas');
-        $tiket->status = 'Buka';
-        $tiket->divisi_id = $request->input('divisi');
-        $tiket->client_id = Auth::guard('client')->user()->id;
-        $tiket->file = $store_file;
-        $tiket->balasan_terbaru = now();
-        $tiket->save();
+        $message->priority = $request->input('priority');
+        $message->status = 'Open';
+        $message->division_id = $request->input('division');
+        $message->client_id = Auth::guard('client')->user()->id;
+        $message->file = $store_file;
+        $message->newest_reply = now();
+        $message->save();
 
         return redirect('client/tiket')->with('success', 'Tiket berhasil dibuat !');
     }
 
     public function tutupTiket($id)
     {
-        $tiket = Tiket::find($id);
-        $tiket->status = 'Tutup';
-        $tiket->save();
+        $message = Message::find($id);
+        $message->status = 'Close';
+        $message->save();
         return redirect('client/tiket')->with('success', 'Tiket berhasil di tutup !!');
     }
 
@@ -155,22 +155,22 @@ class ClientTiketController extends Controller
      */
     public function show($id)
     {
-        $tiket = DB::table('tikets')
-            ->where('tikets.id', $id)
-            ->leftJoin('users', 'tikets.user_id', '=', 'users.id')
-            ->leftJoin('clients', 'tikets.client_id', '=', 'clients.id')
-            ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
+        $message = DB::table('messages')
+            ->where('messages.id', $id)
+            ->leftJoin('users', 'messages.user_id', '=', 'users.id')
+            ->leftJoin('clients', 'messages.client_id', '=', 'clients.id')
+            ->join('divisions', 'messages.division_id', '=', 'divisions.id')
             ->select(
-                'tikets.id',
-                'tikets.status',
-                'tikets.prioritas',
-                'tikets.ket',
-                'tikets.updated_at',
-                'tikets.balasan_terbaru',
-                'tikets.created_at',
-                'tikets.file',
-                'divisis.id as divisi_id',
-                'divisis.divisi',
+                'messages.id',
+                'messages.status',
+                'messages.priority',
+                'messages.detail',
+                'messages.updated_at',
+                'messages.newest_reply',
+                'messages.created_at',
+                'messages.file',
+                'divisions.id as division_id',
+                'divisions.division',
                 'users.role_id',
                 'clients.name as client_name',
                 'users.name as user_name',
@@ -179,59 +179,59 @@ class ClientTiketController extends Controller
             ->get()
             ->first();
 
-        if (empty($tiket->file)) {
-            $tiket_files = null;
+        if (empty($message->file)) {
+            $message_files = null;
         } else {
-            $tiket_file = $tiket->file;
+            $message_file = $message->file;
             $remove = ['"', '[', ']'];
-            $tiket_file_remove = str_replace($remove, ' ', $tiket_file);
+            $message_file_remove = str_replace($remove, ' ', $message_file);
 
-            $tiket_files = explode(',', $tiket_file_remove);
+            $message_files = explode(',', $message_file_remove);
         }
 
-        $balasans = DB::table('balasans')
-            ->where('balasans.tiket_id', $id)
-            ->leftJoin('users', 'balasans.user_id', '=', 'users.id')
-            ->leftJoin('clients', 'balasans.client_id', '=', 'clients.id')
+        $replies = DB::table('replies')
+            ->where('replies.message_id', $id)
+            ->leftJoin('users', 'replies.user_id', '=', 'users.id')
+            ->leftJoin('clients', 'replies.client_id', '=', 'clients.id')
             ->select(
                 'users.role_id',
                 'users.name as user_name',
                 'clients.name as client_name',
-                'balasans.created_at',
-                'balasans.balasan',
-                'balasans.file',
-                'balasans.id'
+                'replies.created_at',
+                'replies.reply',
+                'replies.file',
+                'replies.id'
             )
-            ->orderBy('balasans.created_at', 'DESC')
+            ->orderBy('replies.created_at', 'DESC')
             ->get();
 
-        if (empty($balasans)) {
-            $balasan_file_array = null;
+        if (empty($replies)) {
+            $reply_file_array = null;
         } else {
-            foreach ($balasans as $balasan) {
-                // if (empty($balasan->file)) {
-                //     $balasan_file_array = null;
+            foreach ($replies as $reply) {
+                // if (empty($reply->file)) {
+                //     $reply_file_array = null;
                 // } else {
-                $balasan_file = $balasan->file;
+                $reply_file = $reply->file;
                 $remove = ['"', '[', ']'];
-                $balasan_file_remove = str_replace($remove, ' ', $balasan_file);
-                $balasan_file = explode(',', $balasan_file_remove);
-                $balasan_file_array[] = $balasan_file;
+                $reply_file_remove = str_replace($remove, ' ', $reply_file);
+                $reply_file = explode(',', $reply_file_remove);
+                $reply_file_array[] = $reply_file;
                 // }
             }
         }
 
-        if (empty($balasan_file_array)) {
-            $balasan_file_array = null;
+        if (empty($reply_file_array)) {
+            $reply_file_array = null;
         } else {
-            $balasan_file_array[] = $balasan_file;
+            $reply_file_array[] = $reply_file;
         }
 
         return view('client.balasan')
-            ->with('tiket', $tiket)
-            ->with('balasans', $balasans)
-            ->with('tiket_files', $tiket_files)
-            ->with('balasan_file_array', $balasan_file_array);
+            ->with('message', $message)
+            ->with('replies', $replies)
+            ->with('message_files', $message_files)
+            ->with('reply_file_array', $reply_file_array);
     }
 
     /**

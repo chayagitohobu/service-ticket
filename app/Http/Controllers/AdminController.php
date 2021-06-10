@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
-use App\Models\Divisi;
+use App\Models\Division;
 use App\Models\User;
-use App\Models\Tiket;
+use App\Models\Message;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -45,51 +45,51 @@ class AdminController extends Controller
 
         $this->jumlah_client = Client::all()->count();
 
-        $this->jan = Tiket::whereYear('created_at', '=',  date('Y'))
+        $this->jan = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '01')
             ->count();
 
-        $this->feb = Tiket::whereYear('created_at', '=',  date('Y'))
+        $this->feb = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '02')
             ->count();
 
-        $this->mar = Tiket::whereYear('created_at', '=',  date('Y'))
+        $this->mar = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '03')
             ->count();
 
-        $this->apr = Tiket::whereYear('created_at', '=',  date('Y'))
+        $this->apr = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '04')
             ->count();
 
-        $this->mei = Tiket::whereYear('created_at', '=',  date('Y'))
+        $this->mei = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '05')
             ->count();
 
-        $this->jun = Tiket::whereYear('created_at', '=',  date('Y'))
+        $this->jun = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '06')
             ->count();
 
-        $this->jul = Tiket::whereYear('created_at', '=',  date('Y'))
+        $this->jul = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '07')
             ->count();
 
-        $this->agu = Tiket::whereYear('created_at', '=',  date('Y'))
+        $this->agu = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '08')
             ->count();
 
-        $this->sep = Tiket::whereYear('created_at', '=',  date('Y'))
+        $this->sep = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '09')
             ->count();
 
-        $this->okt = Tiket::whereYear('created_at', '=',  date('Y'))
+        $this->okt = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '10')
             ->count();
 
-        $this->nov = Tiket::whereYear('created_at', '=',  date('Y'))
+        $this->nov = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '11')
             ->count();
 
-        $this->des = Tiket::whereYear('created_at', '=',  date('Y'))
+        $this->des = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '12')
             ->count();
     }
@@ -101,26 +101,26 @@ class AdminController extends Controller
 
         // for ($i = 1; $i < 13; $i++) {
 
-        //     $bulan[] = Tiket::whereYear('created_at', '=',  date('Y'))
+        //     $bulan[] = Message::whereYear('created_at', '=',  date('Y'))
         //         ->whereMonth('created_at', '=', $i)
         //         ->count();
         // }
 
-        $technology = Tiket::whereYear('created_at', '=',  date('Y'))
+        $technology = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '1')
-            ->where('divisi_id', '=', 1)
+            ->where('division_id', '=', 1)
             ->count();
-        $marketing = Tiket::whereYear('created_at', '=',  date('Y'))
+        $marketing = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '1')
-            ->where('divisi_id', '=', 2)
+            ->where('division_id', '=', 2)
             ->count();
-        $human_resource = Tiket::whereYear('created_at', '=',  date('Y'))
+        $human_resource = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '1')
-            ->where('divisi_id', '=', 3)
+            ->where('division_id', '=', 3)
             ->count();
-        $finance = Tiket::whereYear('created_at', '=',  date('Y'))
+        $finance = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', '1')
-            ->where('divisi_id', '=', 4)
+            ->where('division_id', '=', 4)
             ->count();
 
         return view('admin.dashboard')
@@ -188,21 +188,21 @@ class AdminController extends Controller
         }
 
 
-        $technology = Tiket::whereYear('created_at', '=',  date('Y'))
+        $technology = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', $bulan_convert)
-            ->where('divisi_id', '=', 1)
+            ->where('division_id', '=', 1)
             ->count();
-        $marketing = Tiket::whereYear('created_at', '=',  date('Y'))
+        $marketing = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', $bulan_convert)
-            ->where('divisi_id', '=', 2)
+            ->where('division_id', '=', 2)
             ->count();
-        $human_resource = Tiket::whereYear('created_at', '=',  date('Y'))
+        $human_resource = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', $bulan_convert)
-            ->where('divisi_id', '=', 3)
+            ->where('division_id', '=', 3)
             ->count();
-        $finance = Tiket::whereYear('created_at', '=',  date('Y'))
+        $finance = Message::whereYear('created_at', '=',  date('Y'))
             ->whereMonth('created_at', '=', $bulan_convert)
-            ->where('divisi_id', '=', 4)
+            ->where('division_id', '=', 4)
             ->count();
 
         return view('admin.dashboard')
@@ -275,8 +275,8 @@ class AdminController extends Controller
         $user_id = Auth::guard('user')->user()->id;
         $user = DB::table('users')
             ->where('users.id', '=', $user_id)
-            ->leftJoin('divisis', 'users.divisi_id', 'divisis.id')
-            ->select('users.name', 'users.email', 'users.telp', 'divisis.divisi')
+            ->leftJoin('divisions', 'users.division_id', 'divisions.id')
+            ->select('users.name', 'users.email', 'users.phone', 'divisions.division')
             ->get()
             ->first();
 

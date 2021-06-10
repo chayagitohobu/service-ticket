@@ -40,11 +40,11 @@
     </h5>
     <p style="padding-left: 6em; padding-right: 6em;">
       {{Str::limit('
-      Sebagai kontak pewaris, Anda juga bisa meminta untuk menghapus akun kenangan yang Anda kelola. Untuk mengirimkan permintaan penghapusan akun atau jika ada pertanyaan terkait kontak pewaris, isi formulir ini.', 200)}}
+      Sebagai kontak pewaris, Anda juga bisa meminta untuk menghapus akun kenangan yang Anda kelola. Untuk mengirimkan permintaan penghapusan akun atau jika ada information terkait kontak pewaris, isi formulir ini.', 200)}}
     </p>
 </div> --}}
 <div class="container">
-  @if (count($pertanyaans) < 1)
+  @if (count($informations) < 1)
   <div class="text-center">
     <img class="mb-4 m-auto" width="250" src="{{asset('assets/images/ilustrasi/nothing.svg')}}" alt="">
     <h5>Kami tidak menemukan hasil</h5>
@@ -52,21 +52,21 @@
   </div>
   @else
     <div id="accordion">
-      @foreach ($pertanyaans as $pertanyaan)
+      @foreach ($informations as $information)
       <div class="card shadow">
-        <button class="btn text-dark btn-link collapsed pt-3 pb-3"  data-toggle="collapse" data-target="#collapse{{$pertanyaan->id}}" aria-expanded="false" aria-controls="collapse{{$pertanyaan->id}}">
-          <div class="bg-white" id="heading{{$pertanyaan->id}}">
+        <button class="btn text-dark btn-link collapsed pt-3 pb-3"  data-toggle="collapse" data-target="#collapse{{$information->id}}" aria-expanded="false" aria-controls="collapse{{$information->id}}">
+          <div class="bg-white" id="heading{{$information->id}}">
           <p class="mb-0 text-left">
             <i class="fas fa-search mr-5"></i>
             <b>
-              {{$pertanyaan->pertanyaan}}
+              {{$information->question}}
             </b>
             </p>
           </div>
         </button>
-        <div id="collapse{{$pertanyaan->id}}" class="collapse" aria-labelledby="heading{{$pertanyaan->id}}" data-parent="#accordion">
+        <div id="collapse{{$information->id}}" class="collapse" aria-labelledby="heading{{$information->id}}" data-parent="#accordion">
           <div class="card-body pb-5 " style="padding-left: 6em; padding-right: 6em;">
-            {!! $pertanyaan->jawaban !!}
+            {!! $information->answer !!}
           </div>
         </div>
       </div>

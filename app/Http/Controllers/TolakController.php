@@ -21,9 +21,9 @@ class TolakController extends Controller
         //     $faqs = DB::table('faqs')->orderBy('created_at', 'desc')->get();
         //     return view('home')->with('faqs', $faqs);
         // }
-        // $pertanyaans = DB::table('pertanyaans')->where('kategori', 'faq')->orderBy('created_at', 'desc')->get();
-        $pertanyaans = DB::table('pertanyaans')->where('kategori', 'faq')->orderBy('created_at', 'desc')->get();
-        return view('home')->with('pertanyaans', $pertanyaans);
+        // $pertanyaans = DB::table('informations')->where('category', 'faq')->orderBy('created_at', 'desc')->get();
+        $pertanyaans = DB::table('informations')->where('category', 'faq')->orderBy('created_at', 'desc')->get();
+        return view('home')->with('informations', $pertanyaans);
     }
 
     /**

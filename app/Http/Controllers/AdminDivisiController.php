@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Divisi;
+use App\Models\Division;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\AssignOp\Div;
 
@@ -21,8 +21,8 @@ class AdminDivisiController extends Controller
 
     public function index()
     {
-        $divisis = Divisi::paginate(8);
-        return view('admin.divisi')->with('divisis', $divisis);
+        $divisions = Division::paginate(8);
+        return view('admin.divisi')->with('divisions', $divisions);
     }
 
     /**
@@ -43,9 +43,9 @@ class AdminDivisiController extends Controller
      */
     public function store(Request $request)
     {
-        $divisi = new Divisi;
-        $divisi->divisi = $request->input('divisi');
-        $divisi->save();
+        $division = new Division;
+        $division->division = $request->input('divisi');
+        $division->save();
 
         return redirect('admin/divisi')->with('success', 'Divisi telah dibuat !');
     }
@@ -69,8 +69,8 @@ class AdminDivisiController extends Controller
      */
     public function edit($id)
     {
-        $divisi = Divisi::find($id);
-        return view('admin.edit_divisi')->with('divisi', $divisi);
+        $division = Division::find($id);
+        return view('admin.edit_divisi')->with('divisi', $division);
     }
 
     /**
@@ -82,9 +82,9 @@ class AdminDivisiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $divisi = Divisi::find($id);
-        $divisi->divisi = $request->input('divisi');
-        $divisi->save();
+        $division = Division::find($id);
+        $division->division = $request->input('division');
+        $division->save();
         return redirect('admin/divisi')->with('success', 'Divisi telah di update !!');
     }
 
@@ -97,8 +97,8 @@ class AdminDivisiController extends Controller
     public function destroy($id)
     {
         // return 'test';
-        $divisi = Divisi::find($id);
-        $divisi->delete();
+        $division = Division::find($id);
+        $division->delete();
 
         return redirect('admin/divisi')->with('success', 'Divisi berhasil di hapus !!');
     }

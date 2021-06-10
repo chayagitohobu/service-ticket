@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Path\To\DOMdocument;
 use Intervention\Image\ImageManagerStatic as Image;
 
-use App\Models\Tiket;
-use App\Models\Divisi;
+use App\Models\Message;
+use App\Models\Division;
 
 class OperatorTiketController extends Controller
 {
@@ -28,30 +28,30 @@ class OperatorTiketController extends Controller
     public function index()
     {
         $user =  Auth::guard('user')->user();
-        $divisi = Divisi::where('id', $user->divisi_id)->get()->first();
-        $tikets = DB::table('tikets')
-            ->where('tikets.divisi_id', '=', $user->divisi_id)
-            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
-            ->leftJoin('users', 'tikets.user_id', 'users.id')
-            ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
+        $division = Division::where('id', $user->division_id)->get()->first();
+        $messages = DB::table('messages')
+            ->where('messages.division_id', '=', $user->division_id)
+            ->leftJoin('clients', 'messages.client_id', 'clients.id')
+            ->leftJoin('users', 'messages.user_id', 'users.id')
+            ->join('divisions', 'messages.division_id', '=', 'divisions.id')
             ->select(
                 'clients.id as client_id',
                 'clients.name as client_name',
                 'users.id as user_id',
                 'users.name as user_name',
                 'users.role_id',
-                'divisis.divisi',
-                'tikets.judul',
-                'tikets.status',
-                'tikets.created_at',
-                'tikets.balasan_terbaru',
-                'tikets.id'
+                'divisions.division',
+                'messages.title',
+                'messages.status',
+                'messages.created_at',
+                'messages.newest_reply',
+                'messages.id'
             )
             ->paginate(8);
 
-        $namas = DB::table('tikets')
-            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
-            ->leftJoin('users', 'tikets.user_id', 'users.id')
+        $namas = DB::table('messages')
+            ->leftJoin('clients', 'messages.client_id', 'clients.id')
+            ->leftJoin('users', 'messages.user_id', 'users.id')
             ->select(
                 'clients.name as client_name',
                 'users.name as user_name',
@@ -62,8 +62,8 @@ class OperatorTiketController extends Controller
 
         return view('operator.tiket')
             ->with('namas', $namas)
-            ->with('tikets', $tikets)
-            ->with('divisi', $divisi);
+            ->with('messages', $messages)
+            ->with('division', $division);
     }
 
     /**
@@ -75,10 +75,10 @@ class OperatorTiketController extends Controller
     {
 
         $user =  Auth::guard('user')->user();
-        $divisis = Divisi::all();
+        $divisions = Division::all();
 
         return view('operator.create_tiket')
-            ->with('divisis', $divisis)
+            ->with('divisions', $divisions)
             ->with('user', $user);
     }
 
@@ -109,12 +109,12 @@ class OperatorTiketController extends Controller
             $store_file = json_encode($files);
         }
 
-        if (!empty($request->ket)) {
+        if (!empty($request->detail)) {
             $storage = 'storage/tiket';
             $dom = new \DOMDocument();
             libxml_use_internal_errors(true);
-            // $dom->loadHTML($request->ket, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NOIMPLIED);
-            $dom->loadHTML($request->ket);
+            // $dom->loadHTML($request->detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NOIMPLIED);
+            $dom->loadHTML($request->detail);
             libxml_clear_errors();
             $images = $dom->getElementsByTagName('img');
             foreach ($images as $img) {
@@ -136,29 +136,29 @@ class OperatorTiketController extends Controller
             }
         }
 
-        $tiket = new Tiket;
-        $tiket->user_id = Auth::guard('user')->user()->id;
-        $tiket->divisi_id = $request->input('divisi');
-        $tiket->prioritas = $request->input('prioritas');
-        $tiket->judul = $request->input('judul');
-        // $tiket->ket = $request->input('ket');
-        if (!empty($request->ket)) {
-            $tiket->ket = $dom->saveHTML();
+        $message = new Message;
+        $message->user_id = Auth::guard('user')->user()->id;
+        $message->division_id = $request->input('division');
+        $message->priority = $request->input('priority');
+        $message->title = $request->input('title');
+        // $message->detail = $request->input('ket');
+        if (!empty($request->detail)) {
+            $message->detail = $dom->saveHTML();
         } else {
-            $tiket->ket = null;
+            $message->detail = null;
         }
-        $tiket->file = $store_file;
-        $tiket->balasan_terbaru = now();
-        $tiket->save();
+        $message->file = $store_file;
+        $message->newest_reply = now();
+        $message->save();
 
         return redirect('operator/tiket')->with('success', 'Tiket berhasil di buat !!');
     }
 
     public function tutupTiket($id)
     {
-        $tiket = Tiket::find($id);
-        $tiket->status = 'Tutup';
-        $tiket->save();
+        $message = Message::find($id);
+        $message->status = 'Close';
+        $message->save();
         return redirect('client/tiket')->with('success', 'Tiket berhasil di tutup !!');
     }
 
@@ -171,22 +171,22 @@ class OperatorTiketController extends Controller
     public function show($id)
     {
 
-        $tiket = DB::table('tikets')
-            ->where('tikets.id', $id)
-            ->leftJoin('users', 'tikets.user_id', '=', 'users.id')
-            ->leftJoin('clients', 'tikets.client_id', '=', 'clients.id')
-            ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
+        $message = DB::table('messages')
+            ->where('messages.id', $id)
+            ->leftJoin('users', 'messages.user_id', '=', 'users.id')
+            ->leftJoin('clients', 'messages.client_id', '=', 'clients.id')
+            ->join('divisions', 'messages.division_id', '=', 'divisions.id')
             ->select(
-                'tikets.id',
-                'tikets.status',
-                'tikets.prioritas',
-                'tikets.ket',
-                'tikets.updated_at',
-                'tikets.balasan_terbaru',
-                'tikets.created_at',
-                'tikets.file',
-                'divisis.id as divisi_id',
-                'divisis.divisi',
+                'messages.id',
+                'messages.status',
+                'messages.priority',
+                'messages.detail',
+                'messages.updated_at',
+                'messages.newest_reply',
+                'messages.created_at',
+                'messages.file',
+                'divisions.id as division_id',
+                'divisions.division',
                 'users.role_id',
                 'clients.name as client_name',
                 'users.name as user_name',
@@ -194,55 +194,55 @@ class OperatorTiketController extends Controller
             ->get()
             ->first();
 
-        $balasans = DB::table('balasans')
-            ->where('balasans.tiket_id', $id)
-            ->leftJoin('users', 'balasans.user_id', '=', 'users.id')
-            ->leftJoin('clients', 'balasans.client_id', '=', 'clients.id')
+        $replies = DB::table('replies')
+            ->where('replies.message_id', $id)
+            ->leftJoin('users', 'replies.user_id', '=', 'users.id')
+            ->leftJoin('clients', 'replies.client_id', '=', 'clients.id')
             ->select(
                 'users.role_id',
                 'users.name as user_name',
                 'clients.name as client_name',
-                'balasans.created_at',
-                'balasans.balasan',
-                'balasans.id',
-                'balasans.file'
+                'replies.created_at',
+                'replies.reply',
+                'replies.id',
+                'replies.file'
             )
-            ->orderBy('balasans.created_at', 'DESC')
+            ->orderBy('replies.created_at', 'DESC')
             ->get();
 
-        if (empty($tiket->file)) {
-            $tiket_files = null;
+        if (empty($message->file)) {
+            $message_files = null;
         } else {
-            $tiket_file = $tiket->file;
+            $message_file = $message->file;
             $remove = ['"', '[', ']'];
-            $tiket_file_remove = str_replace($remove, ' ', $tiket_file);
+            $message_file_remove = str_replace($remove, ' ', $message_file);
 
-            $tiket_files = explode(',', $tiket_file_remove);
+            $message_files = explode(',', $message_file_remove);
         }
 
-        if (empty($balasans)) {
-            $balasan_file_array = null;
+        if (empty($replies)) {
+            $reply_file_array = null;
         } else {
-            foreach ($balasans as $balasan) {
-                $balasan_file = $balasan->file;
+            foreach ($replies as $reply) {
+                $reply_file = $reply->file;
                 $remove = ['"', '[', ']'];
-                $balasan_file_remove = str_replace($remove, ' ', $balasan_file);
-                $balasan_file = explode(',', $balasan_file_remove);
-                $balasan_file_array[] = $balasan_file;
+                $reply_file_remove = str_replace($remove, ' ', $reply_file);
+                $reply_file = explode(',', $reply_file_remove);
+                $reply_file_array[] = $reply_file;
             }
         }
 
-        if (empty($balasan_file_array)) {
-            $balasan_file_array = null;
+        if (empty($reply_file_array)) {
+            $reply_file_array = null;
         } else {
-            $balasan_file_array[] = $balasan_file;
+            $reply_file_array[] = $reply_file;
         }
 
         return view('operator.balasan')
-            ->with('tiket', $tiket)
-            ->with('balasans', $balasans)
-            ->with('tiket_files', $tiket_files)
-            ->with('balasan_file_array', $balasan_file_array);
+            ->with('message', $message)
+            ->with('replies', $replies)
+            ->with('message_files', $message_files)
+            ->with('reply_file_array', $reply_file_array);
     }
 
     /**

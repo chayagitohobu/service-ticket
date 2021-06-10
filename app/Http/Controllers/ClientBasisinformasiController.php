@@ -9,18 +9,18 @@ class ClientBasisinformasiController extends Controller
 {
     public function index()
     {
-        $pertanyaans = DB::table('pertanyaans')->where('kategori', 'faq')->orderBy('created_at', 'desc')->get();
-        return view('client.basis_informasi.index')->with('pertanyaans', $pertanyaans);
+        $informations = DB::table('informations')->where('category', 'faq')->orderBy('created_at', 'desc')->get();
+        return view('client.basis_informasi.index')->with('informations', $informations);
     }
 
     public function cari(Request $request)
     {
-        $pertanyaans = DB::table('pertanyaans')
-            ->where('pertanyaan', 'LIKE', '%' . $request->input('cari') . '%')
-            ->orWhere('jawaban', 'LIKE', '%' . $request->input('cari') . '%')
+        $informations = DB::table('informations')
+            ->where('question', 'LIKE', '%' . $request->input('cari') . '%')
+            ->orWhere('answer', 'LIKE', '%' . $request->input('cari') . '%')
             ->orderBy('created_at', 'desc')
             ->paginate(8);
 
-        return view('client.basis_informasi.index')->with('pertanyaans', $pertanyaans);
+        return view('client.basis_informasi.index')->with('informations', $informations);
     }
 }

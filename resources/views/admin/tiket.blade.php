@@ -71,8 +71,8 @@
                                         <div id="hide" class="row mb-4">
                                             
                                             <div class="col-xl-4">
-                                                <h4 class="mt-0 header-title">Daftar Tiket</h4>
-                                                <p class="text-muted">Berikut adalah daftar Tiket</p>
+                                                <h4 class="mt-0 header-title">Daftar Pertanyaan</h4>
+                                                <p class="text-muted">Berikut adalah daftar Pertanyaan</p>
                                             </div>
                                             <div class="col-xl-8 text-right">
                                                 <a class="d-inline-block mr-2" href="{{route('admin.tiket.create')}}">
@@ -86,7 +86,7 @@
                                         <div class="row mb-4">
                                             <div class="mr-auto mt-4 col-xl-5">
                                                 <div class="dropdown m-1 d-inline-block">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Nama
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownDivisi">
@@ -107,26 +107,26 @@
                                                     </div>
                                                 </div>
                                                 <div class="dropdown m-1 d-inline-block">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Divisi
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownDivisi">
                                                     <a class="dropdown-item" href="{{route('admin.tiket.index')}}">Semua</a>
-                                                        @foreach ($divisis as $divisi)
-                                                        <a class="dropdown-item" href="{{route('admin.tiket.divisi_filter', $divisi->divisi)}}">{{$divisi->divisi}}</a>
+                                                        @foreach ($divisions as $division)
+                                                        <a class="dropdown-item" href="{{route('admin.tiket.divisi_filter', $division->division)}}">{{$division->division}}</a>
                                                         @endforeach
                                                     </div>
                                                 </div>
                                                 <div class="dropdown m-1 d-inline-block">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Status
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownStatus">
                                                     <a class="dropdown-item" href="{{route('admin.tiket.index')}}">Semua</a>
-                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Buka')}}">Buka</a>
-                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Tutup')}}">Tutup</a>
-                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Balasan Operator')}}">Balasan Operator</a>
-                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Balasan Client')}}">Balasan Client</a>
+                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Open')}}">Buka</a>
+                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Close')}}">Tutup</a>
+                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Operator reply')}}">Balasan Operator</a>
+                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Cleint reply')}}">Balasan Client</a>
                                                     </div>
                                                 </div>
                                                 <form class="mt-1" id="form_search" action="{{route('admin.tiket.search')}}" method="GET">
@@ -230,7 +230,7 @@
                                                         @endswitch
                                                     </p>
 
-                                                    <p>Halaman : {{$tikets->currentPage()}}</p>
+                                                    <p>Halaman : {{$messages->currentPage()}}</p>
                                                 </div>
                                                 
                                             </div>
@@ -246,55 +246,56 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach ($tikets as $tiket)
+                                                @foreach ($messages as $message)
                                                     <tr>
-                                                    @if (empty($tiket->client_name))
-                                                            @switch($tiket->role_id)
+                                                    @if (empty($message->client_name))
+                                                            @switch($message->role_id)
                                                                 @case(1)
-                                                                    <td>{{$tiket->user_name}} (admin)</td>
+                                                                    <td>{{$message->user_name}} (admin)</td>
                                                                     @break
                                                                 @case(2)
-                                                                    <td>{{$tiket->user_name}} (operator)</td>
+                                                                    <td>{{$message->user_name}} (operator)</td>
                                                                     @break
                                                                 @default
                                                                     
                                                             @endswitch
                                                         @else
-                                                            <td> {{$tiket->client_name}} {{$tiket->user_name}} </td>
+                                                            <td> {{$message->client_name}} {{$message->user_name}} </td>
                                                         @endif
-                                                        <td>{{$tiket->divisi}}</td>
-                                                        <td>{{$tiket->judul}}</td>
-                                                        @switch($tiket->status)
-                                                            @case('Buka')
+                                                        <td>{{$message->division}}</td>
+                                                        <td>{{$message->title}}</td>
+                                                        @switch($message->status)
+                                                            @case('Open')
                                                                 <td><i style="font-size: 1.5em;" class="mdi mdi-record text-success"></i> Buka</td>
                                                                 @break
-                                                            @case('Tutup')
+                                                            @case('Close')
                                                                 <td><i style="font-size: 1.3em;" class="mdi mdi-record text-danger"></i> Tutup</td>
                                                                 @break
-                                                            @case('Balasan operator')
+                                                            @case('Operator reply')
                                                                 <td><i style="font-size: 1.3em;" class="mdi mdi-record text-primary"></i> Balasan Operator</td>
                                                                 @break
-                                                            @case('Balasan client')
+                                                            @case('Client reply')
                                                                 <td><i style="font-size: 1.3em;" class="mdi mdi-record text-info"></i> Balasan Client</td>
                                                                 @break
                                                             @default
-                                                                
+                                                                <td><i style="font-size: 1.5em;" class="mdi mdi-record text-success"></i> Buka</td>
                                                         @endswitch
-                                                        @if (empty($tiket->balasan_terbaru))
-                                                            <td>{{$tiket->created_at}}</td>
+                                                        @if (empty($message->newest_reply))
+                                                            <td>{{$message->created_at}}</td>
                                                         @else
-                                                            <td>{{$tiket->balasan_terbaru}}</td>
+                                                        
+                                                            <td>{{$message->newest_reply}}</td>
                                                         @endif
                                                         
-                                                        <td id="aksi" class="text-right"><a id="aksi" href="{{route('admin.tiket.show', $tiket->id)}}" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Lihat "><i id="aksi" class="mdi mdi-eye text-white"></i></a> 
-                                                            
+                                                        <td id="aksi" class="text-right">
+                                                            <a id="aksi" href="{{route('admin.tiket.show', $message->id)}}" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Lihat "><i id="aksi" class="mdi mdi-eye text-white"></i></a> 
                                                         </td>
                                                         <td id="aksi" class="text-center">
-                                                            <a id="aksi" href="{{route('admin.tiket.edit', $tiket->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit"><i id="aksi" class="fas fa-pen text-white"></i></a>
+                                                            <a id="aksi" href="{{route('admin.tiket.edit', $message->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit"><i id="aksi" class="fas fa-pen text-white"></i></a>
                                                             
                                                         </td>
                                                         <td id="aksi" class="text-left">
-                                                            <form class="d-inline" action="{{route('admin.tiket.destroy', $tiket->id)}}" method="POST">
+                                                            <form class="d-inline" action="{{route('admin.tiket.destroy', $message->id)}}" method="POST">
                                                                 @csrf
                                                                 {{ method_field('DELETE') }}
                                                                 <button id="aksi" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i id="aksi" class="fas fa-trash text-white"></i></button>
@@ -309,9 +310,9 @@
                                         <div class="row justify-content-center">
                                             <nav class="mt-5" aria-label="...">
                                                 <ul class="pagination">
-                                                    {{-- {{$tikets->appends('tikets')->links("pagination::bootstrap-4")}} --}}
-                                                    {{$tikets->links("pagination::bootstrap-4")}}
-                                                    {{-- {!! $tikets->render() !!} --}}
+                                                    {{-- {{$messages->appends('tikets')->links("pagination::bootstrap-4")}} --}}
+                                                    {{$messages->links("pagination::bootstrap-4")}}
+                                                    {{-- {!! $messages->render() !!} --}}
                                                 </ul>
                                             </nav>
                                         </div>

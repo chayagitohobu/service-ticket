@@ -87,7 +87,7 @@
                                             <div class="col-xl-12">
                                                 <div class="d-inline-block mr-5  mb-5">
                                                     <div class="m-1 dropdown d-inline-block">
-                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             Role
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownDivisi">
@@ -97,13 +97,13 @@
                                                         </div>
                                                     </div>
                                                     <div class="m-1 dropdown d-inline-block">
-                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             Divisi
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownDivisi">
                                                         <a class="dropdown-item" href="{{route('admin.user.index')}}">Semua</a>
-                                                            @foreach ($divisis as $divisi)
-                                                            <a class="dropdown-item" href="{{route('admin.user.divisi_filter', $divisi->divisi)}}">{{$divisi->divisi}}</a>
+                                                            @foreach ($divisions as $divisi)
+                                                            <a class="dropdown-item" href="{{route('admin.user.divisi_filter', $divisi->division)}}">{{$divisi->division}}</a>
                                                             @endforeach
                                                         </div>
                                                     </div>
@@ -223,7 +223,7 @@
                                                     <th>ID</th>
                                                     <th>Email</th>
                                                     <th>Nama</th>
-                                                    <th>Divisi</th>
+                                                    <th>Division</th>
                                                     <th>Role</th>
                                                     <th>No Telp</th>
                                                     <th>Tanggal Di Buat</th>
@@ -237,9 +237,9 @@
                                                             <td>{{$user->id}}</td>
                                                             <td>{{$user->email}}</td>
                                                             <td>{{$user->name}}</td>
-                                                            <td>{{$user->divisi}}</td>
+                                                            <td>{{$user->division}}</td>
                                                             <td>{{$user->role}}</td>
-                                                            <td>{{$user->telp}}</td>
+                                                            <td>{{$user->phone}}</td>
                                                             @if (empty($user->created_at))
                                                             <td> - </td>
                                                             @else

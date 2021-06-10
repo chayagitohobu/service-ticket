@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Client;
-use App\Models\Tiket;
+use App\Models\Message;
 
 class ClientController extends Controller
 {
@@ -30,30 +30,30 @@ class ClientController extends Controller
         $user_id = Auth::guard('client')->user()->id;
 
 
-        $jumlah_tiket =  DB::table('tikets')
-            ->where('tikets.client_id', '=', $user_id)
+        $jumlah_tiket =  DB::table('messages')
+            ->where('messages.client_id', '=', $user_id)
             ->count();
 
-        $status_buka = DB::table('tikets')
-            ->where('tikets.client_id', '=', $user_id)
-            ->where('status', '=', 'Buka')
+        $status_buka = DB::table('messages')
+            ->where('messages.client_id', '=', $user_id)
+            ->where('status', '=', 'Open')
             ->count();
 
-        $status_tutup = DB::table('tikets')
-            ->where('tikets.client_id', '=', $user_id)
-            ->where('status', '=', 'Tutup')
+        $status_tutup = DB::table('messages')
+            ->where('messages.client_id', '=', $user_id)
+            ->where('status', '=', 'Close')
             ->count();
 
-        $belum_terjawab = DB::table('tikets')
-            ->where('tikets.client_id', '=', $user_id)
-            ->where('status', '=', 'Balasan Operator')
+        $belum_terjawab = DB::table('messages')
+            ->where('messages.client_id', '=', $user_id)
+            ->where('status', '=', 'Operator reply')
             ->count();
 
-        $aktivitas_terbarus = DB::table('tikets')
-            ->where('tikets.client_id', '=', $user_id)
-            ->leftJoin('balasans', 'tikets.id', 'balasans.tiket_id')
-            ->latest('tikets.balasan_terbaru', 'DESC')
-            ->select('tikets.judul', 'tikets.balasan_terbaru')
+        $aktivitas_terbarus = DB::table('messages')
+            ->where('messages.client_id', '=', $user_id)
+            ->leftJoin('replies', 'messages.id', 'replies.message_id')
+            ->latest('messages.newest_reply', 'DESC')
+            ->select('messages.title', 'messages.newest_reply')
             ->take(4)
             ->get();
 
@@ -157,8 +157,8 @@ class ClientController extends Controller
 
         $client = Client::find($client_id);
         $client->name = $request->input('name');
-        $client->name_perusahaan = $request->input('name_perusahaan');
-        $client->telp = $request->input('telp');
+        $client->company = $request->input('company');
+        $client->phone = $request->input('phone');
         $client->save();
 
         return redirect('client/profile')->with('success', 'profile berhasil di update !!');

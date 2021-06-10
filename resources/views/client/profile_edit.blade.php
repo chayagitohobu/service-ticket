@@ -49,11 +49,11 @@
                                                     </div>
                                                     <div class="form-group col-lg-12">
                                                         <label>Perusahaan </label>
-                                                        <input name="name_perusahaan" value="{{$client->name_perusahaan}}" type="text" class="form-control"  required placeholder="Type something"/>
+                                                        <input name="company" value="{{$client->company}}" type="text" class="form-control"  required placeholder="Type something"/>
                                                     </div>
                                                     <div class="form-group col-lg-12">
                                                         <label>No. Telp</label>
-                                                        <input name="telp" value="{{$client->telp}}" type="text" class="form-control" required placeholder="Type something"/>
+                                                        <input name="phone" value="{{$client->phone}}" type="text" class="form-control" required placeholder="Type something"/>
                                                     </div>
                                                     <div class="form-group col-lg-12 text-center">
                                                         <button type="submit" class="btn btn-primary waves-effect waves-light pl-5 pr-5"> 

@@ -50,10 +50,10 @@ class AdminClientController extends Controller
     {
         Client::create([
             'name' => $request->name,
-            'name_perusahaan' => $request->name_perusahaan,
+            'company' => $request->company,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'telp' => $request->telp,
+            'phone' => $request->phone,
         ]);
 
         return redirect('admin/client')->with('success', 'Client berhasil dibuat !');
@@ -93,10 +93,10 @@ class AdminClientController extends Controller
     {
         $client = Client::find($id);
         $client->name = $request->input('name');
-        $client->name_perusahaan = $request->input('name_perusahaan');
+        $client->company = $request->input('company');
         $client->email = $request->input('email');
         $client->password = Hash::make($request->input('password'));
-        $client->telp = $request->input('telp');
+        $client->phone = $request->input('phone');
         $client->save();
 
         return redirect('admin/client')->with('success', 'client berhasil di update !!');

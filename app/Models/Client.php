@@ -20,10 +20,10 @@ class Client extends Authenticatable
 
     protected $fillable = [
         'name',
-        'name_perusahaan',
+        'company',
         'email',
         'password',
-        'telp',
+        'phone',
         'role',
     ];
 

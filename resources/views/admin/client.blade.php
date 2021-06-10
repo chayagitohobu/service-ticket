@@ -70,12 +70,12 @@
                                     <div class="card-body">
                                         <div class="row mb-4">
                                             <div class="col-xl-4 mb-3">
-                                                <h4 class="mt-0 header-title">Daftar Client</h4>
-                                                <p class="text-muted">Berikut adalah daftar data client</p>
+                                                <h4 class="mt-0 header-title">Daftar Klien</h4>
+                                                <p class="text-muted">Berikut adalah daftar data klien</p>
                                             </div>
                                             <div class="col-xl-8 text-right">
                                                 <a class="d-inline-block mr-1" href="{{route('admin.client.create')}}">
-                                                    <button type="button" class="btn btn-info btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-plus noti-icon mr-3"></i>Tambah Client</button>
+                                                    <button type="button" class="btn btn-info btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-plus noti-icon mr-3"></i>Tambah Klien</button>
                                                 </a>
                                                 <div class="d-inline-block">
                                                     <button onclick="window.print()" type="button" class="btn btn-success btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-print mr-3"></i>Cetak</button>
@@ -217,8 +217,8 @@
                                                     <td>{{$client->id}}</td>
                                                     <td>{{$client->email}}</td>
                                                     <td>{{$client->name}}</td>
-                                                    <td>{{$client->name_perusahaan}}</td>
-                                                    <td>{{$client->telp}}</td>
+                                                    <td>{{$client->company}}</td>
+                                                    <td>{{$client->phone}}</td>
                                                     <td>{{$client->created_at}}</td>
                                                     <td id="aksi" class="text-right">
                                                         <a id="aksi" href="{{route('admin.client.edit', $client->id)}}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Edit "><i id="aksi" class="fas fa-pen text-white"></i></a>

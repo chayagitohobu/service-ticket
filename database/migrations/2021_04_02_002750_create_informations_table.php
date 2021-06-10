@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDivisisTable extends Migration
+class CreateInformationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateDivisisTable extends Migration
      */
     public function up()
     {
-        Schema::create('divisis', function (Blueprint $table) {
+        Schema::create('informations', function (Blueprint $table) {
             $table->id();
-            $table->string('divisi');
+            $table->enum('category', ['general', 'faq'])->default('general')->nullable();
+            $table->string('question')->default('-')->nullable();
+            $table->text('answer')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateDivisisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('divisis');
+        Schema::dropIfExists('pertanyaans');
     }
 }

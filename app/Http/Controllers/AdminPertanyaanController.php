@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Information;
 use Illuminate\Http\Request;
-use App\Models\Pertanyaan;
 use Illuminate\Support\Facades\DB;
 
 class AdminPertanyaanController extends Controller
@@ -15,8 +15,8 @@ class AdminPertanyaanController extends Controller
 
     public function index()
     {
-        $pertanyaans = DB::table('pertanyaans')->orderBy('created_at', 'desc')->paginate(8);
-        return view('admin.pertanyaan.index')->with('pertanyaans', $pertanyaans);
+        $informations = DB::table('informations')->orderBy('created_at', 'desc')->paginate(8);
+        return view('admin.pertanyaan.index')->with('informations', $informations);
     }
 
     /**
@@ -37,11 +37,11 @@ class AdminPertanyaanController extends Controller
      */
     public function store(Request $request)
     {
-        $pertanyaan = new pertanyaan;
-        $pertanyaan->pertanyaan = $request->input('pertanyaan');
-        $pertanyaan->kategori = $request->input('kategori');
-        $pertanyaan->jawaban = $request->input('jawaban');
-        $pertanyaan->save();
+        $information = new Information();
+        $information->question = $request->input('pertanyaan');
+        $information->category = $request->input('kategori');
+        $information->answer = $request->input('jawaban');
+        $information->save();
         return redirect()->route('admin.pertanyaan.index')->with('success', 'pertanyaan berhasil di tambahkan !');
         //
     }
@@ -54,8 +54,8 @@ class AdminPertanyaanController extends Controller
      */
     public function show($id)
     {
-        $pertanyaan = pertanyaan::find($id);
-        return view('admin.pertanyaan.show')->with('pertanyaan', $pertanyaan);
+        $information = Information::find($id);
+        return view('admin.pertanyaan.show')->with('information', $information);
         //
     }
 
@@ -67,8 +67,8 @@ class AdminPertanyaanController extends Controller
      */
     public function edit($id)
     {
-        $pertanyaan = pertanyaan::find($id);
-        return view('admin.pertanyaan.edit')->with('pertanyaan', $pertanyaan);
+        $information = Information::find($id);
+        return view('admin.pertanyaan.edit')->with('information', $information);
         //
     }
 
@@ -81,11 +81,11 @@ class AdminPertanyaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $pertanyaan = Pertanyaan::find($id);
-        $pertanyaan->pertanyaan = $request->input('pertanyaan');
-        $pertanyaan->kategori = $request->input('kategori');
-        $pertanyaan->jawaban = $request->input('jawaban');
-        $pertanyaan->save();
+        $information = Information::find($id);
+        $information->question = $request->input('question');
+        $information->category = $request->input('category');
+        $information->answer = $request->input('answer');
+        $information->save();
 
         return redirect()->route('admin.pertanyaan.index')->with('success', 'pertanyaan berhasil diupdate !');
     }
@@ -98,8 +98,8 @@ class AdminPertanyaanController extends Controller
      */
     public function destroy($id)
     {
-        $pertanyaan = Pertanyaan::find($id);
-        $pertanyaan->delete();
+        $information = Information::find($id);
+        $information->delete();
         return redirect()->route('admin.pertanyaan.index')->with('success', 'pertanyaan berhasil di hapus !');
         //
     }

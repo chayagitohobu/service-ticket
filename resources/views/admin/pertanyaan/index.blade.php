@@ -70,12 +70,12 @@
                                     <div class="card-body">
                                         <div class="row mb-4">
                                             <div class="col-xl-7 mb-3">
-                                                <h4 class="mt-0 header-title">Daftar Pertanyaan</h4>
-                                                <p class="text-muted">Berikut adalah daftar data pertanyaan</p>
+                                                <h4 class="mt-0 header-title">Daftar Informasi</h4>
+                                                <p class="text-muted">Berikut adalah daftar data Informasi</p>
                                             </div>
                                             <div class="col-xl-5 text-left">
                                                 <a class="d-inline-block mr-1" href="{{route('admin.pertanyaan.create')}}">
-                                                    <button type="button" class="btn btn-info btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-plus noti-icon mr-3"></i>Tambah <b></b> Pertanyaan</button>
+                                                    <button type="button" class="btn btn-info btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-plus noti-icon mr-3"></i>Tambah <b></b> Informasi</button>
                                                 </a>
                                                 <div class="d-inline-block">
                                                     <button onclick="window.print()" type="button" class="btn btn-success btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-print mr-3"></i>Cetak</button>
@@ -91,7 +91,7 @@
                                                 </div>
                                                 <div>
                                                     <div style="min-height: 3vh"></div>
-                                                    <h1>Laporan pertanyaan</h1>
+                                                    <h1>Laporan Informasi</h1>
                                                     <p> URL : {{Request::fullUrl()}}</p>
                                                 </div>
                                                 <hr class="container">
@@ -126,12 +126,12 @@
                                                 </thead>
                                                 <tbody>
     
-                                                @foreach ($pertanyaans as $pertanyaan)
+                                                @foreach ($informations as $information)
                                                 <tr>
-                                                    <td>{{$pertanyaan->pertanyaan}}</td>
-                                                    <td>{{$pertanyaan->created_at}}</td>
+                                                    <td>{{$information->question}}</td>
+                                                    <td>{{$information->created_at}}</td>
                                                     <td id="aksi" class="text-left">
-                                                        <a id="aksi" href="{{route('admin.pertanyaan.show', $pertanyaan->id)}}" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Preview ">
+                                                        <a id="aksi" href="{{route('admin.pertanyaan.show', $information->id)}}" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Preview ">
                                                             <i id="aksi" class="fas fa-eye mr-2"></i> Preview
                                                         </a>
                                                     </td>

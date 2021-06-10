@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Balasan;
-use App\Models\Tiket;
+use App\Models\Reply;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,10 +64,10 @@ class AdminBalasanController extends Controller
         }
 
 
-        if (empty($user->divisi_id)) {
+        if (empty($user->division_id)) {
             $user_divisi_id = null;
         } else {
-            $user_divisi_id = $user->divisi_id;
+            $user_divisi_id = $user->division_id;
         }
 
         if (!empty($request->balasan)) {
@@ -97,22 +97,22 @@ class AdminBalasanController extends Controller
             }
         }
 
-        $balasan = new Balasan;
-        $balasan->tiket_id = $request->input('tiket_id');
-        $balasan->divisi_id = $user_divisi_id;
+        $balasan = new Reply;
+        $balasan->message_id = $request->input('tiket_id');
+        $balasan->division_id = $user_divisi_id;
         $balasan->user_id = $user->id;
         // $balasan->balasan = $request->input('balasan');
         if (!empty($request->balasan)) {
-            $balasan->balasan = $dom->saveHTML();
+            $balasan->reply = $dom->saveHTML();
         } else {
-            $balasan->balasan = null;
+            $balasan->reply = null;
         }
         $balasan->file = $store_file;
         $balasan->save();
 
-        $tiket = Tiket::find($request->input('tiket_id'));
-        $tiket->balasan_terbaru = now();
-        $tiket->status = 'Balasan operator';
+        $tiket = Message::find($request->input('tiket_id'));
+        $tiket->newest_reply = now();
+        $tiket->status = 'Operator Reply';
         $tiket->save();
 
         return back();

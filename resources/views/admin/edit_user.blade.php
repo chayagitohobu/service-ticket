@@ -41,9 +41,9 @@
                                                             </div>
                                                             <div class="form-group col-lg-6">
                                                                 <label>Divisi</label>
-                                                                <select name="divisi" class="form-control">
-                                                                    @foreach ($divisis as $divisi)
-                                                                        <option value="{{$divisi->id}}">{{$divisi->divisi}}</option>
+                                                                <select name="division" class="form-control">
+                                                                    @foreach ($divisions as $division)
+                                                                        <option value="{{$division->id}}">{{$division->division}}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -66,7 +66,7 @@
                                                             
                                                             <div class="form-group col-lg-6">
                                                                 <label>No. Telp</label>
-                                                                <input value="{{$user->telp}}" name="telp" type="number" class="form-control"  placeholder="Type something"/>
+                                                                <input value="{{$user->phone}}" name="phone" type="number" class="form-control"  placeholder="Type something"/>
                                                             </div>
                                                         </div>
                                                         

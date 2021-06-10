@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-        <title>Tiket Pelayanan</title>
+        <title> Pelayanan Pelanggan </title>
         <meta content="Admin Dashboard" name="description" />
         <meta content="ThemeDesign" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -39,12 +39,29 @@
                 border-left: solid 2px #292b2c;
             }
 
-            #font_family{
+            #all{
                 font-family: 'Poppins';
-                font-size: .8em;
+                font-size: small !important;
             }
+            button{
+                font-size: small !important;
+            }
+            input{
+                font-size: small !important;
+            }
+            
+
             #bg-blue{
                 background:#0c5df4;
+            }
+            
+            .list-inline .list-inline-item button{
+                font-size: x-large !important;
+            }
+
+            #bg-orange{
+                background:#FC8404;
+                border: none;
             }
             #bg-white{
                 background:#fff;
@@ -53,20 +70,27 @@
             #bg-blue-grad{
                 background:#0c5df4;
             }
+
             #card-image{
                 min-height: 30vh;
             }
-            
+
         </style>
     </head>
-    
-    {{-- <body class="fixed-left bg-white"> --}}
-    <body id="font_family">
-        <div class="row text-center" id="bg-blue" >
-            <a href="index.html" class="logo logo-admin m-auto pt-3"><img src="{{asset('assets/images/logo_dark.png')}}" height="40" alt="logo"></a>
-        </div>
-        <!-- Loader -->
-        
+    <body id="all" class="fixed-left">
+        {{-- <!-- Loader -->
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner">
+                    <div class="rect1"></div>
+                    <div class="rect2"></div>
+                    <div class="rect3"></div>
+                    <div class="rect4"></div>
+                    <div class="rect5"></div>
+                </div>
+            </div>
+        </div> --}}
+
         @yield('content')
 
         <!-- jQuery  -->

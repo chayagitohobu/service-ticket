@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminClientController;
-use App\Http\Controllers\AdminTiketController;
+use App\Http\Controllers\AdminMessageController;
 use App\Http\Controllers\AdminDivisiController;
 use App\Http\Controllers\AdminBalasanController;
 use App\Http\Controllers\AdminPertanyaanController;
@@ -40,8 +40,11 @@ Route::post('logout/user', [App\Http\Controllers\Auth\UserLoginController::class
 Route::get('basis_informasi', [App\Http\Controllers\ClientBasisinformasiController::class, 'index'])->name('client.basis_informasi.index');
 Route::get('basis_informasi/cari/', [App\Http\Controllers\ClientBasisinformasiController::class, 'cari'])->name('client.basis_informasi.cari');
 Route::get('/', function () {
-    $pertanyaans = DB::table('pertanyaans')->where('kategori', 'faq')->orderBy('created_at', 'desc')->get();
-    return view('home')->with('pertanyaans', $pertanyaans);
+    $informations = DB::table('informations')->where('category', 'faq')->orderBy('created_at', 'desc')->get();
+    return view('home')->with('informations', $informations);
+})->name('home');
+Route::get('/testing', function () {
+    return view('testing');
 });
 
 // Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm']);
@@ -65,13 +68,13 @@ Route::prefix('admin')->group(function () {
     Route::get('user/email_search', [App\Http\Controllers\AdminFilterController::class, 'email_user'])->name('admin.user.email_search');
     Route::get('user/name_search', [App\Http\Controllers\AdminFilterController::class, 'name_user'])->name('admin.user.name_search');
     Route::get('user/telp_search', [App\Http\Controllers\AdminFilterController::class, 'telp_user'])->name('admin.user.telp_search');
-    Route::get('user/divisi_filter/{divisi}', [App\Http\Controllers\AdminFilterController::class, 'divisi_user'])->name('admin.user.divisi_filter');
+    Route::get('user/division_filter/{divisi}', [App\Http\Controllers\AdminFilterController::class, 'division_user'])->name('admin.user.divisi_filter');
     Route::get('user/role_filter/{role}', [App\Http\Controllers\AdminFilterController::class, 'role_user'])->name('admin.user.role_filter');
 
     // Tiket search
     Route::get('tiket/search', [App\Http\Controllers\AdminFilterController::class, 'search'])->name('admin.tiket.search');
     Route::get('tiket/status_filter/{status}', [App\Http\Controllers\AdminFilterController::class, 'status_tiket'])->name('admin.tiket.status_filter');
-    Route::get('tiket/divisi_filter/{divisi}', [App\Http\Controllers\AdminFilterController::class, 'divisi_tiket'])->name('admin.tiket.divisi_filter');
+    Route::get('tiket/divisi_filter/{divisi}', [App\Http\Controllers\AdminFilterController::class, 'division_tiket'])->name('admin.tiket.divisi_filter');
     Route::get('tiket/name_filter/{name}', [App\Http\Controllers\AdminFilterController::class, 'name_tiket'])->name('admin.tiket.name_filter');
     Route::get('tiket/update_filter', [App\Http\Controllers\AdminFilterController::class, 'update_tiket'])->name('admin.tiket.update_filter');
 
@@ -80,12 +83,12 @@ Route::prefix('admin')->group(function () {
     Route::post('balasan/file_download', [App\Http\Controllers\AdminDownloadController::class, 'balasan_file_download'])->name('admin.balasan.file_download');
 
     // Tutup Tiket
-    Route::get('tiket/tutup/{id}', [App\Http\Controllers\AdminTiketController::class, 'tutupTiket'])->name('admin.tiket.tutup');
+    Route::get('tiket/tutup/{id}', [App\Http\Controllers\AdminMessageController::class, 'tutupTiket'])->name('admin.tiket.tutup');
 
     // CRUD
     Route::resource('user', AdminUserController::class, ['as' => 'admin']);
     Route::resource('client', AdminClientController::class, ['as' => 'admin']);
-    Route::resource('tiket', AdminTiketController::class, ['as' => 'admin']);
+    Route::resource('tiket', AdminMessageController::class, ['as' => 'admin']);
     Route::resource('divisi', AdminDivisiController::class, ['as' => 'admin']);
     Route::resource('balasan', AdminBalasanController::class, ['as' => 'admin']);
     Route::resource('pertanyaan', AdminPertanyaanController::class, ['as' => 'admin']);
@@ -128,9 +131,9 @@ Route::prefix('client')->group(function () {
     Route::post('profile/update', [App\Http\Controllers\ClientController::class, 'update'])->name('client.update');
 
     // Tiket search
-    Route::get('tiket/judul_search', [App\Http\Controllers\ClientFilterController::class, 'judul_tiket'])->name('client.tiket.judul_search');
+    Route::get('tiket/judul_search', [App\Http\Controllers\ClientFilterController::class, 'title_tiket'])->name('client.tiket.judul_search');
     Route::get('tiket/status_filter/{status}', [App\Http\Controllers\ClientFilterController::class, 'status_tiket'])->name('client.tiket.status_filter');
-    Route::get('tiket/divisi_filter/{divisi}', [App\Http\Controllers\ClientFilterController::class, 'divisi_tiket'])->name('client.tiket.divisi_filter');
+    Route::get('tiket/divisi_filter/{divisi}', [App\Http\Controllers\ClientFilterController::class, 'division_tiket'])->name('client.tiket.divisi_filter');
     Route::get('tiket/update_filter', [App\Http\Controllers\ClientFilterController::class, 'update_tiket'])->name('client.tiket.update_filter');
 
     // Download

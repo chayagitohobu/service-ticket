@@ -74,11 +74,11 @@
                                                 <p class="text-muted">Berikut adalah detail pertanyaan</p>
                                             </div>
                                             <div class="col-xl-5 text-left">
-                                                <a class="d-inline-block mr-1" href="{{route('admin.pertanyaan.edit', $pertanyaan->id)}}">
+                                                <a class="d-inline-block mr-1" href="{{route('admin.pertanyaan.edit', $information->id)}}">
                                                     <button type="button" class="btn btn-info btn-lg pr-4 pl-4 mt-2 waves-effect waves-light"><i class="fas fa-pen noti-icon mr-3"></i>Edit pertanyaan</button>
                                                 </a>
                                                 <div class="d-inline-block">
-                                                    <form class="d-inline" action="{{route('admin.pertanyaan.destroy', $pertanyaan->id)}}" method="POST">
+                                                    <form class="d-inline" action="{{route('admin.pertanyaan.destroy', $information->id)}}" method="POST">
                                                         @csrf
                                                         {{ method_field('DELETE') }}
                                                         {{-- <button id="aksi" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus"><i id="aksi" class="fas fa-trash text-white"></i></button> --}}
@@ -88,21 +88,21 @@
                                             </div>
                                         </div>  
                                         <div id="accordion">
-                                            <h4 class="mt-0 header-title mt-5">Kategori Pertanyaan : {{$pertanyaan->kategori}}</h4>
+                                            <h4 class="mt-0 header-title mt-5">Kategori Pertanyaan : {{$information->category}}</h4>
                                             <div class="card shadow mt-5">
-                                              <button class="btn text-dark btn-link collapsed pt-3 pb-3"  data-toggle="collapse" data-target="#collapse{{$pertanyaan->id}}" aria-expanded="false" aria-controls="collapse{{$pertanyaan->id}}">
-                                              <div class="bg-white" id="heading{{$pertanyaan->id}}">
+                                              <button class="btn text-dark btn-link collapsed pt-3 pb-3"  data-toggle="collapse" data-target="#collapse{{$information->id}}" aria-expanded="false" aria-controls="collapse{{$information->id}}">
+                                              <div class="bg-white" id="heading{{$information->id}}">
                                                 <p class="mb-0 text-left">
                                                   <i class="fas fa-arrow-down mr-5"></i>
                                                   <b>
-                                                    {{$pertanyaan->pertanyaan}}
+                                                    {{$information->question}}
                                                   </b>
                                                   </p>
                                                 </div>
                                               </button>
-                                              <div id="collapse{{$pertanyaan->id}}" class="collapse" aria-labelledby="heading{{$pertanyaan->id}}" data-parent="#accordion">
+                                              <div id="collapse{{$information->id}}" class="collapse" aria-labelledby="heading{{$information->id}}" data-parent="#accordion">
                                                 <div class="card-body pb-5 " style="padding-left: 6em; padding-right: 6em;">
-                                                  {!! $pertanyaan->jawaban !!}
+                                                  {!! $information->answer !!}
                                                 </div>
                                               </div>
                                             </div>
@@ -110,7 +110,7 @@
                                         {{-- <div class="row justify-content-center">
                                             <nav class="mt-5" aria-label="...">
                                                 <ul class="pagination">
-                                                    {{$pertanyaans->links("pagination::bootstrap-4")}}
+                                                    {{$informations->links("pagination::bootstrap-4")}}
                                                 </ul>
                                             </nav>
                                         </div> --}}

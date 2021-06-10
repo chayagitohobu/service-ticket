@@ -16,13 +16,16 @@
                   </div> --}}
                   <h5 class="mb-5 text-uppercase"> Apa yang bisa kami bantu ?</h5>
                   <hr>
-                  <div class="input-group rounded mb-5">
-                    <input type="search" class="form-control rounded" placeholder="Cari" aria-label="Search"
-                      aria-describedby="search-addon" />
-                    <span class="input-group-text border-0 pr-5 pl-5" style="background: #FC8404; color:#ffff;" id="search-addon">
-                      <i class="fas fa-search"></i>
-                    </span>
-                  </div>
+                  <form action=" {{route('client.basis_informasi.cari')}} ">
+                    <div class="input-group rounded mb-5">
+                      <input type="search" class="form-control rounded" placeholder="Cari" aria-label="Search"
+                        aria-describedby="search-addon" />
+                      <span class="input-group-text border-0 pr-5 pl-5" style="background: #FC8404; color:#ffff;" id="search-addon">
+                        <i class="fas fa-search"></i>
+                      </span>
+                    </div>
+                  </form>
+                  
               </div>
             </div>
         </div>
@@ -99,21 +102,21 @@
   <p>Pertanyaan umum yang sering ditanyakan oleh para client</p>
   <hr>
   <div id="accordion">
-      @foreach ($pertanyaans as $pertanyaan)
+      @foreach ($informations as $information)
       <div class="card shadow">
-        <button class="btn text-dark btn-link collapsed pt-3 pb-3"  data-toggle="collapse" data-target="#collapse{{$pertanyaan->id}}" aria-expanded="false" aria-controls="collapse{{$pertanyaan->id}}">
-          <div class="bg-white" id="heading{{$pertanyaan->id}}">
+        <button class="btn text-dark btn-link collapsed pt-3 pb-3"  data-toggle="collapse" data-target="#collapse{{$information->id}}" aria-expanded="false" aria-controls="collapse{{$information->id}}">
+          <div class="bg-white" id="heading{{$information->id}}">
           <p class="mb-0 text-left">
             <i class="fas fa-arrow-down mr-5"></i>
             <b>
-              {{$pertanyaan->pertanyaan}}
+              {{$information->question}}
             </b>
             </p>
           </div>
         </button>
-        <div id="collapse{{$pertanyaan->id}}" class="collapse" aria-labelledby="heading{{$pertanyaan->id}}" data-parent="#accordion">
+        <div id="collapse{{$information->id}}" class="collapse" aria-labelledby="heading{{$information->id}}" data-parent="#accordion">
           <div class="card-body pb-5 " style="padding-left: 6em; padding-right: 6em;">
-            {!! $pertanyaan->jawaban !!}
+            {!! $information->answer !!}
           </div>
         </div>
       </div>

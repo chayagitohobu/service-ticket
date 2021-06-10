@@ -32,31 +32,31 @@
                                     </div>
                                     <div class="card-body">
                                         
-                                        <h4 class="mt-0 header-title">Tiket saya</h4>
-                                        <p class="text-muted m-b-30">Pilih tiket yang ingin dilihat dengan mengklik baris pada tabel</p>
+                                        <h4 class="mt-0 header-title">Pertanyaan saya</h4>
+                                        <p class="text-muted m-b-30">Pilih pertanyaan yang ingin dilihat dengan mengklik baris pada tabel</p>
                                         <div class="row mb-4">
                                             <div class="mr-auto mt-4 col-xl-5">
                                                 <div class="dropdown m-1 d-inline-block">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownDivisi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Divisi
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownDivisi">
                                                     <a class="dropdown-item" href="{{route('client.tiket.index')}}">Semua</a>
-                                                        @foreach ($divisis as $divisi)
-                                                        <a class="dropdown-item" href="{{route('client.tiket.divisi_filter', $divisi->divisi)}}">{{$divisi->divisi}}</a>
+                                                        @foreach ($divisions as $division)
+                                                        <a class="dropdown-item" href="{{route('client.tiket.divisi_filter', $division->division)}}">{{$division->division}}</a>
                                                         @endforeach
                                                     </div>
                                                 </div>
                                                 <div class="dropdown m-1 d-inline-block">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Status
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownStatus">
                                                     <a class="dropdown-item" href="{{route('client.tiket.index')}}">Semua</a>
-                                                    <a class="dropdown-item" href="{{route('client.tiket.status_filter', $status = 'Buka')}}">Buka</a>
-                                                    <a class="dropdown-item" href="{{route('client.tiket.status_filter', $status = 'Tutup')}}">Tutup</a>
-                                                    <a class="dropdown-item" href="{{route('client.tiket.status_filter', $status = 'Balasan Operator')}}">Balasan Operator</a>
-                                                    <a class="dropdown-item" href="{{route('client.tiket.status_filter', $status = 'Balasan Client')}}">Balasan Client</a>
+                                                    <a class="dropdown-item" href="{{route('client.tiket.status_filter', $status = 'Open')}}">Buka</a>
+                                                    <a class="dropdown-item" href="{{route('client.tiket.status_filter', $status = 'Close')}}">Tutup</a>
+                                                    <a class="dropdown-item" href="{{route('client.tiket.status_filter', $status = 'Operator reply')}}">Balasan Operator</a>
+                                                    <a class="dropdown-item" href="{{route('client.tiket.status_filter', $status = 'Client reply')}}">Balasan Client</a>
                                                     </div>
                                                 </div>
                                                 <form class="mt-1" id="form_search" action="{{route('client.tiket.judul_search')}}" method="GET">
@@ -124,31 +124,31 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($tikets as $tiket)    
+                                                    @foreach ($messages as $message)    
                                                         <tr>
-                                                            <td>{{$tiket->divisi}}</td>
-                                                            <td>{{$tiket->judul}}</td>
-                                                            @switch($tiket->status)
-                                                                @case('Buka')
+                                                            <td>{{$message->division}}</td>
+                                                            <td>{{$message->title}}</td>
+                                                            @switch($message->status)
+                                                                @case('Open')
                                                                     <td><i style="font-size: 1.5em;" class="mdi mdi-record text-success"></i> Buka</td>
                                                                     @break
-                                                                @case('Tutup')
+                                                                @case('Close')
                                                                     <td><i style="font-size: 1.5em;" class="mdi mdi-record text-danger"></i> Tutup</td>
                                                                     @break
-                                                                @case('Balasan operator')
+                                                                @case('Operator reply')
                                                                     <td><i style="font-size: 1.5em;" class="mdi mdi-record text-primary"></i> Balasan Operator</td>
                                                                     @break
-                                                                @case('Balasan client')
+                                                                @case('Client reply')
                                                                     <td><i style="font-size: 1.5em;" class="mdi mdi-record text-info"></i> Balasan Client</td>
                                                                     @break
                                                                 @default
                                                             @endswitch
-                                                            @if (empty($tiket->balasan_terbaru))
-                                                                <td>{{$tiket->created_at}}</td>
+                                                            @if (empty($message->newest_reply))
+                                                                <td>{{$message->created_at}}</td>
                                                             @else
-                                                                <td>{{$tiket->balasan_terbaru}}</td>
+                                                                <td>{{$message->newest_reply}}</td>
                                                             @endif
-                                                            <td><a href="{{route('client.tiket.show', $tiket->id)}}" class="btn btn-primary">Lihat</a></td>
+                                                            <td><a href="{{route('client.tiket.show', $message->id)}}" class="btn btn-primary">Lihat</a></td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -158,7 +158,7 @@
                                         <div class="row justify-content-center">
                                             <nav class="mt-5" aria-label="...">
                                                 <ul class="pagination">
-                                                    {{$tikets->links("pagination::bootstrap-4")}}
+                                                    {{$messages->links("pagination::bootstrap-4")}}
                                                 </ul>
                                             </nav>
                                         </div>

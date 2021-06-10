@@ -22,9 +22,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'telp',
+        'phone',
         'role_id',
-        'divisi_id',
+        'division_id',
     ];
 
     /**

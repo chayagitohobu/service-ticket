@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\Balasan;
-use App\Models\Tiket;
+use App\Models\Reply;
+use App\Models\Message;
 
 class OperatorBalasanController extends Controller
 {
@@ -41,9 +41,9 @@ class OperatorBalasanController extends Controller
         $user = Auth::guard('user')->user();
 
         if (empty($user->divisi_id)) {
-            $user_divisi_id = null;
+            $user_division_id = null;
         } else {
-            $user_divisi_id = $user->divisi_id;
+            $user_division_id = $user->division_id;
         }
 
         if ($request->hasFile('files')) {
@@ -65,12 +65,12 @@ class OperatorBalasanController extends Controller
             $store_file = json_encode($files);
         }
 
-        if (!empty($request->balasan)) {
+        if (!empty($request->reply)) {
             $storage = 'storage/tiket';
             $dom = new \DOMDocument();
             libxml_use_internal_errors(true);
-            // $dom->loadHTML($request->balasan, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NOIMPLIED);
-            $dom->loadHTML($request->balasan);
+            // $dom->loadHTML($request->reply, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NOIMPLIED);
+            $dom->loadHTML($request->reply);
             libxml_clear_errors();
             $images = $dom->getElementsByTagName('img');
             foreach ($images as $img) {
@@ -92,23 +92,23 @@ class OperatorBalasanController extends Controller
             }
         }
 
-        $balasan = new Balasan;
-        $balasan->tiket_id = $request->input('tiket_id');
-        $balasan->divisi_id = $user_divisi_id;
-        $balasan->user_id = $user->id;
-        // $balasan->balasan = $request->input('balasan');
-        if (!empty($request->balasan)) {
-            $balasan->balasan = $dom->saveHTML();
+        $reply = new Reply;
+        $reply->message_id = $request->input('message_id');
+        $reply->division_id = $user_division_id;
+        $reply->user_id = $user->id;
+        // $reply->reply = $request->input('reply');
+        if (!empty($request->reply)) {
+            $reply->reply = $dom->saveHTML();
         } else {
-            $balasan->balasan = null;
+            $reply->reply = null;
         }
-        $balasan->file = $store_file;
-        $balasan->save();
+        $reply->file = $store_file;
+        $reply->save();
 
-        $tiket = Tiket::find($request->input('tiket_id'));
-        $tiket->balasan_terbaru = now();
-        $tiket->status = 'Balasan operator';
-        $tiket->save();
+        $message = Message::find($request->input('message_id'));
+        $message->newest_reply = now();
+        $message->status = 'Operator reply';
+        $message->save();
 
         return back();
     }

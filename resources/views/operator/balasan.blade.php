@@ -23,29 +23,24 @@
                         <div style="min-height: 5vh;"></div>
 
                         <div class="col-xl-12">
-                            <p>
-                                <!-- <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                  Link with href
-                                </a> -->
-                                <button class="btn btn-block btn-secondary pt-2 pb-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                    <i class="mdi mdi-pencil"></i> Balas
-                                </button>
-                              </p>
+                            <button class="btn btn-dark " type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                <i class="fas fa-reply"></i> Balas Pesan
+                            </button>
                               <div class="collapse" id="collapseExample">
                                 <div class="card card-body">
                                     <form method="POST" action="{{route('operator.balasan.store')}}" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group">
                                             <label>Pesan</label>
-                                            <textarea name="balasan" class="summernote"></textarea>
+                                            <textarea name="reply" class="summernote"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Upload file</label>
                                             <input accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
                                             text/plain, application/pdf, application/rar,.zip,.rar,.7zip" type="file" name="files[]" multiple>
                                         </div>
-                                        <input name="tiket_id" type="hidden" value="{{$tiket->id}}">
-                                        <input name="divisi_id" type="hidden" value="{{$tiket->divisi_id}}">
+                                        <input name="message_id" type="hidden" value="{{$message->id}}">
+                                        <input name="division_id" type="hidden" value="{{$message->division_id}}">
                                         <div style="min-height:5vh;"></div>
                                         <div class="form-group">
                                             <div>
@@ -65,19 +60,19 @@
 
                         <div class="row p-3">
                             <div class="col-lg-12">
-                                @foreach ($balasans as $balasan)
+                                @foreach ($replies as $reply)
                                     <div class="card m-b-30">
-                                        @switch($balasan->role_id)
+                                        @switch($reply->role_id)
                                             @case(1)
                                             <div class="card-header bg-info text-white mb-3">
                                                 <div class="row">
                                                     <div class="col-xl-9">
                                                         <i class="mdi mdi-account-outline"></i> 
                                                         Admin
-                                                        | {{$balasan->user_name}} {{$balasan->client_name}}
+                                                        | {{$reply->user_name}} {{$reply->client_name}}
                                                     </div>    
                                                     <div class="col-xl-3">
-                                                        <i class="mdi mdi-calendar-clock"></i> {{$balasan->created_at}}
+                                                        <i class="mdi mdi-calendar-clock"></i> {{$reply->created_at}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -88,10 +83,10 @@
                                                     <div class="col-xl-9">
                                                         <i class="mdi mdi-account-outline"></i> 
                                                         Operator
-                                                        | {{$balasan->user_name}} {{$balasan->client_name}}
+                                                        | {{$reply->user_name}} {{$reply->client_name}}
                                                     </div>    
                                                     <div class="col-xl-3">
-                                                        <i class="mdi mdi-calendar-clock"></i> {{$balasan->created_at}}
+                                                        <i class="mdi mdi-calendar-clock"></i> {{$reply->created_at}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -102,46 +97,46 @@
                                                     <div class="col-xl-9">
                                                         <i class="mdi mdi-account-outline"></i> 
                                                         Client
-                                                        | {{$balasan->user_name}} {{$balasan->client_name}}
+                                                        | {{$reply->user_name}} {{$reply->client_name}}
                                                     </div>    
                                                     <div class="col-xl-3">
-                                                        <i class="mdi mdi-calendar-clock"></i> {{$balasan->created_at}}
+                                                        <i class="mdi mdi-calendar-clock"></i> {{$reply->created_at}}
                                                     </div>
                                                 </div>
                                             </div>
                                         @endswitch
                                         <div class="card-body">
                                             <p class="card-text">
-                                                {!! $balasan->balasan !!}
+                                                {!! $reply->reply !!}
                                             </p>
                                             <div class="col-md-12 p-0 text-left">
                                                 <hr>
-                                                @switch($balasan->role_id)
+                                                @switch($reply->role_id)
                                                     @case(1)
-                                                    <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#balasan_file_{{$balasan->id}}" aria-expanded="false" aria-controls="balasan_file">
+                                                    <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#balasan_file_{{$reply->id}}" aria-expanded="false" aria-controls="balasan_file">
                                                         File pendukung <i class="mdi mdi-arrow-down"></i>
                                                     </button>
                                                         @break
                                                     @case(2)
-                                                    <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse" data-target="#balasan_file_{{$balasan->id}}" aria-expanded="false" aria-controls="balasan_file">
+                                                    <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse" data-target="#balasan_file_{{$reply->id}}" aria-expanded="false" aria-controls="balasan_file">
                                                         File pendukung <i class="mdi mdi-arrow-down"></i>
                                                     </button>
                                                         @break
                                                     @default
-                                                    <button class="btn btn-sm btn-secondary" type="button" data-toggle="collapse" data-target="#balasan_file_{{$balasan->id}}" aria-expanded="false" aria-controls="balasan_file">
+                                                    <button class="btn btn-sm btn-secondary" type="button" data-toggle="collapse" data-target="#balasan_file_{{$reply->id}}" aria-expanded="false" aria-controls="balasan_file">
                                                         File pendukung <i class="mdi mdi-arrow-down"></i>
                                                     </button>
                                                 @endswitch
-                                                <div class="collapse bg-light p-3" id="balasan_file_{{$balasan->id}}">
-                                                    @if ($balasan_file_array != null)
-                                                        @foreach ($balasan_file_array[$loop->index] as $balasan_file)
+                                                <div class="collapse bg-light p-3" id="balasan_file_{{$reply->id}}">
+                                                    @if ($reply_file_array != null)
+                                                        @foreach ($reply_file_array[$loop->index] as $reply_file)
                                                             <div>
-                                                                @if ($balasan_file != '')
+                                                                @if ($reply_file != '')
                                                                 <form action="{{route('operator.balasan.file_download')}}" method="POST">
                                                                     @csrf
-                                                                    <input type="hidden" name="balasan_file" value="{{$balasan_file}}">
+                                                                    <input type="hidden" name="balasan_file" value="{{$reply_file}}">
                                                                     <button type="submit" class="btn btn-info btn-sm mt-1" data-toggle="tooltip" data-placement="top" title="Download File"> 
-                                                                        <i class="mdi mdi-arrow-down"></i> {{$balasan_file}}
+                                                                        <i class="mdi mdi-arrow-down"></i> {{$reply_file}}
                                                                     </button>
                                                                     <br>
                                                                 </form> 
@@ -159,17 +154,17 @@
                                 @endforeach
 
                                 <div class="card m-b-30">
-                                    @switch($tiket->role_id)
+                                    @switch($message->role_id)
                                         @case(1)
                                         <div class="card-header bg-info text-white mb-3">
                                             <div class="row">
                                                 <div class="col-xl-9">
                                                     <i class="mdi mdi-account-outline"></i> 
                                                     Admin
-                                                    | {{$tiket->client_name}} {{$tiket->user_name}}
+                                                    | {{$message->client_name}} {{$message->user_name}}
                                                 </div>    
                                                 <div class="col-xl-3">
-                                                    <i class="mdi mdi-calendar-clock"></i> {{$tiket->created_at}}
+                                                    <i class="mdi mdi-calendar-clock"></i> {{$message->created_at}}
                                                 </div>
                                             </div>
                                         </div>
@@ -180,10 +175,10 @@
                                                 <div class="col-xl-9">
                                                     <i class="mdi mdi-account-outline"></i> 
                                                     Operator
-                                                    | {{$tiket->client_name}} {{$tiket->user_name}}
+                                                    | {{$message->client_name}} {{$message->user_name}}
                                                 </div>    
                                                 <div class="col-xl-3">
-                                                    <i class="mdi mdi-calendar-clock"></i> {{$tiket->created_at}}
+                                                    <i class="mdi mdi-calendar-clock"></i> {{$message->created_at}}
                                                 </div>
                                             </div>
                                         </div>
@@ -194,21 +189,21 @@
                                                 <div class="col-xl-9">
                                                     <i class="mdi mdi-account-outline"></i> 
                                                     Client
-                                                    | {{$tiket->client_name}} {{$tiket->user_name}}
+                                                    | {{$message->client_name}} {{$message->user_name}}
                                                 </div>    
                                                 <div class="col-xl-3">
-                                                    <i class="mdi mdi-calendar-clock"></i> {{$tiket->created_at}}
+                                                    <i class="mdi mdi-calendar-clock"></i> {{$message->created_at}}
                                                 </div>
                                             </div>
                                         </div>
                                     @endswitch
                                     <div class="card-body">
                                         <p class="card-text">
-                                            {!! $tiket->ket !!}
+                                            {!! $message->detail !!}
                                         </p>
                                         <div class="col-md-12 p-0 text-left">
                                             <hr>
-                                            @switch($tiket->role_id)
+                                            @switch($message->role_id)
                                                 @case(1)
                                                 <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#tiket_file" aria-expanded="false" aria-controls="balasan_file">
                                                     File pendukung <i class="mdi mdi-arrow-down"></i>
@@ -225,13 +220,13 @@
                                                 </button>
                                             @endswitch
                                             <div class="collapse bg-light p-3" id="tiket_file">
-                                                @if ($tiket_files != null)
-                                                    @foreach ($tiket_files as $tiket_file)
+                                                @if ($message_files != null)
+                                                    @foreach ($message_files as $message_file)
                                                         <form action="{{route('operator.tiket.file_download')}}" method="POST">
                                                             @csrf
-                                                            <input type="hidden" name="file" value="{{$tiket_file}}">
+                                                            <input type="hidden" name="file" value="{{$message_file}}">
                                                             <button type="submit" class="btn btn-info btn-sm mt-1" data-toggle="tooltip" data-placement="top" title="Download File"> 
-                                                                <i class="mdi mdi-arrow-down"></i> {{$tiket_file}}
+                                                                <i class="mdi mdi-arrow-down"></i> {{$message_file}}
                                                             </button>
                                                             <br>
                                                         </form>

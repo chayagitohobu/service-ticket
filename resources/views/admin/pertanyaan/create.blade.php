@@ -34,7 +34,7 @@
                                                 <br>
                                                 <div class="d-inline-block mr-5 mt-3 mb-3">
                                                     <label>Umum</label>
-                                                    <input type="radio" name="kategori" value="umum" checked>
+                                                    <input type="radio" name="kategori" value="general" checked>
                                                 </div>
                                                 <div class="d-inline-block mr-5 mt-3 mb-3">
                                                     <label>FAQ : </label>

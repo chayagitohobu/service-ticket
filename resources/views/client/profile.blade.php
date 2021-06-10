@@ -56,11 +56,11 @@
                                                     </div>
                                                     <div class="form-group col-lg-12">
                                                         <label>Perusahaan </label>
-                                                        <input value="{{$client->name_perusahaan}}" type="text" class="form-control"  readonly aria-readonly="true" required placeholder="Type something"/>
+                                                        <input value="{{$client->company}}" type="text" class="form-control"  readonly aria-readonly="true" required placeholder="Type something"/>
                                                     </div>
                                                     <div class="form-group col-lg-12">
                                                         <label>No. Telp</label>
-                                                        <input value="{{$client->telp}}" type="text" class="form-control" readonly aria-readonly="true" required placeholder="Type something"/>
+                                                        <input value="{{$client->phone}}" type="text" class="form-control" readonly aria-readonly="true" required placeholder="Type something"/>
                                                     </div>
                                                     <div class="form-group col-lg-12 text-center">
                                                         <a class="btn btn-primary waves-effect waves-light pl-5 pr-5" href="{{route('client.edit')}}"> 

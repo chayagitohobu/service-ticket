@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Divisi;
+use App\Models\Division;
 
 class ClientFilterController extends Controller
 {
@@ -16,82 +16,82 @@ class ClientFilterController extends Controller
     }
 
     // TIKET SEARCH 
-    public function judul_tiket(Request $request)
+    public function title_tiket(Request $request)
     {
         $search = $request->search;
         $user_id = Auth::guard('client')->user()->id;
 
-        $tikets = DB::table('tikets')
-            ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
-            ->where('judul', 'like', "%" . $search . "%")
+        $tikets = DB::table('messages')
+            ->join('divisions', 'messages.division_id', '=', 'divisions.id')
+            ->where('title', 'like', "%" . $search . "%")
             ->select(
-                'divisis.divisi',
-                'tikets.judul',
-                'tikets.status',
-                'tikets.updated_at',
-                'tikets.id',
-                'tikets.created_at',
-                'tikets.balasan_terbaru'
+                'divisions.division',
+                'messages.title',
+                'messages.status',
+                'messages.updated_at',
+                'messages.id',
+                'messages.created_at',
+                'messages.newest_reply'
             )
-            ->where('tikets.client_id', '=', $user_id)
+            ->where('messages.client_id', '=', $user_id)
             ->paginate(8);
 
         $tikets->appends(array('search' => $request->search));
 
-        $divisis = Divisi::all();
+        $divisions = Division::all();
         return view('client.tiket')
-            ->with('divisis', $divisis)
-            ->with('tikets', $tikets);
+            ->with('divisions', $divisions)
+            ->with('messages', $tikets);
     }
 
-    public function divisi_tiket($divisi)
+    public function division_tiket($division)
     {
         $user_id = Auth::guard('client')->user()->id;
 
-        $tikets = DB::table('tikets')
-            ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
-            ->where('divisi', 'like', "%" . $divisi . "%")
+        $tikets = DB::table('messages')
+            ->join('divisions', 'messages.division_id', '=', 'divisions.id')
+            ->where('division', 'like', "%" . $division . "%")
             ->select(
-                'divisis.divisi',
-                'tikets.judul',
-                'tikets.status',
-                'tikets.updated_at',
-                'tikets.id',
-                'tikets.created_at',
-                'tikets.balasan_terbaru'
+                'divisions.division',
+                'messages.title',
+                'messages.status',
+                'messages.updated_at',
+                'messages.id',
+                'messages.created_at',
+                'messages.newest_reply'
             )
-            ->where('tikets.client_id', '=', $user_id)
+            ->where('messages.client_id', '=', $user_id)
             ->paginate(8);
 
-        $divisis = Divisi::all();
+        $divisions = Division::all();
         return view('client.tiket')
-            ->with('divisis', $divisis)
-            ->with('tikets', $tikets);
+            ->with('divisions', $divisions)
+            ->with('messages', $tikets);
     }
 
     public function status_tiket($status)
     {
         $user_id = Auth::guard('client')->user()->id;
 
-        $tikets = DB::table('tikets')
-            ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
+        $tikets = DB::table('messages')
+            ->join('divisions', 'messages.division_id', '=', 'divisions.id')
             ->where('status', 'like', "%" . $status . "%")
             ->select(
-                'divisis.divisi',
-                'tikets.judul',
-                'tikets.status',
-                'tikets.updated_at',
-                'tikets.id',
-                'tikets.created_at',
-                'tikets.balasan_terbaru',
+                'divisions.division',
+                'messages.title',
+                'messages.status',
+                'messages.updated_at',
+                'messages.id',
+                'messages.created_at',
+                'messages.newest_reply',
             )
-            ->where('tikets.client_id', '=', $user_id)
+            ->where('messages.client_id', '=', $user_id)
             ->paginate(8);
 
-        $divisis = Divisi::all();
+        $divisions = Division::all();
         return view('client.tiket')
-            ->with('divisis', $divisis)
-            ->with('tikets', $tikets);
+            ->with('divisions', $divisions)
+            ->with('messages', $tikets);
     }
 
     public function update_tiket(Request $request)
@@ -100,25 +100,25 @@ class ClientFilterController extends Controller
         $dari =  date($request->input('dari'));
         $sampai =  date($request->input('sampai'));
 
-        $tikets = DB::table('tikets')
-            ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
-            ->whereBetween('tikets.balasan_terbaru', [$dari, $sampai])
+        $tikets = DB::table('messages')
+            ->join('divisions', 'messages.division_id', '=', 'divisions.id')
+            ->whereBetween('messages.newest_reply', [$dari, $sampai])
             ->select(
-                'divisis.divisi',
-                'tikets.judul',
-                'tikets.status',
-                'tikets.id',
-                'tikets.balasan_terbaru',
-                'tikets.created_at',
+                'divisions.division',
+                'messages.title',
+                'messages.status',
+                'messages.id',
+                'messages.newest_reply',
+                'messages.created_at',
             )
-            ->where('tikets.client_id', '=', $user_id)
+            ->where('messages.client_id', '=', $user_id)
             ->paginate(8);
 
         $tikets->appends(array('dari' => date($request->input('dari')), 'sampai' => date($request->input('sampai'))));
 
-        $divisis = Divisi::all();
+        $divisions = Division::all();
         return view('client.tiket')
-            ->with('divisis', $divisis)
-            ->with('tikets', $tikets);
+            ->with('divisions', $divisions)
+            ->with('messages', $tikets);
     }
 }

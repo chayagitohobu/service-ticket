@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\Operator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -28,30 +29,30 @@ class OperatorController extends Controller
     {
         $user =  Auth::guard('user')->user();
 
-        $jumlah_tiket =  DB::table('tikets')
-            ->where('tikets.user_id', '=', $user->id)
+        $jumlah_tiket =  DB::table('messages')
+            ->where('messages.user_id', '=', $user->id)
             ->count();
 
-        $status_buka = DB::table('tikets')
-            ->where('tikets.divisi_id', '=', $user->divisi_id)
-            ->where('status', '=', 'Buka')
+        $status_buka = DB::table('messages')
+            ->where('messages.division_id', '=', $user->division_id)
+            ->where('status', '=', 'Open')
             ->count();
 
-        $status_tutup = DB::table('tikets')
-            ->where('tikets.divisi_id', '=', $user->divisi_id)
-            ->where('status', '=', 'Tutup')
+        $status_tutup = DB::table('messages')
+            ->where('messages.division_id', '=', $user->division_id)
+            ->where('status', '=', 'Close')
             ->count();
 
-        $belum_terjawab = DB::table('tikets')
-            ->where('tikets.divisi_id', '=', $user->divisi_id)
+        $belum_terjawab = DB::table('messages')
+            ->where('messages.division_id', '=', $user->division_id)
             ->where('status', '=', 'Balasan Client')
             ->count();
 
-        $aktivitas_terbarus = DB::table('tikets')
-            ->where('tikets.divisi_id', '=', $user->divisi_id)
-            ->leftJoin('balasans', 'tikets.id', 'balasans.tiket_id')
-            ->latest('tikets.balasan_terbaru', 'DESC')
-            ->select('tikets.judul', 'tikets.balasan_terbaru')
+        $aktivitas_terbarus = DB::table('messages')
+            ->where('messages.division_id', '=', $user->division_id)
+            ->leftJoin('replies', 'messages.id', 'replies.message_id')
+            ->latest('messages.newest_reply', 'DESC')
+            ->select('messages.title', 'messages.newest_reply')
             ->take(4)
             ->get();
 
@@ -109,8 +110,14 @@ class OperatorController extends Controller
 
     public function show()
     {
-        $operator = Auth::guard('user')->user();
-
+        $operator_id = Auth::guard('user')->user()->id;
+        $division_id = Auth::guard('user')->user()->division_id;
+        $operator = DB::table('users')
+            ->leftJoin('divisions', 'users.division_id', 'divisions.id')
+            ->where('users.id', $operator_id)
+            ->where('divisions.id', $division_id)
+            ->get()
+            ->first();
         return view('operator.profile')->with('operator', $operator);
     }
 
@@ -151,7 +158,7 @@ class OperatorController extends Controller
         $user_id = Auth::guard('user')->user()->id;
         $user = User::find($user_id);
         $user->name = $request->input('name');
-        $user->telp = $request->input('telp');
+        $user->phone = $request->input('phone');
         $user->save();
 
         return redirect('operator/profile')->with('success', 'User berhasil di update !!');

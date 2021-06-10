@@ -40,7 +40,7 @@
                                                         </div>
                                                         <div class="form-group col-lg-6">
                                                             <label>Nama Perusahaan</label>
-                                                            <input  value="{{$client->name_perusahaan}}" name="name_perusahaan" type="text" class="form-control" required placeholder="Type something"/>
+                                                            <input  value="{{$client->company}}" name="company" type="text" class="form-control" required placeholder="Type something"/>
                                                         </div>
                                                         <div class="form-group col-lg-6">
                                                             <label>Password</label>
@@ -53,7 +53,7 @@
                                                         
                                                         <div class="form-group col-lg-6">
                                                             <label>No. Telp</label>
-                                                            <input value="{{$client->telp}}" name="telp" type="text" class="form-control" required placeholder="Type something"/>
+                                                            <input value="{{$client->phone}}" name="phone" type="text" class="form-control" required placeholder="Type something"/>
                                                         </div>
                                                     </div>
                                                     

@@ -40,7 +40,7 @@
                                                         </div>
                                                         <div class="form-group col-lg-6">
                                                             <label>Nama Perusahaan</label>
-                                                            <input name="name_perusahaan" type="text" class="form-control" required placeholder="Type something"/>
+                                                            <input name="company" type="text" class="form-control" required placeholder="Type something"/>
                                                         </div>
                                                         <div class="form-group col-lg-6">
                                                             <label>Password</label>
@@ -53,7 +53,7 @@
                                                         
                                                         <div class="form-group col-lg-6">
                                                             <label>No. Telp</label>
-                                                            <input name="telp" type="text" class="form-control" required placeholder="Type something"/>
+                                                            <input name="phone" type="text" class="form-control" required placeholder="Type something"/>
                                                         </div>
                                                     </div>
                                                 </div>

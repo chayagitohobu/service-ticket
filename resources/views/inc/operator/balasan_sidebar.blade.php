@@ -17,7 +17,7 @@
                 <li>
                     <a href="{{route('operator.tiket.index')}}" class="waves-effect mt-3">
                         <i class="dripicons-home"></i>
-                        <span> Back </span>
+                        <span> Kembali </span>
                     </a>
                 </li>
                 <li class="menu-title  mt-2">INFORMASI TIKET</li>
@@ -25,43 +25,75 @@
                     <div class="card m-b-30 p-2">
                         <div class="card m-b-30">
                             <div class="card-body">
-                                @switch($tiket->status)
-                                    @case('Tutup')
-                                    <p class="card-text">Status | <i class="mdi mdi-record text-danger"></i> {{$tiket->status}}</p>
+                                
+                                @switch($message->division)
+                                    @case('technology')
+                                        <p class="card-text"><span class=" text-uppercase ">Divisi</span> | <br> <br> <i class="mdi mdi-office-building text-secondary"></i> Teknologi</p>
                                         @break
-                                    @case('Balasan client')
-                                    <p class="card-text">Status | <i class="mdi mdi-record text-info"></i> {{$tiket->status}}</p>
+                                    @case('marketing')
+                                        <p class="card-text"><span class=" text-uppercase ">Divisi</span> | <br> <br> <i class="mdi mdi-office-building text-secondary"></i> Pemasaran </p>
                                         @break
-                                    @case('Balasan operator')
-                                    <p class="card-text">Status | <i class="mdi mdi-record text-primary"></i> {{$tiket->status}}</p>
+                                    @case('human resource')
+                                        <p class="card-text"><span class=" text-uppercase ">Divisi</span> | <br> <br> <i class="mdi mdi-office-building text-secondary"></i> Sumber Daya Manusia</p>
                                         @break
-                                    @case('Buka')
-                                    <p class="card-text">Status | <i class="mdi mdi-record text-success"></i> {{$tiket->status}}</p>
-                                    @break
+                                    @case('finance')
+                                        <p class="card-text"><span class=" text-uppercase ">Divisi</span> | <br> <br> <i class="mdi mdi-office-building text-secondary"></i> Keuangan </p>
+                                        @break
                                     @default
-                                    <p class="card-text">Status | <i class="mdi mdi-record text-success"></i> {{$tiket->status}}</p>
+                                        
                                 @endswitch
                                 <hr>
-                                <p class="card-text">Divisi | <i class="mdi mdi-office-building text-secondary"></i> {{$tiket->divisi}}</p>
+                                @switch($message->status)
+                                    @case('Open')
+                                        <p class="card-text"><span class=" text-uppercase ">Status</span> | <br> <br> <i class="mdi mdi-record text-success"></i> Buka</p>
+                                        @break
+                                    @case('Close')
+                                        <p class="card-text"><span class=" text-uppercase ">Status</span> | <br> <br> <i class="mdi mdi-record text-danger"></i> Tutup</p>
+                                        @break
+                                    @case('Client reply')
+                                        <p class="card-text"><span class=" text-uppercase ">Status</span> | <br> <br> <i class="mdi mdi-record text-info"></i> Balasan Client</p>
+                                        @break
+                                    @case('Operator reply')
+                                        <p class="card-text"><span class=" text-uppercase ">Status</span> | <br> <br> <i class="mdi mdi-record text-primary"></i> Balasan Operator</p>
+                                        @break
+                                    @default
+                                        <p class="card-text"><span class=" text-uppercase ">Status</span> | <br> <br> <i class="mdi mdi-record text-success"></i> Buka</p>
+                                @endswitch
+                                
                                 <hr>
-                                <p class="card-text">Prioritas | <i class="mdi mdi-note-multiple text-secondary"></i> {{$tiket->prioritas}}</p>
+
+                                @switch($message->priority)
+                                    @case('Low')
+                                        <p class="card-text"><span class=" text-uppercase ">Prioritas</span> | <br> <br> <i class="mdi mdi-note-multiple text-secondary"></i> Rendah</p>        
+                                        @break
+                                    @case('Medium')
+                                        <p class="card-text"><span class=" text-uppercase ">Prioritas</span> | <br> <br> <i class="mdi mdi-note-multiple text-secondary"></i> Sedang</p>
+                                        @break
+                                    @case('High')
+                                        <p class="card-text"><span class=" text-uppercase ">Prioritas</span> | <br> <br> <i class="mdi mdi-note-multiple text-secondary"></i> Tinggi</p>
+                                        @break
+                                    @default
+                                        <p class="card-text"><span class=" text-uppercase ">Prioritas</span> | <br> <br> <i class="mdi mdi-note-multiple text-secondary"></i> Rendah</p>
+                                @endswitch
+
+                                
                                 <hr>
                                 <p class="card-text">Update terakhir | <br> <br> <i class="mdi mdi-update text-secondary"></i> 
                                     
-                                    @if ( empty($tiket->balasan_terbaru))
-                                        {{$tiket->created_at}}
+                                    @if ( empty($message->balasan_terbaru))
+                                        {{$message->created_at}}
                                     @else
-                                        {{$tiket->balasan_terbaru}}
+                                        {{$message->balasan_terbaru}}
                                     @endif
                                     
                                 </p>
                                 <hr>
-                                <p class="card-text">Dibuat pada | <br> <br> <i class="mdi mdi-calendar-check-outline text-secondary"></i> {{$tiket->created_at}}</p>
+                                <p class="card-text">Dibuat pada | <br> <br> <i class="mdi mdi-calendar-check-outline text-secondary"></i> {{$message->created_at}}</p>
                                 <hr>
                                 <br>
-                                @if (!empty($tiket))
-                                    @if ($tiket->status != 'Tutup')
-                                        <a class="row justify-content-center" href="{{route('operator.tiket.tutup',$tiket->id)}}">
+                                @if (!empty($message))
+                                    @if ($message->status != 'Tutup')
+                                        <a class="row justify-content-center" href="{{route('operator.tiket.tutup',$message->id)}}">
                                             <button class="btn btn-primary text-center"> <i class="mdi mdi-close-box"></i> Tutup Tiket</button>
                                         </a>
                                     @endif

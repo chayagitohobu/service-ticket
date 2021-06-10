@@ -27,8 +27,8 @@
                                     <div class="card-body">
                                         <form class="" action="{{route('operator.tiket.store')}}" method="POST" enctype="multipart/form-data">
                                             @csrf
-                                            <h4 class="mt-0 header-title">Informasi tiket</h4>
-                                            <p class="text-muted m-b-30">Anda dapat memilih ke divisi mana tiket ini akan dikirim, serta memilih tingkat prioritas tiket.</p>
+                                            <h4 class="mt-0 header-title">Informasi pertanyaan</h4>
+                                            <p class="text-muted m-b-30">Anda dapat memilih ke divisi mana pertanyaan ini akan dikirim, serta memilih tingkat prioritas pertanyaan.</p>
                                             <div class="row">
                                                 <div class="form-group col-lg-6">
                                                     <label>Nama</label>
@@ -42,18 +42,18 @@
                                             <div class="row">
                                                 <div class="form-group col-lg-6">
                                                     <label>Divisi</label>
-                                                    <select name="divisi" class="form-control">
-                                                        @foreach ($divisis as $divisi)
-                                                            <option value="{{$divisi->id}}">{{$divisi->divisi}}</option>
+                                                    <select name="division" class="form-control">
+                                                        @foreach ($divisions as $division)
+                                                            <option value="{{$division->id}}">{{$division->division}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label>Prioritas</label>
-                                                    <select name="prioritas" class="form-control">
-                                                        <option>Rendah</option>
-                                                        <option>Sedang</option>
-                                                        <option>Tinggi</option>
+                                                    <select name="priority" class="form-control">
+                                                        <option value="low">Rendah</option>
+                                                        <option value="medium">Sedang</option>
+                                                        <option value="high">Tinggi</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -64,13 +64,13 @@
                                             <div class="form-group">
                                                 <label>Judul pesan </label>
                                                 <div>
-                                                    <input name="judul" type="text" class="form-control" required placeholder="Type something"/>
+                                                    <input name="title" type="text" class="form-control" required placeholder="Type something"/>
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="form-group">
                                                 <label>Pesan</label>
-                                                <textarea class="summernote" name="ket"></textarea>
+                                                <textarea class="summernote" name="detail"></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label>Upload file</label>

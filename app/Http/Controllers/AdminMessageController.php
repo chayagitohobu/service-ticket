@@ -9,12 +9,12 @@ use Illuminate\Support\Str;
 use Path\To\DOMdocument;
 use Intervention\Image\ImageManagerStatic as Image;
 
-use App\Models\Tiket;
-use App\Models\Divisi;
+use App\Models\Message;
+use App\Models\Division;
 use App\Models\User;
-use App\Models\Balasan;
+use App\Models\Reply;
 
-class AdminTiketController extends Controller
+class AdminMessageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,28 +29,28 @@ class AdminTiketController extends Controller
 
     public function index()
     {
-        $tikets = DB::table('tikets')
-            ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
-            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
-            ->leftJoin('users', 'tikets.user_id', 'users.id')
+        $messages = DB::table('messages')
+            ->join('divisions', 'messages.division_id', '=', 'divisions.id')
+            ->leftJoin('clients', 'messages.client_id', 'clients.id')
+            ->leftJoin('users', 'messages.user_id', 'users.id')
             ->select(
                 'clients.id as client_id',
                 'clients.name as client_name',
                 'users.id as user_id',
                 'users.name as user_name',
                 'users.role_id',
-                'divisis.divisi',
-                'tikets.judul',
-                'tikets.status',
-                'tikets.created_at',
-                'tikets.balasan_terbaru',
-                'tikets.id',
+                'divisions.division',
+                'messages.title',
+                'messages.status',
+                'messages.created_at',
+                'messages.newest_reply',
+                'messages.id',
             )
             ->paginate(8);
 
-        $namas = DB::table('tikets')
-            ->leftJoin('clients', 'tikets.client_id', 'clients.id')
-            ->leftJoin('users', 'tikets.user_id', 'users.id')
+        $namas = DB::table('messages')
+            ->leftJoin('clients', 'messages.client_id', 'clients.id')
+            ->leftJoin('users', 'messages.user_id', 'users.id')
             ->select(
                 'clients.name as client_name',
                 'users.name as user_name',
@@ -59,12 +59,12 @@ class AdminTiketController extends Controller
             ->groupBy('users.name', 'clients.name', 'users.role_id')
             ->get();
 
-        $divisis = Divisi::all();
+        $divisis = Division::all();
 
         return view('admin.tiket')
             ->with('namas', $namas)
-            ->with('divisis', $divisis)
-            ->with('tikets', $tikets);
+            ->with('divisions', $divisis)
+            ->with('messages', $messages);
     }
 
     /**
@@ -76,9 +76,9 @@ class AdminTiketController extends Controller
     {
         // $user =  auth()->user();
         $user =  Auth::guard('user')->user();
-        $divisis = Divisi::all();
+        $divisis = Division::all();
         return view('admin.create_tiket')
-            ->with('divisis', $divisis)
+            ->with('divisions', $divisis)
             ->with('user', $user);
     }
 
@@ -108,12 +108,12 @@ class AdminTiketController extends Controller
             $store_file = json_encode($files);
         }
 
-        if (!empty($request->ket)) {
+        if (!empty($request->detail)) {
             $storage = 'storage/tiket';
             $dom = new \DOMDocument();
             libxml_use_internal_errors(true);
             // $dom->loadHTML($request->ket, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NOIMPLIED);
-            $dom->loadHTML($request->ket);
+            $dom->loadHTML($request->detail);
             libxml_clear_errors();
             $images = $dom->getElementsByTagName('img');
             foreach ($images as $img) {
@@ -135,21 +135,22 @@ class AdminTiketController extends Controller
             }
         }
 
-        $tiket = new Tiket;
-        $tiket->user_id = Auth::guard('user')->user()->id;
-        $tiket->divisi_id = $request->input('divisi');
-        $tiket->prioritas = $request->input('prioritas');
-        $tiket->judul = $request->input('judul');
-        // $tiket->ket = $request->input('ket');
-        if (!empty($request->ket)) {
-            $tiket->ket = $dom->saveHTML();
+        $message = new Message;
+        $message->user_id = Auth::guard('user')->user()->id;
+        $message->division_id = $request->input('division');
+        $message->priority = $request->input('priority');
+        $message->title = $request->input('title');
+        // $message->detail = $request->input('ket');
+
+        if (!empty($request->detail)) {
+            $message->detail = $dom->saveHTML();
         } else {
-            $tiket->ket = null;
+            $message->detail = null;
         }
-        $tiket->status = 'Buka';
-        $tiket->file = $store_file;
-        $tiket->balasan_terbaru = now();
-        $tiket->save();
+        $message->status = 'Open';
+        $message->file = $store_file;
+        $message->newest_reply = now();
+        $message->save();
 
         return redirect('admin/tiket')->with('success', 'Tiket berhasil di buat !!');
     }
@@ -162,22 +163,22 @@ class AdminTiketController extends Controller
      */
     public function show($id)
     {
-        $tiket = DB::table('tikets')
-            ->where('tikets.id', $id)
-            ->leftJoin('users', 'tikets.user_id', '=', 'users.id')
-            ->leftJoin('clients', 'tikets.client_id', '=', 'clients.id')
-            ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
+        $message = DB::table('messages')
+            ->where('messages.id', $id)
+            ->leftJoin('users', 'messages.user_id', '=', 'users.id')
+            ->leftJoin('clients', 'messages.client_id', '=', 'clients.id')
+            ->join('divisions', 'messages.division_id', '=', 'divisions.id')
             ->select(
-                'tikets.id',
-                'tikets.status',
-                'tikets.prioritas',
-                'tikets.ket',
-                'tikets.updated_at',
-                'tikets.balasan_terbaru',
-                'tikets.created_at',
-                'tikets.file',
-                'divisis.id as divisi_id',
-                'divisis.divisi',
+                'messages.id',
+                'messages.status',
+                'messages.priority',
+                'messages.detail',
+                'messages.updated_at',
+                'messages.newest_reply',
+                'messages.created_at',
+                'messages.file',
+                'divisions.id as division_id',
+                'divisions.division',
                 'users.role_id',
                 'clients.name as client_name',
                 'users.name as user_name',
@@ -185,30 +186,30 @@ class AdminTiketController extends Controller
             ->get()
             ->first();
 
-        $balasans = DB::table('balasans')
-            ->where('balasans.tiket_id', $id)
-            ->leftJoin('users', 'balasans.user_id', '=', 'users.id')
-            ->leftJoin('clients', 'balasans.client_id', '=', 'clients.id')
+        $balasans = DB::table('replies')
+            ->where('replies.message_id', $id)
+            ->leftJoin('users', 'replies.user_id', '=', 'users.id')
+            ->leftJoin('clients', 'replies.client_id', '=', 'clients.id')
             ->select(
                 'users.role_id',
                 'users.name as user_name',
                 'clients.name as client_name',
-                'balasans.created_at',
-                'balasans.id',
-                'balasans.balasan',
-                'balasans.file',
+                'replies.created_at',
+                'replies.id',
+                'replies.reply',
+                'replies.file',
             )
-            ->orderBy('balasans.created_at', 'DESC')
+            ->orderBy('replies.created_at', 'DESC')
             ->get();
 
-        if (empty($tiket->file)) {
-            $tiket_files = null;
+        if (empty($message->file)) {
+            $message_files = null;
         } else {
-            $tiket_file = $tiket->file;
+            $message_file = $message->file;
             $remove = ['"', '[', ']'];
-            $tiket_file_remove = str_replace($remove, ' ', $tiket_file);
+            $message_file_remove = str_replace($remove, ' ', $message_file);
 
-            $tiket_files = explode(',', $tiket_file_remove);
+            $message_files = explode(',', $message_file_remove);
         }
 
 
@@ -233,9 +234,9 @@ class AdminTiketController extends Controller
 
 
         return view('admin.balasan')
-            ->with('tiket', $tiket)
+            ->with('tiket', $message)
             ->with('balasans', $balasans)
-            ->with('tiket_files', $tiket_files)
+            ->with('tiket_files', $message_files)
             ->with('balasan_file_array', $balasan_file_array);
     }
 
@@ -248,18 +249,18 @@ class AdminTiketController extends Controller
     public function edit($id)
     {
         $user = Auth::guard('user')->user();
-        $divisis = Divisi::all();
-        $tiket = Tiket::find($id);
-        // $tiket = DB::table('tikets')
-        //     ->where('tikets.id', '=', $id)
-        //     ->join('divisis', 'tikets.divisi_id', '=', 'divisis.id')
-        //     ->select('divisis.divisi', 'divisis.id as divisi_id', 'tikets.id', 'tikets.judul', 'tikets.ket', 'tikets.prioritas')
+        $divisis = Division::all();
+        $message = Message::find($id);
+        // $message = DB::table('messages')
+        //     ->where('messages.id', '=', $id)
+        //     ->join('divisions', 'messages.division_id', '=', 'divisions.id')
+        //     ->select('divisions.division', 'divisions.id as divisi_id', 'messages.id', 'messages.title', 'messages.ket', 'messages.prioritas')
         //     ->get();
 
         return view('admin.edit_tiket')
-            ->with('tiket', $tiket)
+            ->with('tiket', $message)
             ->with('user', $user)
-            ->with('divisis', $divisis);
+            ->with('divisions', $divisis);
     }
 
     /**
@@ -318,29 +319,29 @@ class AdminTiketController extends Controller
             }
         }
 
-        $tiket = Tiket::find($id);
-        // $tiket->user_id = Auth::guard('user')->user()->id;
-        $tiket->divisi_id = $request->input('divisi');
-        $tiket->prioritas = $request->input('prioritas');
-        $tiket->judul = $request->input('judul');
-        // $tiket->ket = $request->input('ket');
+        $message = Message::find($id);
+        // $message->user_id = Auth::guard('user')->user()->id;
+        $message->divisi_id = $request->input('divisi');
+        $message->priority = $request->input('prioritas');
+        $message->title = $request->input('judul');
+        // $message->detail = $request->input('ket');
         if (!empty($request->ket)) {
-            $tiket->ket = $dom->saveHTML();
+            $message->detail = $dom->saveHTML();
         } else {
-            $tiket->ket = null;
+            $message->detail = null;
         }
-        $tiket->file = $store_file;
-        $tiket->status = 'Buka';
-        $tiket->save();
+        $message->file = $store_file;
+        $message->status = 'Open';
+        $message->save();
 
         return redirect('admin/tiket')->with('success', 'Tiket berhasil di update !!');
     }
 
     public function tutupTiket($id)
     {
-        $tiket = Tiket::find($id);
-        $tiket->status = 'Tutup';
-        $tiket->save();
+        $message = Message::find($id);
+        $message->status = 'Close';
+        $message->save();
         return redirect('admin/tiket')->with('success', 'Tiket berhasil di tutup !!');
     }
 
@@ -352,8 +353,8 @@ class AdminTiketController extends Controller
      */
     public function destroy($id)
     {
-        $tiket = Tiket::find($id);
-        $tiket->delete();
+        $message = Message::find($id);
+        $message->delete();
 
         return redirect('admin/tiket')->with('success', 'Tiket berhasil dihapus !!');
     }
