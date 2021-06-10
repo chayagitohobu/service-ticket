@@ -126,7 +126,7 @@
                                                     <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Open')}}">Buka</a>
                                                     <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Close')}}">Tutup</a>
                                                     <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Operator reply')}}">Balasan Operator</a>
-                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Cleint reply')}}">Balasan Client</a>
+                                                    <a class="dropdown-item" href="{{route('admin.tiket.status_filter', $status = 'Client reply')}}">Balasan Client</a>
                                                     </div>
                                                 </div>
                                                 <form class="mt-1" id="form_search" action="{{route('admin.tiket.search')}}" method="GET">
